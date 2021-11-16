@@ -128,6 +128,7 @@ class BaseController extends GetxController {
       if (response.error?.code == 0) {
         return true;
       } else {
+        Utils.snackBar(title: response.error?.message ?? '');
         return false;
       }
     } else {

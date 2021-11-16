@@ -10,6 +10,7 @@ class CustomButton extends StatefulWidget {
   double? width, height;
   Color? background;
   BorderRadius? radious;
+  Alignment? alignment;
 
   CustomButton(
       {this.onTab,
@@ -19,6 +20,7 @@ class CustomButton extends StatefulWidget {
       this.title,
       this.padding,
       this.width,
+      this.alignment,
       this.height});
 
   EdgeInsetsGeometry? padding;
@@ -42,7 +44,7 @@ class _CustomButtonState extends State<CustomButton> {
           height: widget.height,
           padding: widget.padding ??
               const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          alignment: Alignment.centerLeft,
+          alignment: widget.alignment ?? Alignment.centerLeft,
           child: widget.child ??
               Text(
                 widget.title ?? '',

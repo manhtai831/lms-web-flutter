@@ -85,14 +85,13 @@ class _TypeAheadCustomState extends State<TypeAheadCustom> {
   @override
   void initState() {
     _outlineInputBorder ??= OutlineInputBorder(
-        borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
-        borderSide:
-            const BorderSide(width: 1, color: ColorResource.colorPrimary),
-      );
+      borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
+      borderSide: const BorderSide(width: 1, color: ColorResource.colorPrimary),
+    );
     _outlineInputBorderError ??= OutlineInputBorder(
-        borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
-        borderSide: const BorderSide(width: 1, color: ColorResource.red),
-      );
+      borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
+      borderSide: const BorderSide(width: 1, color: ColorResource.red),
+    );
     super.initState();
   }
 
@@ -117,14 +116,13 @@ class _TypeAheadCustomState extends State<TypeAheadCustom> {
                 child: Form(
                   key: _textFormFieldKey,
                   child: TypeAheadFormField(
-                    hideSuggestionsOnKeyboardHide: false,
-                    suggestionsBoxDecoration:
-                        widget.suggestionsBoxDecoration ??
-                            SuggestionsBoxDecoration(
-                                hasScrollbar: true,
-                                offsetX: 20,
-                                constraints:
-                                    BoxConstraints(maxWidth: Get.width - 72)),
+                    // hideSuggestionsOnKeyboardHide: false,
+                    // suggestionsBoxDecoration: widget.suggestionsBoxDecoration ??
+                    //     SuggestionsBoxDecoration(
+                    //         hasScrollbar: true,
+                    //         offsetX: 20,
+                    //         constraints:
+                    //             BoxConstraints(maxWidth: Get.width - 72)),
                     // suggestionsBoxVerticalOffset: -50.0,
                     enabled: widget.isReadOnly ?? true,
                     textFieldConfiguration: TextFieldConfiguration(
@@ -142,10 +140,10 @@ class _TypeAheadCustomState extends State<TypeAheadCustom> {
                         widget.onSubmitted?.call(t);
                         FocusScope.of(context).nextFocus();
                       },
-                      textCapitalization: widget.capitalization ??
-                          TextCapitalization.sentences,
+                      textCapitalization:
+                          widget.capitalization ?? TextCapitalization.sentences,
                       enabled: widget.isReadOnly ?? true,
-                      style:  TextStyle(
+                      style: TextStyle(
                           fontSize: 15,
                           color: ColorResource.colorPrimary,
                           fontWeight: AppResource.medium),
@@ -153,7 +151,7 @@ class _TypeAheadCustomState extends State<TypeAheadCustom> {
                         errorText: widget.error,
                         contentPadding: EdgeInsets.symmetric(
                             vertical: widget.padV ?? 16,
-                            horizontal: widget.padH ?? 0),
+                            horizontal: widget.padH ?? 8),
                         isDense: true,
                         labelText: widget.hint,
                         labelStyle: const TextStyle(
@@ -162,7 +160,7 @@ class _TypeAheadCustomState extends State<TypeAheadCustom> {
                         hintStyle: const TextStyle(
                             fontSize: 15, color: ColorResource.grey),
                         filled: true,
-                        fillColor: ColorResource.colorPrimary,
+                        fillColor: ColorResource.white,
                         prefixIconConstraints: widget.prefixConstraint ??
                             const BoxConstraints(maxWidth: 45, maxHeight: 50),
                         prefixIcon: widget.widgetLeft,
@@ -172,20 +170,18 @@ class _TypeAheadCustomState extends State<TypeAheadCustom> {
                         enabledBorder: widget.enableBorder ??
                             OutlineInputBorder(
                               borderRadius: BorderRadius.circular(
-                                  widget.borderRadius ?? 8),
-                              borderSide:  const BorderSide(
-                                  width: 1,
-                                  color: ColorResource.colorPrimary),
+                                  widget.borderRadius ?? 0),
+                              borderSide: const BorderSide(
+                                  width: 1, color: ColorResource.colorPrimary),
                             ),
                         focusedBorder:
                             widget.focusBorder ?? _outlineInputBorder,
                         disabledBorder: widget.disableBorder ??
                             OutlineInputBorder(
                               borderRadius: BorderRadius.circular(
-                                  widget.borderRadius ?? 8),
-                              borderSide:  const BorderSide(
-                                  width: 1,
-                                  color: ColorResource.colorPrimary),
+                                  widget.borderRadius ?? 0),
+                              borderSide: const BorderSide(
+                                  width: 1, color: ColorResource.colorPrimary),
                             ),
                         errorBorder:
                             widget.errorBorder ?? _outlineInputBorderError,
@@ -193,8 +189,7 @@ class _TypeAheadCustomState extends State<TypeAheadCustom> {
                             widget.focusedErrorBorder ?? _outlineInputBorder,
                       ),
                     ),
-                    validator: (value) =>
-                        widget.onValidator?.call(value),
+                    validator: (value) => widget.onValidator?.call(value),
                     suggestionsCallback: (pattern) async {
                       // if (pattern != '')
                       return await widget.suggestCallBack!.call(pattern);

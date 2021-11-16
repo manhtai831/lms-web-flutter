@@ -4,7 +4,8 @@ import 'package:web_lms/core/resource/string_resource.dart';
 import 'rest_client.dart';
 
 class NetworkUtils {
-  static String baseUrl = "http://192.168.1.39:3000/";
+  static String baseUrl = "http://192.168.1.26:3000/";
+  // static String baseUrl = "https://lms-app-281.herokuapp.com/";
 
   static String getBaseUrl() {
     return baseUrl;
@@ -12,15 +13,15 @@ class NetworkUtils {
 
   static RestClient? client;
 
-  static Future<RestClient> getClientInstance() async {
-    Dio dio = await NetworkUtils.getDioClientToken();
+  static Future<RestClient> getClientInstance({String? baseUrl}) async {
+    Dio dio = await NetworkUtils.getDioClientToken(baseUrl: baseUrl);
     client ??= RestClient(dio);
     return client!;
   }
 
-  static Future<Dio> getDioClientToken() async {
+  static Future<Dio> getDioClientToken({String? baseUrl}) async {
     final Dio dio = Dio(BaseOptions(
-        baseUrl: getBaseUrl(),
+        baseUrl: baseUrl ?? getBaseUrl(),
         contentType: "application/json",
         sendTimeout: 60000,
         connectTimeout: 60000,

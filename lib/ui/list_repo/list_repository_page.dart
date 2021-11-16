@@ -1,19 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:get/get.dart';
 import 'package:web_lms/core/base_component/custom_button.dart';
 import 'package:web_lms/core/dialog_confirm.dart';
+import 'package:web_lms/core/render_image.dart';
 import 'package:web_lms/core/resource/app_resource.dart';
 import 'package:web_lms/core/resource/color_resource.dart';
 import 'package:web_lms/core/textfield/text_field_custom.dart';
 import 'package:web_lms/core/utils.dart';
-import 'package:web_lms/ui/add_user/add_user_page.dart';
-import 'package:web_lms/ui/list_user/list_user_controller.dart';
 import 'package:collection/collection.dart';
+import 'package:web_lms/ui/add_repo/add_repository_page.dart';
 
-class ListUserPage extends GetWidget<ListUserController> {
-  final _controller = Get.lazyPut(() => ListUserController());
+import 'list_repository_controller.dart';
+
+class ListRepositoryPage extends GetWidget<ListRepositoryController> {
+  final _controller = Get.lazyPut(() => ListRepositoryController());
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class ListUserPage extends GetWidget<ListUserController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Danh sách người dùng',
+              'Danh sách repository',
               style: AppResource.s15b
                   .copyWith(fontSize: 23, color: ColorResource.colorPrimary),
             ),
@@ -50,7 +52,7 @@ class ListUserPage extends GetWidget<ListUserController> {
             Flexible(
               child: TextFieldCustom(
                 padV: 12,
-                hint: 'Tên người dùng',
+                hint: 'Tên repository',
                 editingController: controller.edtController,
               ),
             ),
@@ -61,7 +63,8 @@ class ListUserPage extends GetWidget<ListUserController> {
             ),
             Utils.space(8, 0),
             CustomButton(
-              onTab: () => Get.dialog(AddUserPage(), barrierDismissible: false),
+              onTab: () =>
+                  Get.dialog(AddRepositoryPage(), barrierDismissible: false),
               title: 'Thêm',
             )
           ],
@@ -92,7 +95,7 @@ class ListUserPage extends GetWidget<ListUserController> {
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                   child: Text(
-                    'TÊN TÀI KHOẢN',
+                    'TÊN repository'.toUpperCase(),
                     style: AppResource.s15b,
                   ),
                 ),
@@ -101,7 +104,7 @@ class ListUserPage extends GetWidget<ListUserController> {
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                   child: Text(
-                    'HỌ TÊN',
+                    'Mô tả'.toUpperCase(),
                     style: AppResource.s15b,
                   ),
                 ),
@@ -110,7 +113,7 @@ class ListUserPage extends GetWidget<ListUserController> {
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                   child: Text(
-                    'NGÀY SINH',
+                    'thời gian tạo'.toUpperCase(),
                     style: AppResource.s15b,
                   ),
                 ),
@@ -119,7 +122,7 @@ class ListUserPage extends GetWidget<ListUserController> {
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                   child: Text(
-                    'SỐ ĐIỆN THOẠI',
+                    'người tạo'.toUpperCase(),
                     style: AppResource.s15b,
                   ),
                 ),
@@ -128,16 +131,7 @@ class ListUserPage extends GetWidget<ListUserController> {
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                   child: Text(
-                    'CHUYÊN NGÀNH',
-                    style: AppResource.s15b,
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                  child: Text(
-                    'HỌC KÌ',
+                    'ẢNH',
                     style: AppResource.s15b,
                   ),
                 ),
@@ -166,7 +160,7 @@ class ListUserPage extends GetWidget<ListUserController> {
                   // 2: FixedColumnWidth(64),
                 },
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: controller.listUser
+                children: controller.listRepository
                     .mapIndexed(
                       (index, element) => TableRow(
                         children: [
@@ -184,7 +178,7 @@ class ListUserPage extends GetWidget<ListUserController> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 4),
                             child: Text(
-                              element.userName ?? '',
+                              element.title ?? '',
                               style: AppResource.s15r,
                             ),
                           ),
@@ -193,7 +187,7 @@ class ListUserPage extends GetWidget<ListUserController> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 4),
                             child: Text(
-                              element.name ?? '',
+                              element.content ?? '',
                               style: AppResource.s15r,
                             ),
                           ),
@@ -202,7 +196,7 @@ class ListUserPage extends GetWidget<ListUserController> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 4),
                             child: Text(
-                              element.birth ?? '',
+                              element.createdAt ?? '',
                               style: AppResource.s15r,
                             ),
                           ),
@@ -211,28 +205,19 @@ class ListUserPage extends GetWidget<ListUserController> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 4),
                             child: Text(
-                              element.phoneNumber ?? '',
+                              element.createdBy?.name ?? '',
                               style: AppResource.s15r,
                             ),
                           ),
                           Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 4),
-                            child: Text(
-                              element.chuyenNganh ?? '',
-                              style: AppResource.s15r,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 4),
-                            child: Text(
-                              element.kiHoc ?? '',
-                              style: AppResource.s15r,
-                            ),
-                          ),
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 4),
+                              child: element.image == null
+                                  ? const Text('Chưa có')
+                                  : RenderImage.imageNetwork(
+                                      Utils.concatUrl(element.image ?? ''),
+                                      height: 80)),
                           Container(
                             alignment: Alignment.center,
                             padding: const EdgeInsets.symmetric(
@@ -248,7 +233,8 @@ class ListUserPage extends GetWidget<ListUserController> {
                                     child: Material(
                                       color: ColorResource.transparent,
                                       child: InkWell(
-                                        onTap: () => Get.dialog(AddUserPage(),
+                                        onTap: () => Get.dialog(
+                                            AddRepositoryPage(),
                                             arguments: element,
                                             barrierDismissible: false),
                                         child: const Padding(
@@ -262,48 +248,23 @@ class ListUserPage extends GetWidget<ListUserController> {
                                     ),
                                   ),
                                   Utils.space(4, 0),
-                                  Tooltip(
-                                    message: 'Reset password',
-                                    child: Material(
-                                      color: ColorResource.transparent,
-                                      child: InkWell(
-                                        onTap: () => Get.dialog(
-                                            ConfirmDialog(
-                                              message:
-                                                  'Xác nhận reset password của tài khoản \"${element.userName}\"',
-                                              onConfirm: () =>
-                                                  controller.resetPassword(
-                                                      element.id ?? -1),
-                                            ),
-                                            barrierDismissible: false),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(
-                                            Icons.reset_tv,
-                                            color: ColorResource.colorPrimary,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Utils.space(4, 0),
-                                  Tooltip(
-                                    message: 'Chi tiết',
-                                    child: Material(
-                                      color: ColorResource.transparent,
-                                      child: InkWell(
-                                        onTap: () => null,
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(
-                                            Icons.details,
-                                            color: ColorResource.colorPrimary,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Utils.space(4, 0),
+                                  // Tooltip(
+                                  //   message: 'Chi tiết',
+                                  //   child: Material(
+                                  //     color: ColorResource.transparent,
+                                  //     child: InkWell(
+                                  //       onTap: () => null,
+                                  //       child: const Padding(
+                                  //         padding: EdgeInsets.all(8.0),
+                                  //         child: Icon(
+                                  //           Icons.details,
+                                  //           color: ColorResource.colorPrimary,
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // Utils.space(4, 0),
                                   Tooltip(
                                     message: 'Xóa',
                                     child: Material(
@@ -312,9 +273,10 @@ class ListUserPage extends GetWidget<ListUserController> {
                                         onTap: () => Get.dialog(
                                             ConfirmDialog(
                                               message:
-                                                  'Xác nhận xóa người dùng \"${element.name}\"',
-                                              onConfirm: () => controller
-                                                  .deleteUser(element.id ?? -1),
+                                                  'Xác nhận xóa repository \"${element.title}\"',
+                                              onConfirm: () =>
+                                                  controller.deleteRepository(
+                                                      element.id ?? -1),
                                             ),
                                             barrierDismissible: false),
                                         child: const Padding(

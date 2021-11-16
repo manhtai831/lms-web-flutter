@@ -1,0 +1,11 @@
+export 'package:collection/collection.dart';
+export 'package:get/get.dart';
+export 'package:flutter/material.dart';
+export 'resource/app_resource.dart';
+export 'resource/color_resource.dart';
+export 'resource/key_resource.dart';
+export 'resource/string_resource.dart';
+export 'utils.dart';
+export 'render_image.dart';
+export 'textfield/text_field_custom.dart';
+export 'base_component/custom_button.dart';

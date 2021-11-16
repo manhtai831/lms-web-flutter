@@ -1,20 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:web_lms/core/base_component/custom_button.dart';
 import 'package:web_lms/core/dialog_confirm.dart';
-import 'package:web_lms/core/dropdown/dropdown_custom.dart';
-import 'package:web_lms/core/network/network_utils.dart';
-import 'package:web_lms/core/render_image.dart';
-import 'package:web_lms/core/resource/app_resource.dart';
-import 'package:web_lms/core/resource/color_resource.dart';
-import 'package:web_lms/core/textfield/text_field_custom.dart';
+import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/textfield/type_ahead_custom.dart';
-import 'package:web_lms/core/utils.dart';
-import 'package:web_lms/ui/add_user/add_user_controller.dart';
+import 'package:web_lms/ui/add_department/add_department_controller.dart';
 
-class AddUserPage extends GetWidget<AddUserController> {
-  final _controller = Get.lazyPut(() => AddUserController());
+class AddDepartmentPage extends GetWidget<AddDepartmentController> {
+  final _controller = Get.lazyPut(() => AddDepartmentController());
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +15,10 @@ class AddUserPage extends GetWidget<AddUserController> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              headerDialog(title: 'Thêm người dùng'),
+              headerDialog(
+                  title: controller.pDepartment != null
+                      ? 'Cập nhật khối ngành'
+                      : 'Thêm khối ngành'),
               Utils.space(16, 16),
               Padding(
                 padding: const EdgeInsets.all(24.0),
@@ -49,14 +42,13 @@ class AddUserPage extends GetWidget<AddUserController> {
                               child: Obx(
                                 () => controller.imageCurrent.value == null
                                     ? RenderImage.imageNetwork(Utils.concatUrl(
-                                        controller.pUser?.avatar ?? ''))
+                                        controller.pDepartment?.image ?? ''))
                                     : RenderImage.getImageStorage(
                                         path64: controller.imageCurrent.value),
                               ),
                             ),
                           ),
                         ),
-                        Utils.space(0, 12),
                         const Text('Tải ảnh lên')
                       ],
                     ),
@@ -72,25 +64,21 @@ class AddUserPage extends GetWidget<AddUserController> {
                                   editingController:
                                       controller.edtController[0],
                                   maxLines: 1,
-                                  isReadOnly: controller.pUser != null,
-                                  hint: 'Tên tài khoản',
+                                  hint: 'Tên khối ngành',
                                 ),
                               ),
                               Utils.space(16, 0),
                               Expanded(
                                 child: TextFieldCustom(
-                                  hint: 'Mật khẩu',
+                                  hint: 'Mô tả',
                                   editingController:
                                       controller.edtController[1],
                                   maxLines: 1,
-                                  obscureText: true,
-                                  inputType: TextInputType.visiblePassword,
                                 ),
                               ),
                               Utils.space(16, 0),
                             ],
                           ),
-                          Utils.space(0, 16),
                           Obx(
                             () => SingleChildScrollView(
                               child: Row(
@@ -122,106 +110,21 @@ class AddUserPage extends GetWidget<AddUserController> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: TextFieldCustom(
-                                    maxLines: 1,
-                                    hint: 'Tên người dùng',
-                                    editingController:
-                                        controller.edtController[2],
-                                  ),
-                                ),
-                                Utils.space(16, 0),
-                                Expanded(
-                                  child: TextFieldCustom(
-                                    maxLines: 1,
-                                    hint: 'Ngày sinh',
-                                    isReadOnly: true,
-                                    onTap: () => controller.datePicker(),
-                                    editingController:
-                                        controller.edtController[3],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: TypeAheadCustom(
-                                    maxLines: 1,
-                                    hint: 'Giới tính',
-                                    editingController:
-                                        controller.edtController[4],
-                                  ),
-                                ),
-                                Utils.space(16, 0),
-                                Expanded(
-                                  child: TextFieldCustom(
-                                    maxLines: 1,
-                                    hint: 'Địa chỉ',
-                                    editingController:
-                                        controller.edtController[5],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: TextFieldCustom(
-                                    maxLines: 1,
-                                    hint: 'Email',
-                                    editingController:
-                                        controller.edtController[6],
-                                  ),
-                                ),
-                                Utils.space(16, 0),
-                                Expanded(
-                                  child: TextFieldCustom(
-                                    maxLines: 1,
-                                    hint: 'Số điện thoại',
-                                    editingController:
-                                        controller.edtController[7],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: TypeAheadCustom(
-                                    maxLines: 1,
-                                    hint: 'Chuyên ngành',
-                                    editingController:
-                                        controller.edtController[8],
-                                  ),
-                                ),
-                                Utils.space(16, 0),
-                                Expanded(
-                                  child: TypeAheadCustom(
-                                    maxLines: 1,
-                                    hint: 'Học kì',
-                                    editingController:
-                                        controller.edtController[9],
-                                  ),
-                                ),
-                              ],
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: TypeAheadCustom(
+                              maxLines: 1,
+                              hint: 'Repository',
+                              editingController: controller.edtController[4],
+                              suggestCallBack: (pattern) async =>
+                                  await controller.sugestion(pattern),
+                              onSuggestionSelected: (value) =>
+                                  controller.valueSelected(value),
                             ),
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

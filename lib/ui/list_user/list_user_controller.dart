@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:web_lms/core/api_common.dart';
 import 'package:web_lms/core/base_controller.dart';
 import 'package:web_lms/core/network/base_page_response.dart';
@@ -7,7 +8,7 @@ import 'package:get/get.dart';
 
 class ListUserController extends BaseController {
   var listUser = <User>[].obs;
-
+  TextEditingController edtController = TextEditingController();
   @override
   initialData() async {
     await handleDelay(150);
@@ -36,5 +37,12 @@ class ListUserController extends BaseController {
   resetPassword(int id) async {
     BaseResetPassword baseDeleteUser = BaseResetPassword(id: id);
     await baseDeleteUser.getData();
+  }
+
+  search() async {
+    BaseUser baseSemester = BaseUser(title: edtController.text.trim());
+    await baseSemester.getData();
+    listUser.clear();
+    listUser.value = baseSemester.listData;
   }
 }

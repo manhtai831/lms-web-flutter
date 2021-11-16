@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:web_lms/core/network/network_utils.dart';
 import 'package:web_lms/core/resource/color_resource.dart';
 
 class Utils {
@@ -16,11 +17,19 @@ class Utils {
         Icons.notifications,
         color: ColorResource.white,
       ),
+      maxWidth: Get.width / 2,
       shouldIconPulse: true,
       barBlur: 20,
-      backgroundColor: ColorResource.white.withOpacity(0.2),
+      margin: const EdgeInsets.only(top: 16),
+
+      backgroundColor: ColorResource.black.withOpacity(0.2),
       isDismissible: true,
       duration: const Duration(seconds: 3),
     );
+  }
+
+  static String concatUrl(String url) {
+    print('AAAAAAAAAAA ' + NetworkUtils.baseUrl + url);
+    return NetworkUtils.baseUrl + url;
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:web_lms/core/base_component/custom_button.dart';
+import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/resource/app_resource.dart';
 import 'package:web_lms/core/resource/color_resource.dart';
 import 'package:web_lms/core/textfield/text_field_custom.dart';
@@ -50,8 +51,13 @@ class LoginPage extends GetWidget<LoginController> {
           Utils.space(0, 32),
           CustomButton(
             // width: double.infinity,
+            // child: const Text(
+            //   'Đăng nhập',
+            //   textAlign: TextAlign.center,
+            // ),
+            alignment: Alignment.center,
             title: "Đăng nhập",
-            onTab: () => controller.login(),
+            onTab: () async => await controller.login(),
           ),
         ]),
       ),

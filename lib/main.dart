@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:web_lms/ui/home/home_controller.dart';
 import 'package:web_lms/ui/home/home_page.dart';
+import 'package:web_lms/ui/login/login_controller.dart';
 import 'package:web_lms/ui/login/login_page.dart';
 
 void main() {
+  Get.lazyPut(() => LoginController());
+  Get.lazyPut(() => HomeController());
   runApp(MyApp());
 }
 

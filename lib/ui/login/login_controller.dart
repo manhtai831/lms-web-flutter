@@ -10,6 +10,7 @@ import 'package:web_lms/core/resource/key_resource.dart';
 import 'package:web_lms/core/resource/string_resource.dart';
 import 'package:web_lms/core/utils.dart';
 import 'package:web_lms/model/user.dart';
+import 'package:web_lms/ui/home/home_controller.dart';
 import 'package:web_lms/ui/home/home_page.dart';
 
 class LoginController extends BaseController {
@@ -18,11 +19,13 @@ class LoginController extends BaseController {
 
   @override
   initialData() async {
-    if (await SharedPref.containKey(KeyResource.token)) {
+    var b1 = await SharedPref.containKey(KeyResource.token);
+    if (b1) {
       StringResource.token = await SharedPref.getString(KeyResource.token);
     }
+    await handleDelay(50);
     if (StringResource.token != '') {
-      Get.off(() => HomePage());
+      Get.offAll(() => HomePage());
     }
   }
 
@@ -35,8 +38,13 @@ class LoginController extends BaseController {
       Utils.snackBar(title: 'Hello ' + (user.name ?? ''));
       PersonManager.getInstance().user = user;
       await SharedPref.putString(KeyResource.token, user.token ?? '');
+      await SharedPref.putString(KeyResource.name, user.name ?? '');
+      await SharedPref.putString(KeyResource.avatar, user.avatar ?? '');
       StringResource.token = user.token ?? '';
+      StringResource.name = user.name ?? '';
+      StringResource.avatar = user.avatar ?? '';
       await handleDelay(1000);
+      Get.lazyPut(() => HomeController());
       Get.offAll(() => HomePage());
     }
   }
@@ -46,7 +54,7 @@ class LoginController extends BaseController {
     return User(userName: edtLogin.text, password: edtPassword.text);
   }
 
-  void login() async {
+  login() async {
     await getData();
   }
 }
