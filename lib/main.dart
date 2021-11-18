@@ -6,8 +6,6 @@ import 'package:web_lms/ui/login/login_controller.dart';
 import 'package:web_lms/ui/login/login_page.dart';
 
 void main() {
-  Get.lazyPut(() => LoginController());
-  Get.lazyPut(() => HomeController());
   runApp(MyApp());
 }
 

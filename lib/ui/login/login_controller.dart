@@ -23,7 +23,6 @@ class LoginController extends BaseController {
     if (b1) {
       StringResource.token = await SharedPref.getString(KeyResource.token);
     }
-    await handleDelay(50);
     if (StringResource.token != '') {
       Get.offAll(() => HomePage());
     }
@@ -43,8 +42,8 @@ class LoginController extends BaseController {
       StringResource.token = user.token ?? '';
       StringResource.name = user.name ?? '';
       StringResource.avatar = user.avatar ?? '';
+      NetworkUtils.client = null;
       await handleDelay(1000);
-      Get.lazyPut(() => HomeController());
       Get.offAll(() => HomePage());
     }
   }

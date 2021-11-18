@@ -1,20 +1,27 @@
+import 'package:web_lms/model/department.dart';
+import 'package:web_lms/model/semester.dart';
+
 class User {
   List<Permission>? permission;
   String? sId;
   String? name;
+  String? nameGroup;
   String? data;
   String? userName;
   String? email;
   String? password;
   String? token;
-  int? gender;
+  String? gender;
   int? id;
+  int? idGroup;
   String? birth;
   String? phoneNumber;
   String? address;
   String? avatar;
-  String? chuyenNganh;
-  String? kiHoc;
+  Department? chuyenNganh;
+  int? chuyenNganhId;
+  Semester? kiHoc;
+  int? kiHocId;
 
   User(
       {this.permission,
@@ -25,6 +32,7 @@ class User {
       this.token,
       this.id,
       this.gender,
+      this.idGroup,
       this.birth,
       this.password,
       this.phoneNumber,
@@ -32,7 +40,9 @@ class User {
       this.kiHoc,
       this.data,
       this.chuyenNganh,
-      this.address});
+      this.address,
+      this.kiHocId,
+      this.chuyenNganhId});
 
   User.fromJson(Map<String, dynamic> json) {
     if (json['permission'] != null) {
@@ -43,15 +53,21 @@ class User {
     }
     sId = json['_id'];
     gender = json['gender'];
+    chuyenNganhId = json['chuyenNganhId'];
+    kiHocId = json['kiHocId'];
+    idGroup = json['idGroup'];
+    nameGroup = json['nameGroup'];
     password = json['password'];
     name = json['name'];
     userName = json['userName'];
-    kiHoc = json['kiHoc'];
+    if (json['kiHoc'] != null) kiHoc = Semester.fromJson(json['kiHoc']);
     address = json['address'];
     email = json['email'];
     token = json['token'];
     id = json['id'];
-    chuyenNganh = json['chuyenNganh'];
+    if (json['chuyenNganh'] != null) {
+      chuyenNganh = Department.fromJson(json['chuyenNganh']);
+    }
     birth = json['birth'];
     phoneNumber = json['phoneNumber'];
     avatar = json['avatar'];
@@ -64,7 +80,11 @@ class User {
     }
     if (this.sId != null) data['_id'] = this.sId;
     if (this.gender != null) data['gender'] = this.gender;
+    if (this.idGroup != null) data['idGroup'] = this.idGroup;
+    if (this.kiHocId != null) data['kiHocId'] = this.kiHocId;
+    if (this.nameGroup != null) data['nameGroup'] = this.nameGroup;
     if (this.address != null) data['address'] = this.address;
+    if (this.chuyenNganhId != null) data['chuyenNganhId'] = this.chuyenNganhId;
     if (this.password != null) data['password'] = this.password;
     if (this.name != null) data['name'] = this.name;
     if (this.userName != null) data['userName'] = this.userName;

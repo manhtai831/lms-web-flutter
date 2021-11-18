@@ -10,8 +10,12 @@ import 'package:web_lms/core/resource/color_resource.dart';
 import 'package:web_lms/core/resource/string_resource.dart';
 import 'package:web_lms/core/utils.dart';
 import 'package:web_lms/ui/home/home_controller.dart';
+import 'package:web_lms/ui/list_class/list_class_page.dart';
 import 'package:web_lms/ui/list_department/list_department_page.dart';
+import 'package:web_lms/ui/list_file_folder/list_file_folder_page.dart';
 import 'package:web_lms/ui/list_repo/list_repository_page.dart';
+import 'package:web_lms/ui/list_role/list_role_page.dart';
+import 'package:web_lms/ui/list_subject/list_subject_page.dart';
 import 'package:web_lms/ui/list_user/list_user_page.dart';
 import 'package:web_lms/ui/semester/list_semester_page.dart';
 
@@ -114,7 +118,7 @@ class HomePage extends GetWidget<HomeController> {
       child: Column(
         children: [
           Container(
-            height: 50,
+            height: Get.height / 20,
             width: double.infinity,
             color: ColorResource.colorPrimary,
             alignment: Alignment.center,
@@ -167,7 +171,8 @@ class HomePage extends GetWidget<HomeController> {
   Widget mainView() {
     Widget view;
     if (controller.indexView.value == 0) {
-      view = ListUserPage();
+      view = ListFileFolderPage();
+      // view = ListUserPage();
     } else if (controller.indexView.value == 1) {
       view = ListRepositoryPage();
     } else if (controller.indexView.value == 2) {
@@ -175,7 +180,15 @@ class HomePage extends GetWidget<HomeController> {
     } else if (controller.indexView.value == 3) {
       view = ListDepartmentPage();
     } else if (controller.indexView.value == 4) {
-      view = ListDepartmentPage();
+      view = ListSubjectPage();
+    } else if (controller.indexView.value == 5) {
+      view = ListClassPage();
+    } else if (controller.indexView.value == 6) {
+      view = ListFileFolderPage();
+    } else if (controller.indexView.value == 7) {
+      view = ListFileFolderPage();
+    } else if (controller.indexView.value == 8) {
+      view = ListRolePage();
     } else
       view = Container();
     return Container(
@@ -189,7 +202,7 @@ class HomePage extends GetWidget<HomeController> {
     return Obx(
       () => Container(
         width: double.infinity,
-        height: 50,
+        height: Get.height / 20,
         decoration: const BoxDecoration(color: ColorResource.colorPrimary),
         alignment: Alignment.centerRight,
         child: Row(
@@ -208,7 +221,7 @@ class HomePage extends GetWidget<HomeController> {
                         color: ColorResource.white),
                     child: controller.user.value.avatar != null
                         ? RenderImage.imageNetwork(
-                            Utils.concatUrl(StringResource.avatar))
+                            Utils.concatUrl(controller.user.value.avatar ?? ''))
                         : Utils.space(0, 0),
                   ),
                   Utils.space(16, 0),

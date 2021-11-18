@@ -1,11 +1,11 @@
 import 'package:web_lms/core/dialog_confirm.dart';
 import 'package:web_lms/core/export_all.dart';
-import 'package:web_lms/ui/add_subject/add_subject_page.dart';
-import 'package:web_lms/ui/list_subject/list_subject_controller.dart';
+import 'package:web_lms/ui/add_class/add_class_page.dart';
+import 'package:web_lms/ui/list_class/list_class_controller.dart';
 import 'package:web_lms/ui/semester/list_semester_page.dart';
 
-class ListSubjectPage extends GetWidget<ListSubjectController> {
-  final _controller = Get.lazyPut(() => ListSubjectController());
+class ListClassPage extends GetWidget<ListClassController> {
+  final _controller = Get.lazyPut(() => ListClassController());
 
   @override
   Widget build(BuildContext context) {
@@ -31,31 +31,41 @@ class ListSubjectPage extends GetWidget<ListSubjectController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Danh sách môn học',
+              'Danh sách lớp học',
               style: AppResource.s15b
                   .copyWith(fontSize: 23, color: ColorResource.colorPrimary),
             ),
-            Flexible(
-              flex: 3,
-              child: Container(),
-            ),
-            Flexible(
-              child: TextFieldCustom(
-                padV: 12,
-                hint: 'Tên môn học',
-                editingController: controller.edtController,
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    width: 250,
+                    child: TextFieldCustom(
+                      padV: 12,
+                      hint: 'Tên lớp học',
+                      editingController: controller.edtController,
+                    ),
+                  ),
+                  // Utils.space(8, 6),
+                  // TextFieldCustom(
+                  //   padV: 12,
+                  //   hint: 'Tên môn học',
+                  //   editingController: controller.edtController,
+                  // ),
+                  Utils.space(8, 0),
+                  CustomButton(
+                    title: 'Tìm kiếm',
+                    // onTab: () => controller.search(),
+                  ),
+                  Utils.space(8, 0),
+                  CustomButton(
+                    onTab: () =>
+                        Get.dialog(AddClassPage(), barrierDismissible: false),
+                    title: 'Thêm',
+                  )
+                ],
               ),
-            ),
-            Utils.space(8, 0),
-            CustomButton(
-              title: 'Tìm kiếm',
-              onTab: () => controller.search(),
-            ),
-            Utils.space(8, 0),
-            CustomButton(
-              onTab: () =>
-                  Get.dialog(AddSubjectPage(), barrierDismissible: false),
-              title: 'Thêm',
             )
           ],
         ),
@@ -72,12 +82,11 @@ class ListSubjectPage extends GetWidget<ListSubjectController> {
             TableRow(
               children: [
                 tableCell(header: 'STT'.toUpperCase()),
-                tableCell(header: 'TÊN môn học'.toUpperCase()),
+                tableCell(header: 'TÊN lớp học'.toUpperCase()),
                 tableCell(header: 'Mô tả'.toUpperCase()),
-                tableCell(header: 'trạng thái'.toUpperCase()),
                 tableCell(header: 'Thời gian tạo'.toUpperCase()),
                 tableCell(header: 'người tạo'.toUpperCase()),
-                tableCell(header: 'Chuyên ngành'.toUpperCase()),
+                tableCell(header: 'Môn học'.toUpperCase()),
                 tableCell(header: 'CHỨC NĂNG'.toUpperCase()),
               ],
             ),
@@ -91,36 +100,30 @@ class ListSubjectPage extends GetWidget<ListSubjectController> {
                     TableBorder.all(color: ColorResource.grey.withOpacity(0.5)),
                 columnWidths: const <int, TableColumnWidth>{
                   0: FixedColumnWidth(64),
+                  // 1: FlexColumnWidth(),
+                  // 2: FixedColumnWidth(64),
                 },
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: controller.listSubject
+                children: controller.listCLass
                     .mapIndexed(
                       (index, element) => TableRow(
                         children: [
                           tableCell(text: (index + 1).toString()),
                           tableCell(text: element.name),
                           tableCell(text: element.description),
-                          tableCell(
-                              text: element.status == 1
-                                  ? 'Đã kích hoạt'
-                                  : 'Chưa kích hoạt'),
-                          tableCell(text: element.createdAt ?? ''),
-                          tableCell(text: element.createdBy?.name),
-                          Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 4),
-                              child: Text(element.department?.name ?? '')),
+                          tableCell(text: element.createAt),
+                          tableCell(text: element.createBy?.name),
+                          tableCell(text: element.subject?.name),
                           feature(
                               onDelete: () => Get.dialog(
                                   ConfirmDialog(
                                     message:
-                                        'Xác nhận xóa repository \"${element.name}\"',
+                                        'Xác nhận xóa lớp học \"${element.name}\"',
                                     onConfirm: () =>
                                         controller.delete(element.id ?? -1),
                                   ),
                                   barrierDismissible: false),
-                              onUpdate: () => Get.dialog(AddSubjectPage(),
+                              onUpdate: () => Get.dialog(AddClassPage(),
                                   arguments: element,
                                   barrierDismissible: false))
                         ],

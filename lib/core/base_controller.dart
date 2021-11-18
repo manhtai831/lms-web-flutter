@@ -62,9 +62,10 @@ class BaseController extends GetxController {
 
   getData() async {
     // bool check = await NetworkUtils.hasConnection();
-    client = await NetworkUtils.getClientInstance();
-    await getDataSuccessFromAPI();
+
     if (true) {
+      client = await NetworkUtils.getClientInstance();
+      await getDataSuccessFromAPI();
       try {} catch (onError) {
         catchError(onError);
       }
@@ -86,8 +87,9 @@ class BaseController extends GetxController {
 
         if (res?.statusCode == 401) {
           ///refresh token
-        } else if (res?.statusCode == 502) {
+        } else if (res?.statusCode == 500) {
           setStatus(Status.success);
+          Utils.snackBar(message: 'Đã có lỗi xảy ra');
         } else if (res?.statusCode == 403) {
           setStatus(Status.success);
         } else {

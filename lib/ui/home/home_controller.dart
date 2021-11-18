@@ -26,15 +26,10 @@ class HomeController extends BaseController {
     listItem.add(ItemDrawer(2, 'Học kì', false.obs));
     listItem.add(ItemDrawer(3, 'Khối ngành', false.obs));
     listItem.add(ItemDrawer(4, 'Môn học', false.obs));
-
-    listItem.add(
-        ItemDrawer(5, 'Chức năng ' + listItem.length.toString(), false.obs));
-    listItem.add(
-        ItemDrawer(6, 'Chức năng ' + listItem.length.toString(), false.obs));
-    listItem.add(
-        ItemDrawer(7, 'Chức năng ' + listItem.length.toString(), false.obs));
-    listItem.add(
-        ItemDrawer(8, 'Chức năng ' + listItem.length.toString(), false.obs));
+    listItem.add(ItemDrawer(5, 'Lớp học', false.obs));
+    listItem.add(ItemDrawer(6, 'Danh mục', false.obs));
+    listItem.add(ItemDrawer(7, 'Nhóm danh mục', false.obs));
+    listItem.add(ItemDrawer(8, 'Cấu hình quyền', false.obs));
   }
 
   pickFeature(int index) {

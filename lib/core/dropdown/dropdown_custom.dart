@@ -65,13 +65,13 @@ class DropdownCustomState extends State<DropdownCustom> {
   void initState() {
     if (widget.listItems == null) {
       _outlineInputBorder = OutlineInputBorder(
-        borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
+        borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
         borderSide:
             const BorderSide(width: 1, color: ColorResource.colorPrimary),
       );
     }
     _outlineInputBorderError = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
+      borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
       borderSide: const BorderSide(width: 1, color: ColorResource.red),
     );
     super.initState();
@@ -99,23 +99,23 @@ class DropdownCustomState extends State<DropdownCustom> {
                 child: DropdownButtonFormField<String>(
                   decoration: InputDecoration(
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                        const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
                     errorStyle:
                         const TextStyle(fontSize: 11, color: Colors.red),
-                    errorText: widget.error ?? null,
+                    errorText: widget.error,
                     errorMaxLines: 1,
 
                     filled: true,
-                    fillColor: ColorResource.colorPrimary,
+                    fillColor: ColorResource.white,
                     labelText: widget.label ?? widget.hint ?? '',
                     labelStyle: TextStyle(
                         fontSize: 14,
                         fontWeight: AppResource.medium,
                         color: _labelColor),
-                    isDense: false,
+                    isDense: true,
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(
+                      borderRadius: BorderRadius.circular(0),
+                      borderSide: const BorderSide(
                           width: 1, color: ColorResource.colorPrimary),
                     ),
                     focusedBorder: widget.focusBorder ?? _outlineInputBorder,
@@ -126,15 +126,16 @@ class DropdownCustomState extends State<DropdownCustom> {
                     prefixIcon: widget.widgetLeft,
                     prefixIconConstraints: widget.prefixConstraint ??
                         const BoxConstraints(
-                          minHeight: 50,
+                          minHeight: 40,
                           maxWidth: 40,
                         ),
                     suffixIconConstraints: widget.suffixConstraint ??
-                        BoxConstraints(minHeight: 0, minWidth: 0, maxWidth: 30),
+                        const BoxConstraints(
+                            minHeight: 0, minWidth: 0, maxWidth: 30),
                     suffixIcon: Padding(
                       padding: const EdgeInsets.only(right: 10.0),
                       child: widget.widgetRight ??
-                          Icon(Icons.arrow_drop_down_outlined),
+                          const Icon(Icons.arrow_drop_down_outlined),
                     ),
                     // border: new CustomBorderTextFieldSkin().getSkin(),
                   ),
@@ -143,7 +144,7 @@ class DropdownCustomState extends State<DropdownCustom> {
                   menuMaxHeight: Get.height / 2,
                   value: widget.currentValue == '' ? null : widget.currentValue,
                   isExpanded: true,
-                  isDense: false,
+                  isDense: true,
                   icon: Utils.space(0, 0),
                   style: TextStyle(
                       fontSize: 14,

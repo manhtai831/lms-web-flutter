@@ -4,6 +4,7 @@ import 'package:web_lms/model/user.dart';
 class Department {
   String? sId;
   String? name;
+  String? title;
   int? idSemester;
   String? image;
   String? data;
@@ -32,6 +33,7 @@ class Department {
   Department.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     name = json['name'];
+    title = json['name'];
     idSemester = json['idSemester'];
     image = json['image'];
     status = json['status'];

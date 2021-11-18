@@ -11,6 +11,7 @@ import 'package:web_lms/core/resource/color_resource.dart';
 import 'package:web_lms/core/textfield/text_field_custom.dart';
 import 'package:web_lms/core/textfield/type_ahead_custom.dart';
 import 'package:web_lms/core/utils.dart';
+import 'package:web_lms/model/base_item.dart';
 import 'package:web_lms/ui/add_user/add_user_controller.dart';
 
 class AddUserPage extends GetWidget<AddUserController> {
@@ -20,7 +21,7 @@ class AddUserPage extends GetWidget<AddUserController> {
   Widget build(BuildContext context) {
     return Dialog(
       child: Container(
-        height: 650,
+        height: Get.height * 3 / 4,
         width: Get.width * 2 / 3,
         child: SingleChildScrollView(
           child: Column(
@@ -152,11 +153,18 @@ class AddUserPage extends GetWidget<AddUserController> {
                             child: Row(
                               children: [
                                 Expanded(
-                                  child: TypeAheadCustom(
-                                    maxLines: 1,
-                                    hint: 'Giới tính',
-                                    editingController:
-                                        controller.edtController[4],
+                                  child: Obx(
+                                    () => DropdownCustom(
+                                      hint: 'Giới tính',
+                                      listItems: [
+                                        BaseItem(id: 0, title: 'Nam'),
+                                        BaseItem(id: 1, title: 'Nữ'),
+                                      ],
+                                      getCurrentValue: (value, index) =>
+                                          controller.getCurrentValue(value, 0),
+                                      currentValue:
+                                          controller.currentGender.value,
+                                    ),
                                   ),
                                 ),
                                 Utils.space(16, 0),
@@ -205,6 +213,10 @@ class AddUserPage extends GetWidget<AddUserController> {
                                     hint: 'Chuyên ngành',
                                     editingController:
                                         controller.edtController[8],
+                                    suggestCallBack: (pattern) async =>
+                                        await controller.sugestion(pattern, 8),
+                                    onSuggestionSelected: (value) =>
+                                        controller.valueSelected(value, 8),
                                   ),
                                 ),
                                 Utils.space(16, 0),
@@ -214,8 +226,33 @@ class AddUserPage extends GetWidget<AddUserController> {
                                     hint: 'Học kì',
                                     editingController:
                                         controller.edtController[9],
+                                    suggestCallBack: (pattern) async =>
+                                        await controller.sugestion(pattern, 9),
+                                    onSuggestionSelected: (value) =>
+                                        controller.valueSelected(value, 9),
                                   ),
                                 ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Obx(
+                                    () => DropdownCustom(
+                                      hint: 'Quyền',
+                                      listItems: controller.listGroupRole,
+                                      getCurrentValue: (value, index) =>
+                                          controller.getCurrentValue(value, 1),
+                                      currentValue:
+                                          controller.currentGroup.value,
+                                    ),
+                                  ),
+                                ),
+                                Utils.space(16, 0),
+                                Expanded(child: Container()),
                               ],
                             ),
                           ),

@@ -220,7 +220,7 @@ class ListUserPage extends GetWidget<ListUserController> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 4),
                             child: Text(
-                              element.chuyenNganh ?? '',
+                              element.chuyenNganh?.title ?? '',
                               style: AppResource.s15r,
                             ),
                           ),
@@ -229,7 +229,7 @@ class ListUserPage extends GetWidget<ListUserController> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 4),
                             child: Text(
-                              element.kiHoc ?? '',
+                              element.kiHoc?.title ?? '',
                               style: AppResource.s15r,
                             ),
                           ),

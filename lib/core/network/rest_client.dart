@@ -1,8 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:web_lms/model/class_model.dart';
+import 'package:web_lms/model/class_model.dart';
+import 'package:web_lms/model/class_model.dart';
 import 'package:web_lms/model/department.dart';
+import 'package:web_lms/model/file_folder.dart';
+import 'package:web_lms/model/file_folder.dart';
+import 'package:web_lms/model/file_folder.dart';
+import 'package:web_lms/model/group_role.dart';
+import 'package:web_lms/model/group_role.dart';
+import 'package:web_lms/model/group_role.dart';
 import 'package:web_lms/model/repository.dart';
 import 'package:web_lms/model/semester.dart';
+import 'package:web_lms/model/subject.dart';
+import 'package:web_lms/model/subject.dart';
+import 'package:web_lms/model/subject.dart';
 import 'package:web_lms/model/user.dart';
 
 import 'base_response.dart';
@@ -88,4 +100,62 @@ abstract class RestClient {
 
   @POST("api/delete_department")
   Future<BaseResponse?> deleteDepartment(@Body() Department o);
+
+  ///Subject ------------------------------
+  @POST("api/create_subject")
+  Future<BaseResponse?> createSubject(@Body() Subject o);
+
+  @GET("api/get_subjects")
+  Future<BaseResponse?> getListSubject();
+
+  @GET("api/get_subjects")
+  Future<BaseResponse?> getListSubjectSearch(@Queries() Map<String, dynamic> m);
+
+  @POST("api/update_subjects")
+  Future<BaseResponse?> updateSubject(@Body() Subject o);
+
+  @POST("api/delete_subjects")
+  Future<BaseResponse?> deleteSubject(@Body() Subject o);
+
+  ///Role ------------------------------
+  @POST("api/create_group")
+  Future<BaseResponse?> createGroup(@Body() GroupRole o);
+
+  @GET("api/get_groups")
+  Future<BaseResponse?> getListGroup();
+
+  @POST("api/update_group")
+  Future<BaseResponse?> updateGroup(@Body() GroupRole o);
+
+  @POST("api/delete_group")
+  Future<BaseResponse?> deleteGroup(@Body() GroupRole o);
+
+  @POST("api/get_all_role")
+  Future<BaseResponse?> getListRole({@Body() List<int>? l});
+
+  ///Class ------------------------------
+  @POST("api/create_class")
+  Future<BaseResponse?> createClass(@Body() ClassModel o);
+
+  @GET("api/get_all_class")
+  Future<BaseResponse?> getListClass({@Queries() Map<String, dynamic>? m});
+
+  @POST("api/update_class")
+  Future<BaseResponse?> updateClass(@Body() ClassModel o);
+
+  @POST("api/delete_class")
+  Future<BaseResponse?> deleteClass(@Body() ClassModel o);
+
+  ///Document Type ------------------------------
+  @POST("api/create_document_type")
+  Future<BaseResponse?> createFileFolder(@Body() FileFolder o);
+
+  @GET("api/get_document_types")
+  Future<BaseResponse?> getListFileFolder();
+
+  @POST("api/update_document_types")
+  Future<BaseResponse?> updateFileFolder(@Body() FileFolder o);
+
+  @POST("api/delete_document_types")
+  Future<BaseResponse?> deleteFileFolder(@Body() FileFolder o);
 }
