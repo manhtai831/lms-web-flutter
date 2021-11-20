@@ -24,9 +24,10 @@ class NetworkUtils {
     final Dio dio = Dio(BaseOptions(
         baseUrl: baseUrl ?? getBaseUrl(),
         contentType: "application/json",
-        sendTimeout: 60000,
+        sendTimeout: 10000,
         connectTimeout: 60000,
-        receiveTimeout: 60000,
+        receiveTimeout: 10000,
+        receiveDataWhenStatusError: true,
         headers: <String, dynamic>{
           "token": StringResource.token,
         })); // Provide a dio instance

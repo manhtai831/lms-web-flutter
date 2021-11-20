@@ -5,7 +5,14 @@ import 'package:file_picker/file_picker.dart';
 
 class Base64Converter {
   static convertImageToBase64({FilePickerResult? file}) {
-    String base64Image = "data:image/${file!.files.first.extension};base64," +
+    String mine = '';
+    if (',.jpg,.jpeg,.png,.gif,.bmp'
+        .contains(file!.files.first.extension ?? '!@#%^&*(^&*')) {
+      mine = 'image';
+    } else {
+      mine = 'application';
+    }
+    String base64Image = "data:$mine/${file.files.first.extension};base64," +
         base64Encode(file.files.first.bytes!);
     // String base64Image = base64Encode(bytes);
     print("img_pan : $base64Image");

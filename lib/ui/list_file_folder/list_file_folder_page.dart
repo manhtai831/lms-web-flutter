@@ -1,10 +1,11 @@
-import 'package:web_lms/core/dialog_confirm.dart';
-import 'package:web_lms/core/dropdown/dropdown_custom.dart';
 import 'package:web_lms/core/export_all.dart';
-import 'package:web_lms/model/base_item.dart';
-import 'package:web_lms/ui/add_file_folder/add_file_folder_page.dart';
+import 'package:web_lms/ui/list_file_folder/add_a_type/add_a_type_page.dart';
+import 'package:web_lms/ui/list_file_folder/add_group_type/add_group_type_page.dart';
 import 'package:web_lms/ui/list_file_folder/list_file_folder_controller.dart';
-import 'package:web_lms/ui/semester/list_semester_page.dart';
+
+import 'add_file_system/add_file_system_page.dart';
+import 'detail_file_upload/file_student_page.dart';
+import 'detail_type/detail_type_page.dart';
 
 class ListFileFolderPage extends GetWidget<ListFileFolderController> {
   final _controller = Get.lazyPut(() => ListFileFolderController());
@@ -133,76 +134,104 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
             blurRadius: 3,
           )
         ], color: ColorResource.white),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Nhóm danh mục',
-              style: AppResource.s15b.copyWith(fontSize: 18),
-            ),
-            Utils.space(0, 12),
-            Container(
-              width: double.infinity,
-              height: 2,
-              color: ColorResource.colorPrimary,
-            ),
-            Utils.space(0, 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                CustomButton(
-                  background: ColorResource.grey,
-                  width: 180,
-                  title: 'Xóa nhóm danh mục',
-                  // onTab: () => controller.addGroup(),
-                ),
-                Utils.space(12, 12),
-                CustomButton(
-                  width: 200,
-                  title: 'Thêm nhóm danh mục',
-                  // onTab: () => controller.addGroup(),
-                ),
-              ],
-            ),
-            Utils.space(0, 12),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Obx(
-                  () => Column(
-                    children: controller.listFileFolder
-                        .mapIndexed(
-                          (index, element) => Column(
-                            children: [
-                              Container(
-                                width: double.infinity,
-                                height: 1,
-                                color: ColorResource.grey.withOpacity(0.3),
-                              ),
-                              CustomButton(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 16, horizontal: 12),
-                                // background: element.isChoose.value
-                                //     ? ColorResource.colorPrimary
-                                //     : ColorResource.white,
-                                // onTab: () => controller.showRole(element),
-                                child: Text(
-                                  element.name ?? '',
-                                  // style: AppResource.s15r.copyWith(
-                                  //     color: element.isChoose.value
-                                  //         ? ColorResource.white
-                                  //         : ColorResource.black),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                        .toList(),
+        child: controller.visibleView[5]
+            ? Column(
+                children: [
+                  Text(
+                    'File hệ thống',
+                    style: AppResource.s15b.copyWith(fontSize: 18),
                   ),
-                ),
+                  Utils.space(0, 12),
+                  Container(
+                    width: double.infinity,
+                    height: 2,
+                    color: ColorResource.colorPrimary,
+                  ),
+                  Utils.space(0, 12),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CustomButton(
+                          background: ColorResource.grey,
+                          width: 180,
+                          title: 'Xóa file',
+                          onTab: () => controller.deleteType_FileSys(),
+                        ),
+                        Utils.space(12, 12),
+                        CustomButton(
+                          width: 200,
+                          title: 'Thêm file',
+                          onTab: () => controller.addType_FileSys(isOnly: true),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Utils.space(0, 12),
+                  Expanded(
+                    child: tabGroupCategory(controller.listFileSystem,
+                        isFile: true),
+                  )
+                ],
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TabBar(
+                    controller: controller.tabController1,
+                    indicatorColor: ColorResource.colorPrimary,
+                    unselectedLabelColor: ColorResource.grey,
+                    labelStyle: AppResource.s15b
+                        .copyWith(color: ColorResource.colorPrimary),
+                    labelColor: ColorResource.white,
+                    indicator:
+                        const BoxDecoration(color: ColorResource.colorPrimary),
+                    tabs: const [
+                      Tab(text: 'Nhóm danh mục'),
+                      Tab(text: 'File hệ thống'),
+                    ],
+                  ),
+                  Utils.space(0, 12),
+                  Container(
+                    width: double.infinity,
+                    height: 2,
+                    color: ColorResource.colorPrimary,
+                  ),
+                  Utils.space(0, 12),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CustomButton(
+                          background: ColorResource.grey,
+                          width: 180,
+                          title: controller.deleteFile_GroupType.value,
+                          onTab: () => controller.deleteType_FileSys(),
+                        ),
+                        Utils.space(12, 12),
+                        CustomButton(
+                          width: 200,
+                          title: controller.addFile_GroupType.value,
+                          onTab: () => controller.addType_FileSys(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Utils.space(0, 12),
+                  Expanded(
+                    child: TabBarView(
+                      controller: controller.tabController1,
+                      children: [
+                        tabGroupCategory(controller.listGroupType),
+                        tabGroupCategory(controller.listFileSystem,
+                            isFile: true),
+                      ],
+                    ),
+                  )
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -231,12 +260,24 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
               color: ColorResource.colorPrimary,
             ),
             Utils.space(0, 12),
-            Align(
-              alignment: Alignment.centerRight,
-              child: CustomButton(
-                width: 200,
-                title: 'Thêm nhóm danh mục',
-                // onTab: () => controller.addGroup(),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CustomButton(
+                    background: ColorResource.grey,
+                    width: 150,
+                    title: 'Xóa danh mục',
+                    onTab: () => controller.deleteFileFolder(),
+                  ),
+                  Utils.space(12, 12),
+                  CustomButton(
+                    width: 170,
+                    title: 'Thêm danh mục',
+                    onTab: () => controller.addFileFolder(),
+                  ),
+                ],
               ),
             ),
             Utils.space(0, 12),
@@ -244,7 +285,7 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
               child: SingleChildScrollView(
                 child: Obx(
                   () => Column(
-                    children: controller.listFileFolder
+                    children: controller.listType
                         .mapIndexed(
                           (index, element) => Column(
                             children: [
@@ -255,17 +296,68 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
                               ),
                               CustomButton(
                                 padding: const EdgeInsets.symmetric(
-                                    vertical: 16, horizontal: 12),
-                                // background: element.isChoose.value
-                                //     ? ColorResource.colorPrimary
-                                //     : ColorResource.white,
-                                // onTab: () => controller.showRole(element),
-                                child: Text(
-                                  element.name ?? '',
-                                  // style: AppResource.s15r.copyWith(
-                                  //     color: element.isChoose.value
-                                  //         ? ColorResource.white
-                                  //         : ColorResource.black),
+                                    vertical: 0, horizontal: 0),
+                                background: element.isChoose.value
+                                    ? ColorResource.colorPrimary
+                                    : ColorResource.white,
+                                onTab: () => controller.pickView3(element),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 16.0, horizontal: 12),
+                                        child: Text(
+                                          element.name ?? '',
+                                          style: AppResource.s15r.copyWith(
+                                              color: element.isChoose.value
+                                                  ? ColorResource.white
+                                                  : ColorResource.black),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Visibility(
+                                        visible: element.isChoose.value,
+                                        child: InkWell(
+                                          onTap: () => Get.dialog(
+                                              AddATypePage(),
+                                              barrierDismissible: false,
+                                              arguments: [
+                                                controller.idClass,
+                                                controller.idGroupType,
+                                                element
+                                              ]),
+                                          child: const Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 16.0),
+                                            child: Icon(Icons.update),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Visibility(
+                                        visible: element.isChoose.value,
+                                        child: InkWell(
+                                          onTap: () => Get.dialog(
+                                              DetailTypePage(),
+                                              barrierDismissible: false,
+                                              arguments: [
+                                                controller.idClass,
+                                                controller.idGroupType,
+                                                element
+                                              ]),
+                                          child: const Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 16.0),
+                                            child: Icon(Icons.details),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -309,9 +401,10 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
             Align(
               alignment: Alignment.centerRight,
               child: CustomButton(
-                width: 200,
-                title: 'Thêm nhóm danh mục',
-                // onTab: () => controller.addGroup(),
+                background: ColorResource.grey,
+                width: 120,
+                title: 'Xóa file',
+                onTab: () => controller.deleteFile(),
               ),
             ),
             Utils.space(0, 12),
@@ -319,7 +412,7 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
               child: SingleChildScrollView(
                 child: Obx(
                   () => Column(
-                    children: controller.listFileFolder
+                    children: controller.listFileStudent
                         .mapIndexed(
                           (index, element) => Column(
                             children: [
@@ -330,17 +423,63 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
                               ),
                               CustomButton(
                                 padding: const EdgeInsets.symmetric(
-                                    vertical: 16, horizontal: 12),
-                                // background: element.isChoose.value
-                                //     ? ColorResource.colorPrimary
-                                //     : ColorResource.white,
-                                // onTab: () => controller.showRole(element),
-                                child: Text(
-                                  element.name ?? '',
-                                  // style: AppResource.s15r.copyWith(
-                                  //     color: element.isChoose.value
-                                  //         ? ColorResource.white
-                                  //         : ColorResource.black),
+                                    vertical: 0, horizontal: 0),
+                                background: element.isChoose.value
+                                    ? ColorResource.colorPrimary
+                                    : ColorResource.white,
+                                onTab: () => controller.pickView4(element),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 16.0, horizontal: 12),
+                                        child: Text(
+                                          element.name ?? '',
+                                          style: AppResource.s15r.copyWith(
+                                              color: element.isChoose.value
+                                                  ? ColorResource.white
+                                                  : ColorResource.black),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Visibility(
+                                        visible: element.isChoose.value,
+                                        child: InkWell(
+                                          onTap: () => Get.dialog(
+                                              DetailFileStudentPage(),
+                                              barrierDismissible: false,
+                                              arguments: [
+                                                controller.idClass,
+                                                controller.idType,
+                                                element
+                                              ]),
+                                          child: const Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 16.0),
+                                            child: Icon(Icons.details),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Visibility(
+                                        visible: element.isChoose.value,
+                                        child: InkWell(
+                                          onTap: () => Utils.launchInBrowser(
+                                              Utils.concatUrl(
+                                                  element.link ?? '')),
+                                          child: const Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 16.0),
+                                            child: Icon(Icons.forward),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -383,6 +522,108 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
                             color: element.isChoose.value
                                 ? ColorResource.white
                                 : ColorResource.black),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+              .toList(),
+        ),
+      ),
+    );
+  }
+
+  Widget tabGroupCategory(List listClass, {bool? isFile}) {
+    return SingleChildScrollView(
+      child: Obx(
+        () => Column(
+          children: listClass
+              .mapIndexed(
+                (index, element) => Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 1,
+                      color: ColorResource.grey.withOpacity(0.3),
+                    ),
+                    CustomButton(
+                      padding: EdgeInsets.all(
+                          (isFile ?? false || element.isChoose.value) ? 0 : 16),
+                      background: element.isChoose.value
+                          ? ColorResource.colorPrimary
+                          : ColorResource.white,
+                      onTab: () => controller.pickView2(element),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12),
+                              child: Text(
+                                element.name ?? '',
+                                style: AppResource.s15r.copyWith(
+                                    color: element.isChoose.value
+                                        ? ColorResource.white
+                                        : ColorResource.black),
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: element.isChoose.value,
+                            child: Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  if (controller.tabController1!.index == 0) {
+                                    Get.dialog(AddGroupTypePage(),
+                                        arguments: [
+                                          controller.idClass,
+                                          element
+                                        ],
+                                        barrierDismissible: false);
+                                  }
+                                  if (controller.tabController1!.index == 1) {
+                                    Get.dialog(AddFileSystemPage(),
+                                        barrierDismissible: false,
+                                        arguments: [
+                                          controller.idClass,
+                                          element
+                                        ]);
+                                  }
+                                },
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 16),
+                                  child: Icon(
+                                    Icons.update,
+                                    color: element.isChoose.value
+                                        ? ColorResource.white
+                                        : ColorResource.black,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: isFile ?? false,
+                            child: Expanded(
+                              child: InkWell(
+                                onTap: () => Utils.launchInBrowser(
+                                    Utils.concatUrl(element.linkFile)),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 16),
+                                  child: Icon(
+                                    Icons.forward,
+                                    color: element.isChoose.value
+                                        ? ColorResource.white
+                                        : ColorResource.black,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

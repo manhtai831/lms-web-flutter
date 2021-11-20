@@ -7,9 +7,16 @@ import 'package:web_lms/model/department.dart';
 import 'package:web_lms/model/file_folder.dart';
 import 'package:web_lms/model/file_folder.dart';
 import 'package:web_lms/model/file_folder.dart';
+import 'package:web_lms/model/file_student.dart';
+import 'package:web_lms/model/file_system.dart';
+import 'package:web_lms/model/file_system.dart';
+import 'package:web_lms/model/file_system.dart';
 import 'package:web_lms/model/group_role.dart';
 import 'package:web_lms/model/group_role.dart';
 import 'package:web_lms/model/group_role.dart';
+import 'package:web_lms/model/group_type.dart';
+import 'package:web_lms/model/group_type.dart';
+import 'package:web_lms/model/group_type.dart';
 import 'package:web_lms/model/repository.dart';
 import 'package:web_lms/model/semester.dart';
 import 'package:web_lms/model/subject.dart';
@@ -140,6 +147,9 @@ abstract class RestClient {
   @GET("api/get_all_class")
   Future<BaseResponse?> getListClass({@Queries() Map<String, dynamic>? m});
 
+  @GET("api/detail_class")
+  Future<BaseResponse?> getDetailClass({@Queries() Map<String, dynamic>? m});
+
   @POST("api/update_class")
   Future<BaseResponse?> updateClass(@Body() ClassModel o);
 
@@ -151,11 +161,59 @@ abstract class RestClient {
   Future<BaseResponse?> createFileFolder(@Body() FileFolder o);
 
   @GET("api/get_document_types")
-  Future<BaseResponse?> getListFileFolder();
+  Future<BaseResponse?> getListFileFolder({@Queries() Map<String, dynamic>? m});
+
+  @GET("api/detail_document_types")
+  Future<BaseResponse?> getDetailFileFolder(
+      {@Queries() Map<String, dynamic>? m});
 
   @POST("api/update_document_types")
   Future<BaseResponse?> updateFileFolder(@Body() FileFolder o);
 
   @POST("api/delete_document_types")
   Future<BaseResponse?> deleteFileFolder(@Body() FileFolder o);
+
+  ///Group Type ------------------------------
+  @POST("api/create_group_type")
+  Future<BaseResponse?> createGroupType(@Body() GroupType o);
+
+  @GET("api/get_group_types")
+  Future<BaseResponse?> getListGroupType({@Queries() Map<String, dynamic>? m});
+
+  @POST("api/update_group_type")
+  Future<BaseResponse?> updateGroupType(@Body() GroupType o);
+
+  @POST("api/delete_group_type")
+  Future<BaseResponse?> deleteGroupType(@Body() GroupType o);
+
+  ///File system ------------------------------
+  @POST("api/create_file_system")
+  Future<BaseResponse?> createFileSystem(@Body() FileSystem o);
+
+  @GET("api/get_file_system")
+  Future<BaseResponse?> getListFileSystem({@Queries() Map<String, dynamic>? m});
+
+  @POST("api/update_file_system")
+  Future<BaseResponse?> updateFileSystem(@Body() FileSystem o);
+
+  @POST("api/delete_file_system")
+  Future<BaseResponse?> deleteFileSystem(@Body() FileSystem o);
+
+  ///File student ------------------------------
+  @POST("api/create_file_attach")
+  Future<BaseResponse?> createFileStudent(@Body() FileStudent o);
+
+  @GET("api/get_list_file_attach")
+  Future<BaseResponse?> getListFileStudent(
+      {@Queries() Map<String, dynamic>? m});
+
+  @GET("api/detail_file_attach")
+  Future<BaseResponse?> getDetailFileStudent(
+      {@Queries() Map<String, dynamic>? m});
+
+  @POST("api/update_file_attach")
+  Future<BaseResponse?> updateFileStudent(@Body() FileStudent o);
+
+  @POST("api/delete_file_attach")
+  Future<BaseResponse?> deleteFileStudent(@Body() FileStudent o);
 }

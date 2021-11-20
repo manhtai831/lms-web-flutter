@@ -7,7 +7,6 @@ import 'package:web_lms/core/base_component/custom_button.dart';
 import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/resource/app_resource.dart';
 import 'package:web_lms/core/resource/color_resource.dart';
-import 'package:web_lms/core/resource/string_resource.dart';
 import 'package:web_lms/core/utils.dart';
 import 'package:web_lms/ui/home/home_controller.dart';
 import 'package:web_lms/ui/list_class/list_class_page.dart';
@@ -171,8 +170,8 @@ class HomePage extends GetWidget<HomeController> {
   Widget mainView() {
     Widget view;
     if (controller.indexView.value == 0) {
-      view = ListFileFolderPage();
-      // view = ListUserPage();
+      // view = ListFileFolderPage();
+      view = ListUserPage();
     } else if (controller.indexView.value == 1) {
       view = ListRepositoryPage();
     } else if (controller.indexView.value == 2) {

@@ -6,26 +6,10 @@ import 'package:intl/intl.dart';
 
 class TimeUtils {
   static String dateFormat = "dd/MM/yyyy";
-  static String dateFormat2 = "yyyy-MM-dd";
-  static String dateFormat3 = "dd,MMM,yyyy";
-  static String dayFormat = "dd";
 
-  static String monthFormat = "MM";
-  static String dayMonthFormat = "dd/MM";
-  static String monthYearFormat = "MM-yyyy";
-  static String monthYear = "MM/yyyy";
+  static String timeFomart = "HH:mm:ss";
 
-  static String timeFormat = "HH:mm";
-  static String hourFormat = "hh:mm a";
-  static String timeDayYearFormat = "HH:mm dd-MM-yy";
-  static String timeDayYearFormat2 = "HH:mm, dd/MM/yyyy";
-
-  static String dateHourFormat = "dd/MM/yyyy  HH:mm";
-  static String locateDatetime = "yyyy-MM-ddTHH:mm:ss";
   static String locateDatetime2 = "dd/MM/yyyy HH:mm:ss";
-  static String locateDatetime3 = "yyyy-MM-dd HH:mm:ss.SSS";
-  static String locateDatetimeMinute = "yyyy-MM-ddTHH:mm";
-  static String yearFormat = "yyyy";
 
   static DateTime getFirstDateOfMonth() {
     DateTime now = DateTime.now();
@@ -40,7 +24,11 @@ class TimeUtils {
   }
 
   static DateTime convertStringToDate(String data, String formatFrom) {
-    return DateFormat(formatFrom).parse(data);
+    try {
+      return DateFormat(formatFrom).parse(data);
+    } catch (e) {
+      return DateTime.now();
+    }
   }
 
   static String convertTimeToFormat(TimeOfDay time) {
@@ -173,34 +161,6 @@ class TimeUtils {
       },
     };
     return mMonth['vi']![month];
-  }
-
-  static timeOfDay(DateTime date) {
-    int index = date.hour;
-    Map<String, Map<String, String>> mapMonth = HashMap();
-    mapMonth['month'] = {'vi_VN': index < 12 ? 'SA' : 'CH'};
-    String timeOfDay = '';
-    mapMonth.entries.forEach((element) {
-      element.value.entries.forEach((element) {
-        if (element.key == Get.locale.toString()) {
-          if (date.hour < 10) if (date.minute < 10) {
-            timeOfDay = '0${date.hour}:0${date.minute} ${element.value}';
-          } else {
-            timeOfDay = '0${date.hour}:${date.minute} ${element.value}';
-          }
-          else {
-            if (date.minute < 10) {
-              timeOfDay = '${date.hour}:0${date.minute} ${element.value}';
-            } else {
-              timeOfDay = '${date.hour}:${date.minute} ${element.value}';
-            }
-          }
-        } else {
-          timeOfDay = TimeUtils.convertDateTimeToFormat(date, hourFormat);
-        }
-      });
-    });
-    return timeOfDay;
   }
 
   static DateTime utc({

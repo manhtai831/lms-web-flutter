@@ -4,7 +4,11 @@ import 'package:web_lms/core/network/base_response.dart';
 import 'package:web_lms/core/utils.dart';
 import 'package:web_lms/model/class_model.dart';
 import 'package:web_lms/model/department.dart';
+import 'package:web_lms/model/file_folder.dart';
+import 'package:web_lms/model/file_student.dart';
+import 'package:web_lms/model/file_system.dart';
 import 'package:web_lms/model/group_role.dart';
+import 'package:web_lms/model/group_type.dart';
 import 'package:web_lms/model/repository.dart';
 import 'package:web_lms/model/semester.dart';
 import 'package:web_lms/model/subject.dart';
@@ -222,5 +226,118 @@ class BaseClassModel extends BaseController {
         listData!.add(ClassModel.fromJson(element));
       });
     }
+  }
+}
+
+class BaseGroupType extends BaseController {
+  int? idClass;
+  List<GroupType>? listData = [];
+
+  BaseGroupType({this.idClass});
+
+  @override
+  getDataSuccessFromAPI() async {
+    BaseResponse? baseResponse =
+        await client.getListGroupType(m: getParameters());
+    if (checkError(baseResponse)) {
+      BasePageResponse basePageResponse =
+          BasePageResponse.fromJson(baseResponse?.data);
+      basePageResponse.data!.forEach((element) {
+        listData!.add(GroupType.fromJson(element));
+      });
+    }
+  }
+
+  @override
+  getParameters() {
+    super.getParameters();
+    if (this.idClass != null) map['idClass'] = idClass;
+    return map;
+  }
+}
+
+class BaseFileSystem extends BaseController {
+  int? idClass;
+  int? idSubject;
+  List<FileSystem>? listData = [];
+
+  BaseFileSystem({this.idClass, this.idSubject});
+
+  @override
+  getDataSuccessFromAPI() async {
+    BaseResponse? baseResponse =
+        await client.getListFileSystem(m: getParameters());
+    if (checkError(baseResponse)) {
+      BasePageResponse basePageResponse =
+          BasePageResponse.fromJson(baseResponse?.data);
+      basePageResponse.data!.forEach((element) {
+        listData!.add(FileSystem.fromJson(element));
+      });
+    }
+  }
+
+  @override
+  getParameters() {
+    super.getParameters();
+    if (this.idClass != null) map['idClass'] = idClass;
+    if (this.idSubject != null) map['idSubject'] = idSubject;
+    return map;
+  }
+}
+
+class BaseFileStudent extends BaseController {
+  int? idClass;
+  int? idDocumentType;
+  List<FileStudent>? listData = [];
+
+  BaseFileStudent({this.idDocumentType, this.idClass});
+
+  @override
+  getDataSuccessFromAPI() async {
+    BaseResponse? baseResponse =
+        await client.getListFileStudent(m: getParameters());
+    if (checkError(baseResponse)) {
+      BasePageResponse basePageResponse =
+          BasePageResponse.fromJson(baseResponse?.data);
+      basePageResponse.data!.forEach((element) {
+        listData!.add(FileStudent.fromJson(element));
+      });
+    }
+  }
+
+  @override
+  getParameters() {
+    super.getParameters();
+    if (this.idDocumentType != null)
+      map['idDocumentType'] = this.idDocumentType;
+    if (this.idClass != null) map['idClass'] = this.idClass;
+    return map;
+  }
+}
+
+class BaseFileFolder extends BaseController {
+  int? idGroupType;
+  List<FileFolder>? listData = [];
+
+  BaseFileFolder({this.idGroupType});
+
+  @override
+  getDataSuccessFromAPI() async {
+    BaseResponse? baseResponse =
+        await client.getListFileFolder(m: getParameters());
+    if (checkError(baseResponse)) {
+      BasePageResponse basePageResponse =
+          BasePageResponse.fromJson(baseResponse?.data);
+      basePageResponse.data!.forEach((element) {
+        listData!.add(FileFolder.fromJson(element));
+      });
+    }
+  }
+
+  @override
+  getParameters() {
+    super.getParameters();
+    if (this.idGroupType != null) map['idGroupType'] = this.idGroupType;
+    return map;
   }
 }

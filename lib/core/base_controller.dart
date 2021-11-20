@@ -93,6 +93,7 @@ class BaseController extends GetxController {
         } else if (res?.statusCode == 403) {
           setStatus(Status.success);
         } else {
+          Utils.snackBar(message: 'Time out connection');
           setStatus(Status.fail);
         }
         break;

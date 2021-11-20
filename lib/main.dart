@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:web_lms/core/network/network_utils.dart';
 import 'package:web_lms/ui/home/home_controller.dart';
 import 'package:web_lms/ui/home/home_page.dart';
 import 'package:web_lms/ui/login/login_controller.dart';
 import 'package:web_lms/ui/login/login_page.dart';
 
 void main() {
+  print('-----}-------------> Listen on ' + NetworkUtils.baseUrl);
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -30,7 +34,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textSelectionTheme: const TextSelectionThemeData(),
-        // fontFamily: "SFUIDisplay",
       ),
       home: LoginPage(),
     );

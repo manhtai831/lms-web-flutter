@@ -27,8 +27,8 @@ class HomeController extends BaseController {
     listItem.add(ItemDrawer(3, 'Khối ngành', false.obs));
     listItem.add(ItemDrawer(4, 'Môn học', false.obs));
     listItem.add(ItemDrawer(5, 'Lớp học', false.obs));
-    listItem.add(ItemDrawer(6, 'Danh mục', false.obs));
-    listItem.add(ItemDrawer(7, 'Nhóm danh mục', false.obs));
+    listItem.add(ItemDrawer(6, 'File sinh viên và hệ thống', false.obs));
+    listItem.add(ItemDrawer(7, 'Quiz', false.obs));
     listItem.add(ItemDrawer(8, 'Cấu hình quyền', false.obs));
   }
 
