@@ -84,49 +84,52 @@ class ListDepartmentPage extends GetWidget<ListDepartController> {
         ),
         Expanded(
           child: Obx(
-            () => SingleChildScrollView(
-              child: Table(
-                border:
-                    TableBorder.all(color: ColorResource.grey.withOpacity(0.5)),
-                columnWidths: const <int, TableColumnWidth>{
-                  0: FixedColumnWidth(64),
-                  // 1: FlexColumnWidth(),
-                  // 2: FixedColumnWidth(64),
-                },
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: controller.listDepartment
-                    .mapIndexed(
-                      (index, element) => TableRow(
-                        children: [
-                          tableCell(text: (index + 1).toString()),
-                          tableCell(text: element.name),
-                          tableCell(text: element.description),
-                          tableCell(
-                              child: RenderImage.imageNetwork(
-                                  Utils.concatUrl(element.image ?? ''),
-                                  height: 80)),
-                          tableCell(text: element.createBy?.name),
-                          tableCell(
-                              text: element.status == 1
-                                  ? 'Đã kích hoạt'
-                                  : 'Chưa kích hoạt'),
-                          tableCell(text: element.semester?.title),
-                          feature(
-                              onDelete: () => Get.dialog(
-                                  ConfirmDialog(
-                                    message:
-                                        'Xác nhận xóa ngành \"${element.name}\"',
-                                    onConfirm: () => controller
-                                        .deleteSemester(element.id ?? -1),
-                                  ),
-                                  barrierDismissible: false),
-                              onUpdate: () => Get.dialog(AddDepartmentPage(),
-                                  arguments: element,
-                                  barrierDismissible: false))
-                        ],
-                      ),
-                    )
-                    .toList(),
+            () => BaseView(
+              status: controller.status.value,
+              child: SingleChildScrollView(
+                child: Table(
+                  border: TableBorder.all(
+                      color: ColorResource.grey.withOpacity(0.5)),
+                  columnWidths:  <int, TableColumnWidth>{
+                    0: controller.listDepartment.isEmpty ? const FixedColumnWidth(64) :const FlexColumnWidth(),
+                    // 1: FlexColumnWidth(),
+                    // 2: FixedColumnWidth(64),
+                  },
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children:controller.listDepartment.isNotEmpty ?  controller.listDepartment
+                      .mapIndexed(
+                        (index, element) => TableRow(
+                          children: [
+                            tableCell(text: (index + 1).toString()),
+                            tableCell(text: element.name),
+                            tableCell(text: element.description),
+                            tableCell(
+                                child: RenderImage.imageNetwork(
+                                    Utils.concatUrl(element.image ?? ''),
+                                    height: 80)),
+                            tableCell(text: element.createBy?.name),
+                            tableCell(
+                                text: element.status == 1
+                                    ? 'Đã kích hoạt'
+                                    : 'Chưa kích hoạt'),
+                            tableCell(text: element.semester?.title),
+                            feature(
+                                onDelete: () => Get.dialog(
+                                    ConfirmDialog(
+                                      message:
+                                          'Xác nhận xóa ngành \"${element.name}\"',
+                                      onConfirm: () => controller
+                                          .deleteSemester(element.id ?? -1),
+                                    ),
+                                    barrierDismissible: false),
+                                onUpdate: () => Get.dialog(AddDepartmentPage(),
+                                    arguments: element,
+                                    barrierDismissible: false))
+                          ],
+                        ),
+                      )
+                      .toList() : Utils.emptyTable(),
+                ),
               ),
             ),
           ),

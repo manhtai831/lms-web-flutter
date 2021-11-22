@@ -126,15 +126,18 @@ class BaseController extends GetxController {
     super.onClose();
   }
 
-  bool checkError(BaseResponse? response) {
-    if (response != null) {
-      if (response.error?.code == 0) {
+  bool checkError(BaseResponse? baseResponse) {
+    if (baseResponse != null) {
+      if (baseResponse.error?.code == 0) {
+        status.value = Status.success;
+
         return true;
       } else {
-        Utils.snackBar(title: response.error?.message ?? '');
+        Utils.snackBar(title: baseResponse.error?.message ?? '');
         return false;
       }
     } else {
+      status.value = Status.fail;
       Utils.snackBar(title: 'Đã có lỗi xảy ra');
       return false;
     }

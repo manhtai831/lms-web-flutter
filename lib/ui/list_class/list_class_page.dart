@@ -94,42 +94,49 @@ class ListClassPage extends GetWidget<ListClassController> {
         ),
         Expanded(
           child: Obx(
-            () => SingleChildScrollView(
-              child: Table(
-                border:
-                    TableBorder.all(color: ColorResource.grey.withOpacity(0.5)),
-                columnWidths: const <int, TableColumnWidth>{
-                  0: FixedColumnWidth(64),
-                  // 1: FlexColumnWidth(),
-                  // 2: FixedColumnWidth(64),
-                },
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: controller.listCLass
-                    .mapIndexed(
-                      (index, element) => TableRow(
-                        children: [
-                          tableCell(text: (index + 1).toString()),
-                          tableCell(text: element.name),
-                          tableCell(text: element.description),
-                          tableCell(text: element.createAt),
-                          tableCell(text: element.createBy?.name),
-                          tableCell(text: element.subject?.name),
-                          feature(
-                              onDelete: () => Get.dialog(
-                                  ConfirmDialog(
-                                    message:
-                                        'Xác nhận xóa lớp học \"${element.name}\"',
-                                    onConfirm: () =>
-                                        controller.delete(element.id ?? -1),
-                                  ),
-                                  barrierDismissible: false),
-                              onUpdate: () => Get.dialog(AddClassPage(),
-                                  arguments: element,
-                                  barrierDismissible: false))
-                        ],
-                      ),
-                    )
-                    .toList(),
+            () => BaseView(
+              status: controller.status.value,
+              child: SingleChildScrollView(
+                child: Table(
+                  border: TableBorder.all(
+                      color: ColorResource.grey.withOpacity(0.5)),
+                  columnWidths: <int, TableColumnWidth>{
+                    0: controller.listCLass.isNotEmpty
+                        ? const FixedColumnWidth(64)
+                        : const FlexColumnWidth(),
+                    // 1: FlexColumnWidth(),
+                    // 2: FixedColumnWidth(64),
+                  },
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: controller.listCLass.isNotEmpty
+                      ? controller.listCLass
+                          .mapIndexed(
+                            (index, element) => TableRow(
+                              children: [
+                                tableCell(text: (index + 1).toString()),
+                                tableCell(text: element.name),
+                                tableCell(text: element.description),
+                                tableCell(text: element.createAt),
+                                tableCell(text: element.createBy?.name),
+                                tableCell(text: element.subject?.name),
+                                feature(
+                                    onDelete: () => Get.dialog(
+                                        ConfirmDialog(
+                                          message:
+                                              'Xác nhận xóa lớp học \"${element.name}\"',
+                                          onConfirm: () => controller
+                                              .delete(element.id ?? -1),
+                                        ),
+                                        barrierDismissible: false),
+                                    onUpdate: () => Get.dialog(AddClassPage(),
+                                        arguments: element,
+                                        barrierDismissible: false))
+                              ],
+                            ),
+                          )
+                          .toList()
+                      : Utils.emptyTable(),
+                ),
               ),
             ),
           ),

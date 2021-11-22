@@ -85,48 +85,56 @@ class ListSubjectPage extends GetWidget<ListSubjectController> {
         ),
         Expanded(
           child: Obx(
-            () => SingleChildScrollView(
-              child: Table(
-                border:
-                    TableBorder.all(color: ColorResource.grey.withOpacity(0.5)),
-                columnWidths: const <int, TableColumnWidth>{
-                  0: FixedColumnWidth(64),
-                },
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: controller.listSubject
-                    .mapIndexed(
-                      (index, element) => TableRow(
-                        children: [
-                          tableCell(text: (index + 1).toString()),
-                          tableCell(text: element.name),
-                          tableCell(text: element.description),
-                          tableCell(
-                              text: element.status == 1
-                                  ? 'Đã kích hoạt'
-                                  : 'Chưa kích hoạt'),
-                          tableCell(text: element.createdAt ?? ''),
-                          tableCell(text: element.createdBy?.name),
-                          Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 4),
-                              child: Text(element.department?.name ?? '')),
-                          feature(
-                              onDelete: () => Get.dialog(
-                                  ConfirmDialog(
-                                    message:
-                                        'Xác nhận xóa repository \"${element.name}\"',
-                                    onConfirm: () =>
-                                        controller.delete(element.id ?? -1),
-                                  ),
-                                  barrierDismissible: false),
-                              onUpdate: () => Get.dialog(AddSubjectPage(),
-                                  arguments: element,
-                                  barrierDismissible: false))
-                        ],
-                      ),
-                    )
-                    .toList(),
+            () => BaseView(
+              status: controller.status.value,
+              child: SingleChildScrollView(
+                child: Table(
+                  border: TableBorder.all(
+                      color: ColorResource.grey.withOpacity(0.5)),
+                  columnWidths: <int, TableColumnWidth>{
+                    0: controller.listSubject.isNotEmpty
+                        ? const FixedColumnWidth(64)
+                        : const FlexColumnWidth(),
+                  },
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: controller.listSubject.isNotEmpty
+                      ? controller.listSubject
+                          .mapIndexed(
+                            (index, element) => TableRow(
+                              children: [
+                                tableCell(text: (index + 1).toString()),
+                                tableCell(text: element.name),
+                                tableCell(text: element.description),
+                                tableCell(
+                                    text: element.status == 1
+                                        ? 'Đã kích hoạt'
+                                        : 'Chưa kích hoạt'),
+                                tableCell(text: element.createdAt ?? ''),
+                                tableCell(text: element.createdBy?.name),
+                                Container(
+                                    alignment: Alignment.center,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 4),
+                                    child:
+                                        Text(element.department?.name ?? '')),
+                                feature(
+                                    onDelete: () => Get.dialog(
+                                        ConfirmDialog(
+                                          message:
+                                              'Xác nhận xóa repository \"${element.name}\"',
+                                          onConfirm: () => controller
+                                              .delete(element.id ?? -1),
+                                        ),
+                                        barrierDismissible: false),
+                                    onUpdate: () => Get.dialog(AddSubjectPage(),
+                                        arguments: element,
+                                        barrierDismissible: false))
+                              ],
+                            ),
+                          )
+                          .toList()
+                      : Utils.emptyTable(),
+                ),
               ),
             ),
           ),

@@ -9,3 +9,4 @@ export 'utils.dart';
 export 'render_image.dart';
 export 'textfield/text_field_custom.dart';
 export 'base_component/custom_button.dart';
+export 'base_component/base_view.dart';

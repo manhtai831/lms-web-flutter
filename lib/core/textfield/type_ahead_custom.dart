@@ -1,6 +1,7 @@
 // Do Manh Tai - 04-08-2021/08/2021
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:web_lms/core/resource/app_resource.dart';
@@ -26,7 +27,7 @@ class TypeAheadCustom extends StatefulWidget {
   Widget? widgetAbove, widgetBelow;
   SuggestionsCallback? suggestCallBack;
   Function? onSuggestionSelected;
-  Function? onValidator;
+  Function? onValidator, itemBuilder;
   double? border = 0;
   OutlineInputBorder? enableBorder,
       focusBorder,
@@ -63,6 +64,7 @@ class TypeAheadCustom extends StatefulWidget {
       this.borderColor,
       this.suffixConstraint,
       this.suggestCallBack,
+      this.itemBuilder,
       this.onSuggestionSelected,
       this.suggestionsBoxDecoration,
       this.onSubmitted,
@@ -104,8 +106,6 @@ class _TypeAheadCustomState extends State<TypeAheadCustom> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // widgetLeft ?? Utils.getSpaceView(0, 0),
-            // widgetAfterLeft ?? Utils.getSpaceView(0, 0),
             Expanded(
               flex: 1,
               child: Focus(
@@ -126,7 +126,7 @@ class _TypeAheadCustomState extends State<TypeAheadCustom> {
                     // suggestionsBoxVerticalOffset: -50.0,
                     enabled: widget.isReadOnly ?? true,
                     textFieldConfiguration: TextFieldConfiguration(
-                      focusNode: widget.focusNode ?? FocusNode(),
+                      // focusNode: widget.focusNode ?? FocusNode(),
                       controller: widget.editingController,
                       onChanged: (String value) {
                         widget.onChange?.call(value);
@@ -197,20 +197,29 @@ class _TypeAheadCustomState extends State<TypeAheadCustom> {
                     },
 
                     itemBuilder: (context, dynamic suggestion) {
-                      return ListTile(
-                        // title: Text('Default'),
-                        title: Text(suggestion.title ?? 'Default'),
-                      );
+                      return widget.itemBuilder?.call(suggestion) ??
+                          ListTile(
+                            title: Text(suggestion.title ?? 'Default'),
+                          );
                     },
                     hideOnError: true,
                     transitionBuilder: (context, suggestionsBox, controller) {
                       return suggestionsBox;
                     },
-                    hideOnEmpty: true,
+                    noItemsFoundBuilder: (context) => Container(
+                      padding: const EdgeInsets.all(24),
+                      child: const Text('Không có dữ liệu'),
+                    ),
+                    hideOnEmpty: false,
+                    keepSuggestionsOnSuggestionSelected: false,
+                    hideSuggestionsOnKeyboardHide: false,
+                    hideOnLoading: false,
+                    keepSuggestionsOnLoading: false,
+
                     onSuggestionSelected: (dynamic suggestion) {
                       widget.editingController?.text =
                           suggestion.title ?? 'Default';
-                      widget.onSuggestionSelected!.call(suggestion);
+                      widget.onSuggestionSelected?.call(suggestion);
                     },
                   ),
                 ),

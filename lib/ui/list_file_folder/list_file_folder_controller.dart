@@ -40,6 +40,7 @@ class ListFileFolderController extends BaseController {
   int? idClass;
   int? idType;
   int? idSubject;
+  int? idSubjectForQuiz;
 
   @override
   initialData() async {
@@ -143,9 +144,11 @@ class ListFileFolderController extends BaseController {
     if (element is ClassModel) {
       idClass = element.id;
       idSubject = null;
+      idSubjectForQuiz = element.idSubject;
       visibleView[1] = true;
       visibleView[2] = false;
       visibleView[3] = false;
+      visibleView[5] = false;
     } else {
       idSubject = element.id;
       visibleView[2] = false;
@@ -184,10 +187,14 @@ class ListFileFolderController extends BaseController {
     element.isChoose.value = true;
     if (element is FileFolder) {
       idType = element.id;
-      getListFileStudent();
-      visibleView[1] = true;
-      visibleView[2] = true;
-      visibleView[3] = true;
+      if (element.type == 'QUIZ') {
+        visibleView[3] = false;
+      } else {
+        getListFileStudent();
+        visibleView[1] = true;
+        visibleView[2] = true;
+        visibleView[3] = true;
+      }
     }
   }
 
@@ -247,7 +254,8 @@ class ListFileFolderController extends BaseController {
 
   addFileFolder() async {
     await Get.dialog(AddATypePage(),
-        arguments: [idClass, idGroupType], barrierDismissible: false);
+        arguments: [idClass, idGroupType, null, idSubjectForQuiz],
+        barrierDismissible: false);
   }
 
   deleteFileFolder() {

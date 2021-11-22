@@ -4,6 +4,7 @@ import 'package:web_lms/core/base_controller.dart';
 import 'package:web_lms/core/network/base_page_response.dart';
 import 'package:web_lms/core/network/base_response.dart';
 import 'package:web_lms/core/network/network_utils.dart';
+import 'package:web_lms/core/status.dart';
 import 'package:web_lms/model/repository.dart';
 import 'package:get/get.dart';
 
@@ -25,6 +26,7 @@ class ListRepositoryController extends BaseController {
       basePageResponse.data!.forEach((element) {
         listRepository.add(Repository.fromJson(element));
       });
+      setStatus(Status.success);
     }
   }
 

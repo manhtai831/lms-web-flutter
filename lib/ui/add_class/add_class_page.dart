@@ -10,8 +10,8 @@ class AddClassPage extends GetWidget<AddClassController> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: Container(
-        height: Get.width / 4,
+      child: SizedBox(
+        height: Get.width / 3,
         width: Get.height * 2 / 3,
         child: SingleChildScrollView(
           child: Column(

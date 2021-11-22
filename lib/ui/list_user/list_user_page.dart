@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:web_lms/core/base_component/base_view.dart';
 import 'package:web_lms/core/base_component/custom_button.dart';
 import 'package:web_lms/core/dialog_confirm.dart';
 import 'package:web_lms/core/resource/app_resource.dart';
@@ -156,185 +157,200 @@ class ListUserPage extends GetWidget<ListUserController> {
         ),
         Expanded(
           child: Obx(
-            () => SingleChildScrollView(
-              child: Table(
-                border:
-                    TableBorder.all(color: ColorResource.grey.withOpacity(0.5)),
-                columnWidths: const <int, TableColumnWidth>{
-                  0: FixedColumnWidth(64),
-                  // 1: FlexColumnWidth(),
-                  // 2: FixedColumnWidth(64),
-                },
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: controller.listUser
-                    .mapIndexed(
-                      (index, element) => TableRow(
-                        children: [
-                          Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 4),
-                            child: Text(
-                              (index + 1).toString(),
-                              style: AppResource.s15r,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 4),
-                            child: Text(
-                              element.userName ?? '',
-                              style: AppResource.s15r,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 4),
-                            child: Text(
-                              element.name ?? '',
-                              style: AppResource.s15r,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 4),
-                            child: Text(
-                              element.birth ?? '',
-                              style: AppResource.s15r,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 4),
-                            child: Text(
-                              element.phoneNumber ?? '',
-                              style: AppResource.s15r,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 4),
-                            child: Text(
-                              element.chuyenNganh?.title ?? '',
-                              style: AppResource.s15r,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 4),
-                            child: Text(
-                              element.kiHoc?.title ?? '',
-                              style: AppResource.s15r,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 4),
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Tooltip(
-                                    message: 'Cật nhật',
-                                    child: Material(
-                                      color: ColorResource.transparent,
-                                      child: InkWell(
-                                        onTap: () => Get.dialog(AddUserPage(),
-                                            arguments: element,
-                                            barrierDismissible: false),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(
-                                            CupertinoIcons.pen,
-                                            color: ColorResource.colorPrimary,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+            () => BaseView(
+              status: controller.status.value,
+              child: SingleChildScrollView(
+                child: Table(
+                  border: TableBorder.all(
+                      color: ColorResource.grey.withOpacity(0.5)),
+                  columnWidths: <int, TableColumnWidth>{
+                    0: controller.listUser.isNotEmpty
+                        ? FixedColumnWidth(64)
+                        : FlexColumnWidth(),
+                    // 1: FlexColumnWidth(),
+                    // 2: FixedColumnWidth(64),
+                  },
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: controller.listUser.isNotEmpty
+                      ? controller.listUser
+                          .mapIndexed(
+                            (index, element) => TableRow(
+                              children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 4),
+                                  child: Text(
+                                    (index + 1).toString(),
+                                    style: AppResource.s15r,
                                   ),
-                                  Utils.space(4, 0),
-                                  Tooltip(
-                                    message: 'Reset password',
-                                    child: Material(
-                                      color: ColorResource.transparent,
-                                      child: InkWell(
-                                        onTap: () => Get.dialog(
-                                            ConfirmDialog(
-                                              message:
-                                                  'Xác nhận reset password của tài khoản \"${element.userName}\"',
-                                              onConfirm: () =>
-                                                  controller.resetPassword(
-                                                      element.id ?? -1),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 4),
+                                  child: Text(
+                                    element.userName ?? '',
+                                    style: AppResource.s15r,
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 4),
+                                  child: Text(
+                                    element.name ?? '',
+                                    style: AppResource.s15r,
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 4),
+                                  child: Text(
+                                    element.birth ?? '',
+                                    style: AppResource.s15r,
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 4),
+                                  child: Text(
+                                    element.phoneNumber ?? '',
+                                    style: AppResource.s15r,
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 4),
+                                  child: Text(
+                                    element.chuyenNganh?.title ?? '',
+                                    style: AppResource.s15r,
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 4),
+                                  child: Text(
+                                    element.kiHoc?.title ?? '',
+                                    style: AppResource.s15r,
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 4),
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Tooltip(
+                                          message: 'Cật nhật',
+                                          child: Material(
+                                            color: ColorResource.transparent,
+                                            child: InkWell(
+                                              onTap: () => Get.dialog(
+                                                  AddUserPage(),
+                                                  arguments: element,
+                                                  barrierDismissible: false),
+                                              child: const Padding(
+                                                padding: EdgeInsets.all(8.0),
+                                                child: Icon(
+                                                  CupertinoIcons.pen,
+                                                  color: ColorResource
+                                                      .colorPrimary,
+                                                ),
+                                              ),
                                             ),
-                                            barrierDismissible: false),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(
-                                            Icons.reset_tv,
-                                            color: ColorResource.colorPrimary,
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                  Utils.space(4, 0),
-                                  Tooltip(
-                                    message: 'Chi tiết',
-                                    child: Material(
-                                      color: ColorResource.transparent,
-                                      child: InkWell(
-                                        onTap: () => null,
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(
-                                            Icons.details,
-                                            color: ColorResource.colorPrimary,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Utils.space(4, 0),
-                                  Tooltip(
-                                    message: 'Xóa',
-                                    child: Material(
-                                      color: ColorResource.transparent,
-                                      child: InkWell(
-                                        onTap: () => Get.dialog(
-                                            ConfirmDialog(
-                                              message:
-                                                  'Xác nhận xóa người dùng \"${element.name}\"',
-                                              onConfirm: () => controller
-                                                  .deleteUser(element.id ?? -1),
+                                        Utils.space(4, 0),
+                                        Tooltip(
+                                          message: 'Reset password',
+                                          child: Material(
+                                            color: ColorResource.transparent,
+                                            child: InkWell(
+                                              onTap: () => Get.dialog(
+                                                  ConfirmDialog(
+                                                    message:
+                                                        'Xác nhận reset password của tài khoản \"${element.userName}\"',
+                                                    onConfirm: () => controller
+                                                        .resetPassword(
+                                                            element.id ?? -1),
+                                                  ),
+                                                  barrierDismissible: false),
+                                              child: const Padding(
+                                                padding: EdgeInsets.all(8.0),
+                                                child: Icon(
+                                                  Icons.reset_tv,
+                                                  color: ColorResource
+                                                      .colorPrimary,
+                                                ),
+                                              ),
                                             ),
-                                            barrierDismissible: false),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(
-                                            Icons.delete,
-                                            color: ColorResource.colorPrimary,
                                           ),
                                         ),
-                                      ),
+                                        Utils.space(4, 0),
+                                        Tooltip(
+                                          message: 'Chi tiết',
+                                          child: Material(
+                                            color: ColorResource.transparent,
+                                            child: InkWell(
+                                              onTap: () => null,
+                                              child: const Padding(
+                                                padding: EdgeInsets.all(8.0),
+                                                child: Icon(
+                                                  Icons.details,
+                                                  color: ColorResource
+                                                      .colorPrimary,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Utils.space(4, 0),
+                                        Tooltip(
+                                          message: 'Xóa',
+                                          child: Material(
+                                            color: ColorResource.transparent,
+                                            child: InkWell(
+                                              onTap: () => Get.dialog(
+                                                  ConfirmDialog(
+                                                    message:
+                                                        'Xác nhận xóa người dùng \"${element.name}\"',
+                                                    onConfirm: () =>
+                                                        controller.deleteUser(
+                                                            element.id ?? -1),
+                                                  ),
+                                                  barrierDismissible: false),
+                                              child: const Padding(
+                                                padding: EdgeInsets.all(8.0),
+                                                child: Icon(
+                                                  Icons.delete,
+                                                  color: ColorResource
+                                                      .colorPrimary,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                  )
-                                ],
-                              ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    )
-                    .toList(),
+                          )
+                          .toList()
+                      : Utils.emptyTable(),
+                ),
               ),
             ),
           ),

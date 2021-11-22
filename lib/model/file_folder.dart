@@ -1,5 +1,6 @@
 import 'package:web_lms/model/class_model.dart';
 import 'package:web_lms/model/group_type.dart';
+import 'package:web_lms/model/question.dart';
 import 'package:web_lms/model/subject.dart';
 import 'package:web_lms/model/user.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ class FileFolder {
   GroupType? groupType;
   ClassModel? mClass;
   Subject? subject;
+  List<int>? listIdQuestion;
   String? type;
   String? startTime;
   String? endTime;
@@ -31,6 +33,7 @@ class FileFolder {
       this.idClass,
       this.idGroupType,
       this.startTime,
+      this.listIdQuestion,
       this.groupType,
       this.endTime,
       this.type,
@@ -74,6 +77,7 @@ class FileFolder {
     if (this.idGroupType != null) data['idGroupType'] = this.idGroupType;
     if (this.endTime != null) data['endTime'] = this.endTime;
     if (this.groupType != null) data['groupType'] = this.groupType;
+    if (this.listIdQuestion != null) data['listQuestion'] = this.listIdQuestion;
     if (this.idClass != null) data['idClass'] = this.idClass;
     if (this.mClass != null) data['mClass'] = this.mClass;
     if (this.type != null) data['type'] = this.type;

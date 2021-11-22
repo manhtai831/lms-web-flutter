@@ -86,51 +86,60 @@ class ListSemesterPage extends GetWidget<ListSemesterController> {
         ),
         Expanded(
           child: Obx(
-            () => SingleChildScrollView(
-              child: Table(
-                border:
-                    TableBorder.all(color: ColorResource.grey.withOpacity(0.5)),
-                columnWidths: const <int, TableColumnWidth>{
-                  0: FixedColumnWidth(64),
-                  // 1: FlexColumnWidth(),
-                  // 2: FixedColumnWidth(64),
-                },
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: controller.listSemester
-                    .mapIndexed(
-                      (index, element) => TableRow(
-                        children: [
-                          tableCell(text: (index + 1).toString()),
-                          tableCell(text: element.name),
-                          tableCell(text: element.description),
-                          tableCell(text: element.startTime),
-                          tableCell(text: element.endTime),
-                          tableCell(
-                              text: element.status == 1
-                                  ? 'Đã kích hoạt'
-                                  : 'Chưa kích hoạt'),
-                          tableCell(text: element.createBy?.name),
-                          Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 4),
-                              child: Text(element.repository?.title ?? '')),
-                          feature(
-                              onDelete: () => Get.dialog(
-                                  ConfirmDialog(
-                                    message:
-                                        'Xác nhận xóa repository \"${element.name}\"',
-                                    onConfirm: () => controller
-                                        .deleteSemester(element.id ?? -1),
-                                  ),
-                                  barrierDismissible: false),
-                              onUpdate: () => Get.dialog(AddSemesterPage(),
-                                  arguments: element,
-                                  barrierDismissible: false))
-                        ],
-                      ),
-                    )
-                    .toList(),
+            () => BaseView(
+              status: controller.status.value,
+              child: SingleChildScrollView(
+                child: Table(
+                  border: TableBorder.all(
+                      color: ColorResource.grey.withOpacity(0.5)),
+                  columnWidths: <int, TableColumnWidth>{
+                    0: controller.listSemester.isNotEmpty
+                        ? const FixedColumnWidth(64)
+                        : const FlexColumnWidth(),
+                    // 1: FlexColumnWidth(),
+                    // 2: FixedColumnWidth(64),
+                  },
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: controller.listSemester.isNotEmpty
+                      ? controller.listSemester
+                          .mapIndexed(
+                            (index, element) => TableRow(
+                              children: [
+                                tableCell(text: (index + 1).toString()),
+                                tableCell(text: element.name),
+                                tableCell(text: element.description),
+                                tableCell(text: element.startTime),
+                                tableCell(text: element.endTime),
+                                tableCell(
+                                    text: element.status == 1
+                                        ? 'Đã kích hoạt'
+                                        : 'Chưa kích hoạt'),
+                                tableCell(text: element.createBy?.name),
+                                Container(
+                                    alignment: Alignment.center,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 4),
+                                    child:
+                                        Text(element.repository?.title ?? '')),
+                                feature(
+                                    onDelete: () => Get.dialog(
+                                        ConfirmDialog(
+                                          message:
+                                              'Xác nhận xóa repository \"${element.name}\"',
+                                          onConfirm: () => controller
+                                              .deleteSemester(element.id ?? -1),
+                                        ),
+                                        barrierDismissible: false),
+                                    onUpdate: () => Get.dialog(
+                                        AddSemesterPage(),
+                                        arguments: element,
+                                        barrierDismissible: false))
+                              ],
+                            ),
+                          )
+                          .toList()
+                      : Utils.emptyTable(),
+                ),
               ),
             ),
           ),

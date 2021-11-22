@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web_lms/core/network/network_utils.dart';
 import 'package:web_lms/core/resource/color_resource.dart';
+import 'package:web_lms/ui/semester/list_semester_page.dart';
 
 class Utils {
   static SizedBox space(double width, double height) {
@@ -49,5 +50,38 @@ class Utils {
       Utils.snackBar(message: 'Can not open file');
       throw 'Could not launch $url';
     }
+  }
+
+  static Widget empty() {
+    return const Center(
+      child: Text('Không có dữ liệu'),
+    );
+  }
+
+  static List<TableRow> emptyTable() {
+    return <TableRow>[
+      TableRow(
+        children: [
+          tableCell(text: 'Không có dữ liệu'),
+        ],
+      ),
+    ];
+  }
+
+  static Widget loading() {
+    return SizedBox(
+      height: Get.height / 2,
+      child: const Center(
+        child: CircularProgressIndicator(
+          color: ColorResource.colorPrimary,
+        ),
+      ),
+    );
+  }
+
+  static Widget error() {
+    return const Center(
+      child: Text('Đã có lỗi xảy ra'),
+    );
   }
 }

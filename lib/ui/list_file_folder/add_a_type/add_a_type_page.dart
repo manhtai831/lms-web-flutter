@@ -1,5 +1,8 @@
 import 'package:web_lms/core/dialog_confirm.dart';
 import 'package:web_lms/core/export_all.dart';
+import 'package:web_lms/core/textfield/type_ahead_custom.dart';
+import 'package:web_lms/model/question.dart';
+import 'package:web_lms/ui/semester/list_semester_page.dart';
 
 import 'add_a_type_controller.dart';
 
@@ -9,10 +12,11 @@ class AddATypePage extends GetWidget<AddATypeController> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: Container(
-        height: Get.height / 1.8,
-        width: Get.width / 3,
-        child: SingleChildScrollView(
+      child: GestureDetector(
+        onTap: () => FocusScope.of(Get.context!).requestFocus(FocusNode()),
+        child: SizedBox(
+          height: Get.height / 1.2,
+          width: Get.width / 1.2,
           child: Column(
             children: [
               headerDialog(
@@ -101,10 +105,149 @@ class AddATypePage extends GetWidget<AddATypeController> {
                             ],
                           ),
                           Utils.space(0, 16),
+                          Obx(
+                            () => Row(
+                              children: [
+                                Checkbox(
+                                    value: controller.isQuiz.value,
+                                    onChanged: (v) => controller.isQuiz.value =
+                                        !controller.isQuiz.value),
+                                InkWell(
+                                  onTap: () => controller.isQuiz.value =
+                                      !controller.isQuiz.value,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0, horizontal: 24),
+                                    child: Text(
+                                      'Là quiz',
+                                      style: AppResource.s15b,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Utils.space(0, 16),
                         ],
                       ),
                     ),
                   ],
+                ),
+              ),
+              Obx(
+                () => Visibility(
+                  visible: controller.isQuiz.value,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: TypeAheadCustom(
+                      hint: 'Câu hỏi',
+                      maxLines: 1,
+                      editingController: controller.edtController[6],
+                      suggestCallBack: (pattern) async =>
+                          await controller.suggestion(pattern),
+                      onSuggestionSelected: (suggestion) => null,
+                      itemBuilder: (Question suggestion) => Row(
+                        children: [
+                          Obx(
+                            () => Checkbox(
+                                value: suggestion.isChoose.value,
+                                onChanged: (v) =>
+                                    controller.suggestionSelected(suggestion)),
+                          ),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () =>
+                                  controller.suggestionSelected(suggestion),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8.0, horizontal: 24),
+                                child: Text(
+                                  suggestion.content ?? '',
+                                  style: AppResource.s15b,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Obx(
+                () => Visibility(
+                  visible: controller.isQuiz.value,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: Table(
+                      border: TableBorder.all(color: ColorResource.grey),
+                      columnWidths: const <int, TableColumnWidth>{
+                        0: FixedColumnWidth(64),
+                        // 1: FixedColumnWidth(80),
+                        // 1: FlexColumnWidth(),
+                        // 2: FixedColumnWidth(64),
+                      },
+                      defaultVerticalAlignment:
+                          TableCellVerticalAlignment.middle,
+                      children: [
+                        TableRow(
+                          children: [
+                            tableCell(header: 'STT'.toUpperCase()),
+                            tableCell(header: 'Câu hỏi'.toUpperCase()),
+                            // tableCell(header: 'Câu trả lời'.toUpperCase()),
+                            // tableCell(header: 'CHỨC NĂNG'.toUpperCase()),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Obx(
+                  () => Visibility(
+                    visible: controller.isQuiz.value,
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                      child: Table(
+                        border: TableBorder.all(
+                            color: ColorResource.grey.withOpacity(0.5)),
+                        columnWidths: <int, TableColumnWidth>{
+                          0: controller.listQuestion.isNotEmpty
+                              ? const FixedColumnWidth(64)
+                              : const FlexColumnWidth(),
+                          // 1: FixedColumnWidth(80),
+
+                          // 2: FixedColumnWidth(64),
+                        },
+                        defaultVerticalAlignment:
+                            TableCellVerticalAlignment.middle,
+                        children: controller.listQuestion.isNotEmpty
+                            ? controller.listQuestion
+                                .mapIndexed(
+                                  (index, element) => TableRow(
+                                    children: [
+                                      tableCell(text: (index + 1).toString()),
+                                      tableCell(text: element.content),
+                                      // tableCell(text: element.content),
+                                      // feature(
+                                      //   onDelete: () => Get.dialog(
+                                      //       ConfirmDialog(
+                                      //         message:
+                                      //         'Xác nhận xóa câu trả lời \"${element.content}\"',
+                                      //         onConfirm: () =>
+                                      //             controller.deleteAnswer(index),
+                                      //       ),
+                                      //       barrierDismissible: false),
+                                      // )
+                                    ],
+                                  ),
+                                )
+                                .toList()
+                            : Utils.emptyTable(),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Utils.space(0, 42),
@@ -134,7 +277,8 @@ class AddATypePage extends GetWidget<AddATypeController> {
                   ),
                   Utils.space(16, 0),
                 ],
-              )
+              ),
+              Utils.space(0, 16),
             ],
           ),
         ),

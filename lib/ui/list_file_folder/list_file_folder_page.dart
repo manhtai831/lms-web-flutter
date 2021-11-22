@@ -327,7 +327,9 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
                                               arguments: [
                                                 controller.idClass,
                                                 controller.idGroupType,
-                                                element
+                                                element,
+                                                controller.idSubjectForQuiz,
+                                                controller.idType
                                               ]),
                                           child: const Padding(
                                             padding: EdgeInsets.symmetric(

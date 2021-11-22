@@ -36,7 +36,7 @@ class Subject {
     idDepartment = json['idDepartment'];
     description = json['description'];
     createdAt = json['createdAt'];
-    createdBy = User.fromJson(json['createdBy']);
+    if (json['createdBy'] != null) createdBy = User.fromJson(json['createdBy']);
     id = json['id'];
     status = json['status'];
     iV = json['__v'];

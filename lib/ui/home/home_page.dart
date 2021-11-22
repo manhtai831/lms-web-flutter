@@ -12,6 +12,8 @@ import 'package:web_lms/ui/home/home_controller.dart';
 import 'package:web_lms/ui/list_class/list_class_page.dart';
 import 'package:web_lms/ui/list_department/list_department_page.dart';
 import 'package:web_lms/ui/list_file_folder/list_file_folder_page.dart';
+import 'package:web_lms/ui/list_quiz/list_quiz_controller.dart';
+import 'package:web_lms/ui/list_quiz/list_quiz_page.dart';
 import 'package:web_lms/ui/list_repo/list_repository_page.dart';
 import 'package:web_lms/ui/list_role/list_role_page.dart';
 import 'package:web_lms/ui/list_subject/list_subject_page.dart';
@@ -185,7 +187,7 @@ class HomePage extends GetWidget<HomeController> {
     } else if (controller.indexView.value == 6) {
       view = ListFileFolderPage();
     } else if (controller.indexView.value == 7) {
-      view = ListFileFolderPage();
+      view = ListQuizPage();
     } else if (controller.indexView.value == 8) {
       view = ListRolePage();
     } else

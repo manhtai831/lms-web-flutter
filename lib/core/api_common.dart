@@ -9,6 +9,7 @@ import 'package:web_lms/model/file_student.dart';
 import 'package:web_lms/model/file_system.dart';
 import 'package:web_lms/model/group_role.dart';
 import 'package:web_lms/model/group_type.dart';
+import 'package:web_lms/model/question.dart';
 import 'package:web_lms/model/repository.dart';
 import 'package:web_lms/model/semester.dart';
 import 'package:web_lms/model/subject.dart';
@@ -338,6 +339,35 @@ class BaseFileFolder extends BaseController {
   getParameters() {
     super.getParameters();
     if (this.idGroupType != null) map['idGroupType'] = this.idGroupType;
+    return map;
+  }
+}
+
+class BaseQuestion extends BaseController {
+  String? content;
+  int? idMonHoc;
+  List<Question> listData = [];
+
+  BaseQuestion({this.content, this.idMonHoc});
+
+  @override
+  getDataSuccessFromAPI() async {
+    BaseResponse? baseResponse =
+        await client.getAllQuestionsQuick(m: getParameters());
+    if (checkError(baseResponse)) {
+      BasePageResponse basePageResponse =
+          BasePageResponse.fromJson(baseResponse?.data);
+      basePageResponse.data!.forEach((element) {
+        listData.add(Question.fromJson(element));
+      });
+    }
+  }
+
+  @override
+  getParameters() {
+    super.getParameters();
+    if (this.content != null) map['content'] = this.content;
+    if (this.idMonHoc != null) map['idMonHoc'] = this.idMonHoc;
     return map;
   }
 }

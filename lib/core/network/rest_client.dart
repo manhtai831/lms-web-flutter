@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:web_lms/model/answer.dart';
+import 'package:web_lms/model/answer.dart';
+import 'package:web_lms/model/answer.dart';
 import 'package:web_lms/model/class_model.dart';
 import 'package:web_lms/model/class_model.dart';
 import 'package:web_lms/model/class_model.dart';
@@ -17,6 +20,9 @@ import 'package:web_lms/model/group_role.dart';
 import 'package:web_lms/model/group_type.dart';
 import 'package:web_lms/model/group_type.dart';
 import 'package:web_lms/model/group_type.dart';
+import 'package:web_lms/model/question.dart';
+import 'package:web_lms/model/question.dart';
+import 'package:web_lms/model/question.dart';
 import 'package:web_lms/model/repository.dart';
 import 'package:web_lms/model/semester.dart';
 import 'package:web_lms/model/subject.dart';
@@ -216,4 +222,38 @@ abstract class RestClient {
 
   @POST("api/delete_file_attach")
   Future<BaseResponse?> deleteFileStudent(@Body() FileStudent o);
+
+  ///Question ------------------------------
+  @POST("api/create_questions")
+  Future<BaseResponse?> createQuestion(@Body() Question o);
+
+  @GET("api/get_all_questions")
+  Future<BaseResponse?> getListQuestion({@Queries() Map<String, dynamic>? m});
+
+  @GET("api/getAllQuestionsQuick")
+  Future<BaseResponse?> getAllQuestionsQuick(
+      {@Queries() Map<String, dynamic>? m});
+
+  @GET("api/list_question_by_type")
+  Future<BaseResponse?> getAllQuestionsByType(
+      {@Queries() Map<String, dynamic>? m});
+
+  @POST("api/update_questions")
+  Future<BaseResponse?> updateQuestion(@Body() Question o);
+
+  @POST("api/delete_questions")
+  Future<BaseResponse?> deleteQuestion(@Body() Question o);
+
+  ///Question ------------------------------
+  @POST("api/create_answer")
+  Future<BaseResponse?> createAnswer(@Body() Answer o);
+
+  @GET("api/get_all_answers")
+  Future<BaseResponse?> getListAnswer({@Queries() Map<String, dynamic>? m});
+
+  @POST("api/update_answers")
+  Future<BaseResponse?> updateAnswer(@Body() Answer o);
+
+  @POST("api/delete_answers")
+  Future<BaseResponse?> deleteAnswer(@Body() Answer o);
 }
