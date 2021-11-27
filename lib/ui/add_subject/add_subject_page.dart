@@ -32,11 +32,14 @@ class AddSubjectPage extends GetWidget<AddSubjectController> {
                           Row(
                             children: [
                               Expanded(
-                                child: TextFieldCustom(
-                                  editingController:
-                                      controller.edtController[0],
-                                  maxLines: 1,
-                                  hint: 'Tên môn học',
+                                child: Obx(
+                                  () => TextFieldCustom(
+                                    editingController:
+                                        controller.edtController[0],
+                                    error: controller.error[0],
+                                    maxLines: 1,
+                                    hint: 'Tên môn học',
+                                  ),
                                 ),
                               ),
                             ],
@@ -48,36 +51,36 @@ class AddSubjectPage extends GetWidget<AddSubjectController> {
                             maxLines: 1,
                           ),
                           Utils.space(0, 16),
-                          Obx(
-                            () => SingleChildScrollView(
-                              child: Row(
-                                children: [
-                                  Utils.space(16, 0),
-                                  Switch(
-                                    onChanged: (b) => controller.isActive
-                                        .value = !controller.isActive.value,
-                                    value: controller.isActive.value,
-                                    activeColor: ColorResource.colorPrimary,
-                                    activeTrackColor:
-                                        ColorResource.colorPrimary10,
-                                    inactiveThumbColor: ColorResource.grey,
-                                    inactiveTrackColor:
-                                        ColorResource.grey.withOpacity(0.5),
-                                  ),
-                                  InkWell(
-                                      onTap: () => controller.isActive.value =
-                                          !controller.isActive.value,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          'Trạng thái kích hoạt',
-                                          style: AppResource.s15r,
-                                        ),
-                                      ))
-                                ],
-                              ),
-                            ),
-                          ),
+                          // Obx(
+                          //   () => SingleChildScrollView(
+                          //     child: Row(
+                          //       children: [
+                          //         Utils.space(16, 0),
+                          //         Switch(
+                          //           onChanged: (b) => controller.isActive
+                          //               .value = !controller.isActive.value,
+                          //           value: controller.isActive.value,
+                          //           activeColor: ColorResource.colorPrimary,
+                          //           activeTrackColor:
+                          //               ColorResource.colorPrimary10,
+                          //           inactiveThumbColor: ColorResource.grey,
+                          //           inactiveTrackColor:
+                          //               ColorResource.grey.withOpacity(0.5),
+                          //         ),
+                          //         InkWell(
+                          //             onTap: () => controller.isActive.value =
+                          //                 !controller.isActive.value,
+                          //             child: Padding(
+                          //               padding: const EdgeInsets.all(8.0),
+                          //               child: Text(
+                          //                 'Trạng thái kích hoạt',
+                          //                 style: AppResource.s15r,
+                          //               ),
+                          //             ))
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
                           Utils.space(0, 16),
                           TypeAheadCustom(
                             maxLines: 1,
@@ -115,7 +118,7 @@ class AddSubjectPage extends GetWidget<AddSubjectController> {
                   CustomButton(
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 24),
-                    onTab: () => controller.getData(),
+                    onTab: () => controller.request(),
                     title: 'Đồng ý',
                     background: ColorResource.colorPrimary,
                   ),

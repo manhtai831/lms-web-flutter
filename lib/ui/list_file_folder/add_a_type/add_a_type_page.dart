@@ -37,11 +37,14 @@ class AddATypePage extends GetWidget<AddATypeController> {
                           Row(
                             children: [
                               Expanded(
-                                child: TextFieldCustom(
-                                  editingController:
-                                      controller.edtController[0],
-                                  maxLines: 1,
-                                  hint: 'Tên danh mục',
+                                child: Obx(
+                                  () => TextFieldCustom(
+                                    editingController:
+                                        controller.edtController[0],
+                                    error: controller.error[0],
+                                    maxLines: 1,
+                                    hint: 'Tên danh mục',
+                                  ),
                                 ),
                               ),
                             ],
@@ -271,7 +274,7 @@ class AddATypePage extends GetWidget<AddATypeController> {
                   CustomButton(
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 24),
-                    onTab: () => controller.getData(),
+                    onTab: () => controller.request(),
                     title: 'Đồng ý',
                     background: ColorResource.colorPrimary,
                   ),

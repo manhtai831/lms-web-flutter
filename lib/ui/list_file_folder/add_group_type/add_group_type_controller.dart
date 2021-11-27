@@ -10,6 +10,7 @@ class AddGroupTypeController extends BaseController {
   GroupType? pGroupType;
   List<TextEditingController> edtController = [];
   int? idClass;
+  var error = <String?>[].obs;
 
   @override
   initialData() async {
@@ -20,6 +21,7 @@ class AddGroupTypeController extends BaseController {
 
     for (int i = 0; i < 5; i++) {
       edtController.add(TextEditingController());
+      error.add(null);
     }
     edtController[0].text = pGroupType?.name ?? '';
     edtController[1].text = pGroupType?.name ?? '';
@@ -51,5 +53,12 @@ class AddGroupTypeController extends BaseController {
         name: edtController[0].text,
         description: edtController[1].text,
         idClass: idClass);
+  }
+
+  request() async {
+    error[0] = Utils.validate(s: edtController[0].text);
+    if (Utils.checkValidate(l: error)) {
+      await getData();
+    }
   }
 }

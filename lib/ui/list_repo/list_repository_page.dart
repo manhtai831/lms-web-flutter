@@ -122,6 +122,14 @@ class ListRepositoryPage extends GetWidget<ListRepositoryController> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                 child: Text(
+                  'Thể loại',
+                  style: AppResource.s15b,
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                child: Text(
                   'CHỨC NĂNG',
                   style: AppResource.s15b,
                 ),
@@ -138,149 +146,165 @@ class ListRepositoryPage extends GetWidget<ListRepositoryController> {
               child: Table(
                 border:
                     TableBorder.all(color: ColorResource.grey.withOpacity(0.5)),
-                columnWidths:  <int, TableColumnWidth>{
-                  0: controller.listRepository.isNotEmpty ? const FixedColumnWidth(64): const FlexColumnWidth(),
+                columnWidths: <int, TableColumnWidth>{
+                  0: controller.listRepository.isNotEmpty
+                      ? const FixedColumnWidth(64)
+                      : const FlexColumnWidth(),
                   // 1: FlexColumnWidth(),
                   // 2: FixedColumnWidth(64),
                 },
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: controller.listRepository.isNotEmpty ? controller.listRepository
-                    .mapIndexed(
-                      (index, element) => TableRow(
-                        children: [
-                          Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 4),
-                            child: Text(
-                              (index + 1).toString(),
-                              style: AppResource.s15r,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 4),
-                            child: Text(
-                              element.title ?? '',
-                              style: AppResource.s15r,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 4),
-                            child: Text(
-                              element.content ?? '',
-                              style: AppResource.s15r,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 4),
-                            child: Text(
-                              element.createdAt ?? '',
-                              style: AppResource.s15r,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 4),
-                            child: Text(
-                              element.createdBy?.name ?? '',
-                              style: AppResource.s15r,
-                            ),
-                          ),
-                          Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 4),
-                              child: element.image == null
-                                  ? const Text('Chưa có')
-                                  : RenderImage.imageNetwork(
-                                      Utils.concatUrl(element.image ?? ''),
-                                      height: 80)),
-                          Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 4),
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Tooltip(
-                                    message: 'Cật nhật',
-                                    child: Material(
-                                      color: ColorResource.transparent,
-                                      child: InkWell(
-                                        onTap: () => Get.dialog(
-                                            AddRepositoryPage(),
-                                            arguments: element,
-                                            barrierDismissible: false),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(
-                                            CupertinoIcons.pen,
-                                            color: ColorResource.colorPrimary,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Utils.space(4, 0),
-                                  // Tooltip(
-                                  //   message: 'Chi tiết',
-                                  //   child: Material(
-                                  //     color: ColorResource.transparent,
-                                  //     child: InkWell(
-                                  //       onTap: () => null,
-                                  //       child: const Padding(
-                                  //         padding: EdgeInsets.all(8.0),
-                                  //         child: Icon(
-                                  //           Icons.details,
-                                  //           color: ColorResource.colorPrimary,
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  // Utils.space(4, 0),
-                                  Tooltip(
-                                    message: 'Xóa',
-                                    child: Material(
-                                      color: ColorResource.transparent,
-                                      child: InkWell(
-                                        onTap: () => Get.dialog(
-                                            ConfirmDialog(
-                                              message:
-                                                  'Xác nhận xóa repository \"${element.title}\"',
-                                              onConfirm: () =>
-                                                  controller.deleteRepository(
-                                                      element.id ?? -1),
-                                            ),
-                                            barrierDismissible: false),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(
-                                            Icons.delete,
-                                            color: ColorResource.colorPrimary,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
+                children: controller.listRepository.isNotEmpty
+                    ? controller.listRepository
+                        .mapIndexed(
+                          (index, element) => TableRow(
+                            children: [
+                              Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 4),
+                                child: Text(
+                                  (index + 1).toString(),
+                                  style: AppResource.s15r,
+                                ),
                               ),
-                            ),
+                              Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 4),
+                                child: Text(
+                                  element.title ?? '',
+                                  style: AppResource.s15r,
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 4),
+                                child: Text(
+                                  element.content ?? '',
+                                  style: AppResource.s15r,
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 4),
+                                child: Text(
+                                  element.createdAt ?? '',
+                                  style: AppResource.s15r,
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 4),
+                                child: Text(
+                                  element.createdBy?.name ?? '',
+                                  style: AppResource.s15r,
+                                ),
+                              ),
+                              Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 4),
+                                  child: element.image == null
+                                      ? const Text('Chưa có')
+                                      : RenderImage.imageNetwork(
+                                          Utils.concatUrl(element.image ?? ''),
+                                          height: 80)),
+                              Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 4),
+                                child: Text(
+                                  element.type ?? '',
+                                  style: AppResource.s15r,
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 4),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Tooltip(
+                                        message: 'Cật nhật',
+                                        child: Material(
+                                          color: ColorResource.transparent,
+                                          child: InkWell(
+                                            onTap: () => Get.dialog(
+                                                AddRepositoryPage(),
+                                                arguments: element,
+                                                barrierDismissible: false),
+                                            child: const Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Icon(
+                                                CupertinoIcons.pen,
+                                                color:
+                                                    ColorResource.colorPrimary,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Utils.space(4, 0),
+                                      // Tooltip(
+                                      //   message: 'Chi tiết',
+                                      //   child: Material(
+                                      //     color: ColorResource.transparent,
+                                      //     child: InkWell(
+                                      //       onTap: () => null,
+                                      //       child: const Padding(
+                                      //         padding: EdgeInsets.all(8.0),
+                                      //         child: Icon(
+                                      //           Icons.details,
+                                      //           color: ColorResource.colorPrimary,
+                                      //         ),
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      // Utils.space(4, 0),
+                                      Tooltip(
+                                        message: 'Xóa',
+                                        child: Material(
+                                          color: ColorResource.transparent,
+                                          child: InkWell(
+                                            onTap: () => Get.dialog(
+                                                ConfirmDialog(
+                                                  message:
+                                                      'Xác nhận xóa repository \"${element.title}\"',
+                                                  onConfirm: () => controller
+                                                      .deleteRepository(
+                                                          element.id ?? -1),
+                                                ),
+                                                barrierDismissible: false),
+                                            child: const Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Icon(
+                                                Icons.delete,
+                                                color:
+                                                    ColorResource.colorPrimary,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    )
-                    .toList() : Utils.emptyTable(),
+                        )
+                        .toList()
+                    : Utils.emptyTable(),
               ),
             ),
           ),

@@ -6,6 +6,7 @@ import 'package:web_lms/ui/semester/list_semester_page.dart';
 
 class ListDepartmentPage extends GetWidget<ListDepartController> {
   final _controller = Get.lazyPut(() => ListDepartController());
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -75,7 +76,7 @@ class ListDepartmentPage extends GetWidget<ListDepartController> {
                 tableCell(header: 'Mô tả'.toUpperCase()),
                 tableCell(header: 'Ảnh'.toUpperCase()),
                 tableCell(header: 'người tạo'.toUpperCase()),
-                // tableCell(header: 'trạng thái'.toUpperCase()),
+                tableCell(header: 'Repository'.toUpperCase()),
                 tableCell(header: 'Học kì'.toUpperCase()),
                 tableCell(header: 'CHỨC NĂNG'.toUpperCase()),
               ],
@@ -111,10 +112,7 @@ class ListDepartmentPage extends GetWidget<ListDepartController> {
                                         Utils.concatUrl(element.image ?? ''),
                                         height: 80)),
                                 tableCell(text: element.createBy?.name),
-                                // tableCell(
-                                //     text: element.status == 1
-                                //         ? 'Đã kích hoạt'
-                                //         : 'Chưa kích hoạt'),
+                                tableCell(text: element.listRepoStrings),
                                 tableCell(text: element.semester?.title),
                                 feature(
                                     onDelete: () => Get.dialog(

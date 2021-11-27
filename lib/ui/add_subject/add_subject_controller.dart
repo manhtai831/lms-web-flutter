@@ -14,12 +14,14 @@ class AddSubjectController extends BaseController {
   var imageCurrent = Rxn();
   var avatar;
   int? idDepartment;
+  var error = <String?>[].obs;
 
   @override
   initialData() {
     pSubject = Get.arguments;
     for (int i = 0; i < 10; i++) {
       edtController.add(TextEditingController());
+      error.add(null);
     }
     edtController[0].text = pSubject?.name ?? '';
     edtController[1].text = pSubject?.description ?? '';
@@ -71,5 +73,12 @@ class AddSubjectController extends BaseController {
 
   valueSelected(value) {
     idDepartment = value.id;
+  }
+
+  request() async {
+    error[0] = Utils.validate(s: edtController[0].text);
+    if (Utils.checkValidate(l: error)) {
+      await getData();
+    }
   }
 }

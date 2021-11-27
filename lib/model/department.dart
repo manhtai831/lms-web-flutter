@@ -1,3 +1,4 @@
+import 'package:web_lms/model/repository.dart';
 import 'package:web_lms/model/semester.dart';
 import 'package:web_lms/model/user.dart';
 
@@ -6,6 +7,9 @@ class Department {
   String? name;
   String? title;
   int? idSemester;
+  List<int>? listRepo;
+  List<Repository>? listRepoObj;
+  String listRepoStrings = '';
   String? image;
   String? data;
   String? description;
@@ -21,6 +25,7 @@ class Department {
       this.name,
       this.idSemester,
       this.image,
+      this.listRepo,
       this.description,
       this.status,
       this.data,
@@ -37,6 +42,18 @@ class Department {
     idSemester = json['idSemester'];
     image = json['image'];
     status = json['status'];
+    if (json['listRepoObj'] != null) {
+      listRepoObj = [];
+      json['listRepoObj'].forEach((element) {
+        Repository repository = Repository.fromJson(element);
+        listRepoObj!.add(repository);
+        listRepoStrings += '${repository.title}; ';
+      });
+      if (listRepoStrings.length > 2) {
+        listRepoStrings =
+            listRepoStrings.substring(0, listRepoStrings.length - 2);
+      }
+    }
     description = json['description'];
     createAt = json['createAt'];
     createBy =
@@ -57,6 +74,7 @@ class Department {
     if (this.description != null) data['description'] = this.description;
     if (this.createAt != null) data['createAt'] = this.createAt;
     if (this.data != null) data['data'] = this.data;
+    if (this.listRepo != null) data['listRepo'] = this.listRepo;
     if (this.createBy != null) {
       data['createBy'] = this.createBy!.toJson();
     }

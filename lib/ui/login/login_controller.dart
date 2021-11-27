@@ -21,13 +21,13 @@ class LoginController extends BaseController {
   @override
   initialData() async {
     setStatus(Status.success);
-    // var b1 = await SharedPref.containKey(KeyResource.token);
-    // if (b1) {
-    //   StringResource.token = await SharedPref.getString(KeyResource.token);
-    // }
-    // if (StringResource.token != '') {
-    //   Get.offAll(() => HomePage());
-    // }
+    var b1 = await SharedPref.containKey(KeyResource.token);
+    if (b1) {
+      StringResource.token = await SharedPref.getString(KeyResource.token);
+    }
+    if (StringResource.token != '') {
+      Get.offAll(() => HomePage());
+    }
   }
 
   @override

@@ -14,12 +14,14 @@ class AddSemesterController extends BaseController {
   Semester? pSemester;
   List<TextEditingController> edtController = [];
   int? idRepo;
+  var error = <String?>[].obs;
 
   @override
   initialData() {
     pSemester = Get.arguments;
     for (int i = 0; i < 8; i++) {
       edtController.add(TextEditingController());
+      error.add(null);
     }
 
     edtController[0].text = pSemester?.name ?? '';
@@ -83,5 +85,16 @@ class AddSemesterController extends BaseController {
     BaseRepository baseRepository = BaseRepository(title: pattern.toString());
     await baseRepository.getData();
     return baseRepository.listData;
+  }
+
+  request() async{
+    error[0] = Utils.validate(s: edtController[0].text);
+    error[2] = Utils.validate(s: edtController[2].text);
+    error[3] = Utils.validate(s: edtController[3].text);
+    error[4] = Utils.validate(s: edtController[4].text);
+   if(Utils.checkValidate(l: error)){
+     await getData();
+   }
+
   }
 }

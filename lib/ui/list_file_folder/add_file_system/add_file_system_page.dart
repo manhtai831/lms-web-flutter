@@ -9,7 +9,7 @@ class AddFileSystemPage extends GetWidget<AddFileSystemController> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: Container(
+      child: SizedBox(
         height: Get.height / 2,
         width: Get.width / 3,
         child: SingleChildScrollView(
@@ -33,11 +33,14 @@ class AddFileSystemPage extends GetWidget<AddFileSystemController> {
                           Row(
                             children: [
                               Expanded(
-                                child: TextFieldCustom(
-                                  editingController:
-                                      controller.edtController[0],
-                                  maxLines: 1,
-                                  hint: 'Tên file',
+                                child: Obx(
+                                  () => TextFieldCustom(
+                                    editingController:
+                                        controller.edtController[0],
+                                    maxLines: 1,
+                                    error: controller.error[0],
+                                    hint: 'Tên file',
+                                  ),
                                 ),
                               ),
                             ],
@@ -96,7 +99,7 @@ class AddFileSystemPage extends GetWidget<AddFileSystemController> {
                   CustomButton(
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 24),
-                    onTab: () => controller.getData(),
+                    onTab: () => controller.request(),
                     title: 'Đồng ý',
                     background: ColorResource.colorPrimary,
                   ),

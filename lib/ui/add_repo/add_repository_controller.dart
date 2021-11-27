@@ -10,17 +10,21 @@ import 'package:web_lms/ui/list_repo/list_repository_controller.dart';
 class AddRepositoryController extends BaseController {
   Repository? pRepository;
   List<TextEditingController> edtController = [];
+  var error = <String?>[].obs;
   var imageCurrent = Rxn();
   var avatar;
+  String type = '';
 
   @override
   initialData() {
     pRepository = Get.arguments;
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 4; i++) {
       edtController.add(TextEditingController());
+      error.add(null);
     }
     edtController[0].text = pRepository?.title ?? '';
     edtController[1].text = pRepository?.content ?? '';
+    type = pRepository?.type ?? '';
   }
 
   pickImage() async {
@@ -59,6 +63,31 @@ class AddRepositoryController extends BaseController {
       title: edtController[0].text,
       content: edtController[1].text,
       data: avatar,
+      type: type,
     );
+  }
+
+  getValue(value, index) {
+    type = value.title;
+  }
+
+  request() async {
+    int count = 0;
+    if (edtController[0].text.trim().isEmpty) {
+      error[0] = 'Vui lòng nhập tên repository';
+      count++;
+    } else {
+      error[0] = null;
+    }
+    if (type.isEmpty) {
+      error[2] = 'Vui lòng chọn một thể loại';
+      count++;
+    } else {
+      error[2] = null;
+    }
+
+    if (count == 0) {
+      await getData();
+    }
   }
 }

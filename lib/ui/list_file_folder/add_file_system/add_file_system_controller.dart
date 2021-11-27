@@ -15,6 +15,7 @@ class AddFileSystemController extends BaseController {
   int? idClass;
   var fileCurrent = ''.obs;
   var fileBase64;
+  var error = <String?>[].obs;
   @override
   initialData() async {
     idClass = Get.arguments[0];
@@ -24,6 +25,7 @@ class AddFileSystemController extends BaseController {
 
     for (int i = 0; i < 5; i++) {
       edtController.add(TextEditingController());
+      error.add(null);
     }
     edtController[0].text = pFileSystem?.name ?? '';
     edtController[1].text = pFileSystem?.description ?? '';
@@ -64,6 +66,13 @@ class AddFileSystemController extends BaseController {
     if (pickedFile != null) {
       fileCurrent.value = pickedFile.files.first.name;
       fileBase64 = Base64Converter.convertImageToBase64(file: pickedFile);
+    }
+  }
+
+  request() async {
+    error[0] = Utils.validate(s: edtController[0].text);
+    if (Utils.checkValidate(l: error)) {
+      await getData();
     }
   }
 }

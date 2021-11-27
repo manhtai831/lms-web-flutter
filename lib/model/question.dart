@@ -1,3 +1,4 @@
+import 'package:web_lms/core/date_time/time_utils.dart';
 import 'package:web_lms/model/answer.dart';
 import 'package:web_lms/model/file_folder.dart';
 import 'package:web_lms/model/subject.dart';
@@ -58,7 +59,10 @@ class Question {
       monHoc = Subject.fromJson(json['monHoc']);
     }
     idDapAp = json['idDapAp'];
-    createdAt = json['createdAt'];
+    if (json['createdAt'] != null) {
+      createdAt = TimeUtils.convertTimeToFormated(
+          json['createdAt'], TimeUtils.locateDatetime, TimeUtils.dateFormat);
+    }
     createdBy = json['createdBy'];
     sId = json['_id'];
     id = json['id'];

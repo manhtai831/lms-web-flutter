@@ -12,12 +12,14 @@ class AddClassController extends BaseController {
   ClassModel? pClass;
   List<TextEditingController> edtController = [];
   int? idSubject;
+  var error = <String?>[].obs;
 
   @override
   initialData() async {
     pClass = Get.arguments;
     for (int i = 0; i < 10; i++) {
       edtController.add(TextEditingController());
+      error.add(null);
     }
     edtController[0].text = pClass?.name ?? '';
     edtController[1].text = pClass?.description ?? '';
@@ -64,5 +66,12 @@ class AddClassController extends BaseController {
 
   valueSelected(value) {
     idSubject = value.id;
+  }
+
+  request() async {
+    error[0] = Utils.validate(s: edtController[0].text);
+    if (Utils.checkValidate(l: error)) {
+      await getData();
+    }
   }
 }

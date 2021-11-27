@@ -5,10 +5,11 @@ import 'package:web_lms/ui/add_semester/add_semester_controller.dart';
 
 class AddSemesterPage extends GetWidget<AddSemesterController> {
   final _controller = Get.lazyPut(() => AddSemesterController());
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: Container(
+      child: SizedBox(
         height: Get.height * 2 / 3,
         width: Get.width / 3,
         child: SingleChildScrollView(
@@ -26,102 +27,110 @@ class AddSemesterPage extends GetWidget<AddSemesterController> {
                   children: [
                     Utils.space(16, 0),
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: TextFieldCustom(
-                                  editingController:
-                                      controller.edtController[0],
-                                  maxLines: 1,
-                                  hint: 'Tên kì học',
-                                ),
-                              ),
-                            ],
-                          ),
-                          Utils.space(0, 16),
-                          TextFieldCustom(
-                            hint: 'Mô tả',
-                            editingController: controller.edtController[1],
-                            maxLines: 1,
-                          ),
-                          Utils.space(0, 16),
-                          Obx(
-                            () => SingleChildScrollView(
-                              child: Row(
-                                children: [
-                                  Utils.space(16, 0),
-                                  Switch(
-                                    onChanged: (b) => controller.isActive
-                                        .value = !controller.isActive.value,
-                                    value: controller.isActive.value,
-                                    activeColor: ColorResource.colorPrimary,
-                                    activeTrackColor:
-                                        ColorResource.colorPrimary10,
-                                    inactiveThumbColor: ColorResource.grey,
-                                    inactiveTrackColor:
-                                        ColorResource.grey.withOpacity(0.5),
-                                  ),
-                                  InkWell(
-                                      onTap: () => controller.isActive.value =
-                                          !controller.isActive.value,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          'Trạng thái kích hoạt',
-                                          style: AppResource.s15r,
-                                        ),
-                                      ))
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            child: Row(
+                      child: Obx(
+                        () => Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               children: [
                                 Expanded(
                                   child: TextFieldCustom(
-                                    maxLines: 1,
-                                    hint: 'Thời gian bắt đầu',
-                                    isReadOnly: true,
-                                    onTap: () => controller.datePicker(2),
                                     editingController:
-                                        controller.edtController[2],
+                                        controller.edtController[0],
+                                    error: controller.error[0],
+                                    maxLines: 1,
+                                    hint: 'Tên kì học',
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                          TextFieldCustom(
-                            maxLines: 1,
-                            hint: 'Thời gian kết thúc',
-                            isReadOnly: true,
-                            onTap: () => controller.datePicker(3),
-                            editingController: controller.edtController[3],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: TypeAheadCustom(
-                                    maxLines: 1,
-                                    hint: 'Repository',
-                                    editingController:
-                                        controller.edtController[4],
-                                    suggestCallBack: (pattern) async =>
-                                        await controller.sugestion(pattern),
-                                    onSuggestionSelected: (value) =>
-                                        controller.valueSelected(value),
-                                  ),
-                                ),
-                              ],
+                            Utils.space(0, 16),
+                            TextFieldCustom(
+                              hint: 'Mô tả',
+                              editingController: controller.edtController[1],
+                              maxLines: 1,
                             ),
-                          ),
-                        ],
+                            Utils.space(0, 16),
+                            // Obx(
+                            //   () => SingleChildScrollView(
+                            //     child: Row(
+                            //       children: [
+                            //         Utils.space(16, 0),
+                            //         Switch(
+                            //           onChanged: (b) => controller.isActive
+                            //               .value = !controller.isActive.value,
+                            //           value: controller.isActive.value,
+                            //           activeColor: ColorResource.colorPrimary,
+                            //           activeTrackColor:
+                            //               ColorResource.colorPrimary10,
+                            //           inactiveThumbColor: ColorResource.grey,
+                            //           inactiveTrackColor:
+                            //               ColorResource.grey.withOpacity(0.5),
+                            //         ),
+                            //         InkWell(
+                            //             onTap: () => controller.isActive.value =
+                            //                 !controller.isActive.value,
+                            //             child: Padding(
+                            //               padding: const EdgeInsets.all(8.0),
+                            //               child: Text(
+                            //                 'Trạng thái kích hoạt',
+                            //                 style: AppResource.s15r,
+                            //               ),
+                            //             ))
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 16.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: TextFieldCustom(
+                                      maxLines: 1,
+                                      hint: 'Thời gian bắt đầu',
+                                      error: controller.error[2],
+                                      isReadOnly: true,
+                                      onTap: () => controller.datePicker(2),
+                                      editingController:
+                                          controller.edtController[2],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            TextFieldCustom(
+                              maxLines: 1,
+                              hint: 'Thời gian kết thúc',
+                              isReadOnly: true,
+                              error: controller.error[3],
+                              onTap: () => controller.datePicker(3),
+                              editingController: controller.edtController[3],
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 16.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: TypeAheadCustom(
+                                      maxLines: 1,
+                                      hint: 'Repository',
+                                      error: controller.error[4],
+                                      editingController:
+                                          controller.edtController[4],
+                                      suggestCallBack: (pattern) async =>
+                                          await controller.sugestion(pattern),
+                                      onSuggestionSelected: (value) =>
+                                          controller.valueSelected(value),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -148,7 +157,7 @@ class AddSemesterPage extends GetWidget<AddSemesterController> {
                   CustomButton(
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 24),
-                    onTab: () => controller.getData(),
+                    onTab: () => controller.request(),
                     title: 'Đồng ý',
                     background: ColorResource.colorPrimary,
                   ),

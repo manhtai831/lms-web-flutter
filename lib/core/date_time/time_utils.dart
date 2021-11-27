@@ -10,6 +10,7 @@ class TimeUtils {
   static String timeFomart = "HH:mm:ss";
 
   static String locateDatetime2 = "dd/MM/yyyy HH:mm:ss";
+  static String locateDatetime = "yyyy/MM/dd HH:mm:ss";
 
   static DateTime getFirstDateOfMonth() {
     DateTime now = DateTime.now();

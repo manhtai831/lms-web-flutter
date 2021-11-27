@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web_lms/core/network/network_utils.dart';
 import 'package:web_lms/core/resource/color_resource.dart';
+import 'package:web_lms/model/base_item.dart';
 import 'package:web_lms/ui/semester/list_semester_page.dart';
 
 class Utils {
@@ -84,5 +85,39 @@ class Utils {
     return const Center(
       child: Text('Đã có lỗi xảy ra'),
     );
+  }
+
+  static List<BaseItem> typeRepository() {
+    return [
+      BaseItem(id: 0, title: 'Tài liệu'),
+      BaseItem(id: 1, title: 'Khác'),
+    ];
+  }
+
+  static String? validate({String? s}) {
+    if (s != null) {
+      if (s.trim().isEmpty) {
+        return 'Không được để trống';
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static bool checkValidate({List<String?>? l}) {
+    int count = 0;
+    if (l != null) {
+      l.forEach((element) {
+        if (element != null) {
+          count++;
+        }
+      });
+    }
+    if (count == 0) {
+      return true;
+    }
+    return false;
   }
 }

@@ -25,6 +25,7 @@ class AddATypeController extends BaseController {
   var listQuestion = <Question>[].obs;
   var isQuiz = false.obs;
   BaseQuestion? baseQuestion;
+  var error = <String?>[].obs;
 
   @override
   initialData() async {
@@ -41,6 +42,7 @@ class AddATypeController extends BaseController {
     }
     for (int i = 0; i < 7; i++) {
       edtController.add(TextEditingController());
+      error.add(null);
     }
     if (pFileFolder?.type == 'QUIZ') {
       isQuiz.value = true;
@@ -160,4 +162,6 @@ class AddATypeController extends BaseController {
       }
     });
   }
+
+  request() {}
 }

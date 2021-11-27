@@ -6,6 +6,7 @@ import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/network/base_page_response.dart';
 import 'package:web_lms/core/network/base_response.dart';
 import 'package:web_lms/model/department.dart';
+import 'package:web_lms/model/repository.dart';
 import 'package:web_lms/ui/list_department/list_department_controller.dart';
 
 class AddDepartmentController extends BaseController {
@@ -15,16 +16,28 @@ class AddDepartmentController extends BaseController {
   var imageCurrent = Rxn();
   var avatar;
   int? idSemester;
+  BaseRepository? baseRepository;
+  List<Repository> listRepo = [];
+  List<int> listRepoID = [];
+  var error = <String?>[].obs;
 
   @override
   initialData() {
     pDepartment = Get.arguments;
     for (int i = 0; i < 10; i++) {
       edtController.add(TextEditingController());
+      error.add(null);
     }
     edtController[0].text = pDepartment?.name ?? '';
     edtController[1].text = pDepartment?.description ?? '';
     edtController[4].text = pDepartment?.semester?.name ?? '';
+    String s = '';
+    pDepartment?.listRepoObj?.forEach((element) {
+      s += '${element.title}; ';
+      listRepoID.add(element.id ?? -1);
+    });
+    edtController[5].text = s;
+
     idSemester = pDepartment?.idSemester;
     if (pDepartment?.status == 0) {
       isActive.value = false;
@@ -62,14 +75,45 @@ class AddDepartmentController extends BaseController {
     }
   }
 
-  sugestion(String pattern) async {
-    BaseSemester baseSemester = BaseSemester(title: pattern.toString());
-    await baseSemester.getData();
-    return baseSemester.listData;
+  sugestion(String pattern, int index) async {
+    if (index == 4) {
+      BaseSemester baseSemester = BaseSemester(title: pattern.toString());
+      await baseSemester.getData();
+      return baseSemester.listData;
+    } else if (index == 5) {
+      if (listRepo.isEmpty) {
+        baseRepository ??= BaseRepository();
+        baseRepository?.listData?.clear();
+        await baseRepository?.getData();
+        baseRepository!.listData?.forEach((element) {
+          pDepartment?.listRepoObj?.forEach((element1) {
+            if (element.id == element1.id) {
+              element.isChoose.value = true;
+            }
+          });
+        });
+
+        listRepo = baseRepository!.listData!;
+      }
+      return listRepo;
+    } else
+      return [];
   }
 
   valueSelected(value) {
-    idSemester = value.id;
+    if (value is Repository) {
+      value.isChoose.value = !value.isChoose.value;
+      edtController[5].text = '';
+      listRepoID.clear();
+      listRepo.forEach((element) {
+        if (element.isChoose.value) {
+          edtController[5].text += '${element.title ?? ''}; ';
+          listRepoID.add(element.id ?? -1);
+        }
+      });
+    } else {
+      idSemester = value.id;
+    }
   }
 
   @override
@@ -80,6 +124,14 @@ class AddDepartmentController extends BaseController {
         description: edtController[1].text,
         idSemester: idSemester,
         data: avatar,
+        listRepo: listRepoID,
         status: isActive.value ? 1 : 0);
+  }
+
+  request() async {
+    error[0] = Utils.validate(s: edtController[0].text);
+    if (Utils.checkValidate(l: error)) {
+      await getData();
+    }
   }
 }

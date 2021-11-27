@@ -1,3 +1,4 @@
+import 'package:web_lms/core/date_time/time_utils.dart';
 import 'package:web_lms/model/subject.dart';
 import 'package:web_lms/model/user.dart';
 import 'package:get/get.dart';
@@ -30,7 +31,10 @@ class ClassModel {
     description = json['description'];
     idSubject = json['idSubject'];
     if (json['subject'] != null) subject = Subject.fromJson(json['subject']);
-    createAt = json['createAt'];
+    if (json['createAt'] != null) {
+      createAt = TimeUtils.convertTimeToFormated(
+          json['createAt'], TimeUtils.locateDatetime, TimeUtils.dateFormat);
+    }
     createBy =
         json['createBy'] != null ? new User.fromJson(json['createBy']) : null;
     id = json['id'];

@@ -35,7 +35,8 @@ class FileSystem {
 
   FileSystem.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    name = json['name'] + ' (.' + (json['linkFile'] ?? '').split('.')[1] + ')';
+    // name = json['name'] + ' (.' + (json['linkFile'] ?? '').split('.')[1] + ')';
+    name = json['name'];
     description = json['description'];
     listClass = json['listClass'].cast<int>();
     createAt = json['createAt'];

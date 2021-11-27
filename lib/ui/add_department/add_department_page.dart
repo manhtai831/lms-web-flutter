@@ -1,6 +1,7 @@
 import 'package:web_lms/core/dialog_confirm.dart';
 import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/textfield/type_ahead_custom.dart';
+import 'package:web_lms/model/repository.dart';
 import 'package:web_lms/ui/add_department/add_department_controller.dart';
 
 class AddDepartmentPage extends GetWidget<AddDepartmentController> {
@@ -60,11 +61,14 @@ class AddDepartmentPage extends GetWidget<AddDepartmentController> {
                             children: [
                               Utils.space(16, 0),
                               Expanded(
-                                child: TextFieldCustom(
-                                  editingController:
-                                      controller.edtController[0],
-                                  maxLines: 1,
-                                  hint: 'Tên khối ngành',
+                                child: Obx(
+                                  () => TextFieldCustom(
+                                    editingController:
+                                        controller.edtController[0],
+                                    error: controller.error[0],
+                                    maxLines: 1,
+                                    hint: 'Tên khối ngành',
+                                  ),
                                 ),
                               ),
                               Utils.space(16, 0),
@@ -79,36 +83,37 @@ class AddDepartmentPage extends GetWidget<AddDepartmentController> {
                               Utils.space(16, 0),
                             ],
                           ),
-                          Obx(
-                            () => SingleChildScrollView(
-                              child: Row(
-                                children: [
-                                  Utils.space(16, 0),
-                                  Switch(
-                                    onChanged: (b) => controller.isActive
-                                        .value = !controller.isActive.value,
-                                    value: controller.isActive.value,
-                                    activeColor: ColorResource.colorPrimary,
-                                    activeTrackColor:
-                                        ColorResource.colorPrimary10,
-                                    inactiveThumbColor: ColorResource.grey,
-                                    inactiveTrackColor:
-                                        ColorResource.grey.withOpacity(0.5),
-                                  ),
-                                  InkWell(
-                                      onTap: () => controller.isActive.value =
-                                          !controller.isActive.value,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          'Trạng thái kích hoạt',
-                                          style: AppResource.s15r,
-                                        ),
-                                      ))
-                                ],
-                              ),
-                            ),
-                          ),
+                          // Obx(
+                          //   () => SingleChildScrollView(
+                          //     child: Row(
+                          //       children: [
+                          //         Utils.space(16, 0),
+                          //         Switch(
+                          //           onChanged: (b) => controller.isActive
+                          //               .value = !controller.isActive.value,
+                          //           value: controller.isActive.value,
+                          //           activeColor: ColorResource.colorPrimary,
+                          //           activeTrackColor:
+                          //               ColorResource.colorPrimary10,
+                          //           inactiveThumbColor: ColorResource.grey,
+                          //           inactiveTrackColor:
+                          //               ColorResource.grey.withOpacity(0.5),
+                          //         ),
+                          //         InkWell(
+                          //             onTap: () => controller.isActive.value =
+                          //                 !controller.isActive.value,
+                          //             child: Padding(
+                          //               padding: const EdgeInsets.all(8.0),
+                          //               child: Text(
+                          //                 'Trạng thái kích hoạt',
+                          //                 style: AppResource.s15r,
+                          //               ),
+                          //             ))
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
+                          Utils.space(0, 16),
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 16.0),
@@ -117,9 +122,47 @@ class AddDepartmentPage extends GetWidget<AddDepartmentController> {
                               hint: 'Học kì',
                               editingController: controller.edtController[4],
                               suggestCallBack: (pattern) async =>
-                                  await controller.sugestion(pattern),
+                                  await controller.sugestion(pattern, 4),
                               onSuggestionSelected: (value) =>
                                   controller.valueSelected(value),
+                            ),
+                          ),
+                          Utils.space(0, 16),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: TypeAheadCustom(
+                              maxLines: 1,
+                              hint: 'Repository',
+                              editingController: controller.edtController[5],
+                              itemBuilder: (Repository suggestion) => Row(
+                                children: [
+                                  Obx(
+                                    () => Checkbox(
+                                        value: suggestion.isChoose.value,
+                                        onChanged: (v) => controller
+                                            .valueSelected(suggestion)),
+                                  ),
+                                  Expanded(
+                                    child: InkWell(
+                                      onTap: () =>
+                                          controller.valueSelected(suggestion),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8.0, horizontal: 24),
+                                        child: Text(
+                                          suggestion.title ?? '',
+                                          style: AppResource.s15b,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              suggestCallBack: (pattern) async =>
+                                  await controller.sugestion(pattern, 5),
+                              // onSuggestionSelected: (value) =>
+                              //     controller.valueSelected(value),
                             ),
                           ),
                         ],
@@ -149,7 +192,7 @@ class AddDepartmentPage extends GetWidget<AddDepartmentController> {
                   CustomButton(
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 24),
-                    onTab: () => controller.getData(),
+                    onTab: () => controller.request(),
                     title: 'Đồng ý',
                     background: ColorResource.colorPrimary,
                   ),

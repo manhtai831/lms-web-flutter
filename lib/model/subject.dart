@@ -1,3 +1,4 @@
+import 'package:web_lms/core/date_time/time_utils.dart';
 import 'package:web_lms/model/user.dart';
 import 'package:get/get.dart';
 import 'department.dart';
@@ -35,7 +36,10 @@ class Subject {
     title = json['name'];
     idDepartment = json['idDepartment'];
     description = json['description'];
-    createdAt = json['createdAt'];
+    if (json['createdAt'] != null) {
+      createdAt = TimeUtils.convertTimeToFormated(
+          json['createdAt'], TimeUtils.locateDatetime, TimeUtils.dateFormat);
+    }
     if (json['createdBy'] != null) createdBy = User.fromJson(json['createdBy']);
     id = json['id'];
     status = json['status'];

@@ -74,7 +74,7 @@ class ListSubjectPage extends GetWidget<ListSubjectController> {
                 tableCell(header: 'STT'.toUpperCase()),
                 tableCell(header: 'TÊN môn học'.toUpperCase()),
                 tableCell(header: 'Mô tả'.toUpperCase()),
-                tableCell(header: 'trạng thái'.toUpperCase()),
+                // tableCell(header: 'trạng thái'.toUpperCase()),
                 tableCell(header: 'Thời gian tạo'.toUpperCase()),
                 tableCell(header: 'người tạo'.toUpperCase()),
                 tableCell(header: 'Chuyên ngành'.toUpperCase()),
@@ -105,10 +105,10 @@ class ListSubjectPage extends GetWidget<ListSubjectController> {
                                 tableCell(text: (index + 1).toString()),
                                 tableCell(text: element.name),
                                 tableCell(text: element.description),
-                                tableCell(
-                                    text: element.status == 1
-                                        ? 'Đã kích hoạt'
-                                        : 'Chưa kích hoạt'),
+                                // tableCell(
+                                //     text: element.status == 1
+                                //         ? 'Đã kích hoạt'
+                                //         : 'Chưa kích hoạt'),
                                 tableCell(text: element.createdAt ?? ''),
                                 tableCell(text: element.createdBy?.name),
                                 Container(

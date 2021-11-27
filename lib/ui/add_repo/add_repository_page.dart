@@ -2,6 +2,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:web_lms/core/base_component/custom_button.dart';
 import 'package:web_lms/core/dialog_confirm.dart';
+import 'package:web_lms/core/dropdown/dropdown_custom.dart';
 import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/textfield/text_field_custom.dart';
 import 'package:web_lms/core/textfield/type_ahead_custom.dart';
@@ -13,7 +14,7 @@ class AddRepositoryPage extends GetWidget<AddRepositoryController> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: Container(
+      child: SizedBox(
         height: 650,
         width: Get.width * 2 / 3,
         child: SingleChildScrollView(
@@ -64,11 +65,14 @@ class AddRepositoryPage extends GetWidget<AddRepositoryController> {
                             children: [
                               Utils.space(16, 0),
                               Expanded(
-                                child: TextFieldCustom(
-                                  editingController:
-                                      controller.edtController[0],
-                                  maxLines: 1,
-                                  hint: 'Tên repository',
+                                child: Obx(
+                                  () => TextFieldCustom(
+                                    editingController:
+                                        controller.edtController[0],
+                                    error: controller.error[0],
+                                    maxLines: 1,
+                                    hint: 'Tên repository',
+                                  ),
                                 ),
                               ),
                               Utils.space(16, 0),
@@ -81,8 +85,22 @@ class AddRepositoryPage extends GetWidget<AddRepositoryController> {
                                 ),
                               ),
                               Utils.space(16, 0),
+                              Utils.space(16, 0),
                             ],
                           ),
+                          Obx(
+                            () => Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: DropdownCustom(
+                                hint: 'Chọn thể loại',
+                                error: controller.error[2],
+                                currentValue: controller.type,
+                                listItems: Utils.typeRepository(),
+                                getCurrentValue: (value, index) =>
+                                    controller.getValue(value, index),
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     )
@@ -110,7 +128,7 @@ class AddRepositoryPage extends GetWidget<AddRepositoryController> {
                   CustomButton(
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 24),
-                    onTab: () => controller.getData(),
+                    onTab: () => controller.request(),
                     title: 'Đồng ý',
                     background: ColorResource.colorPrimary,
                   ),
