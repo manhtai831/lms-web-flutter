@@ -5,6 +5,7 @@ import 'package:web_lms/core/base_component/custom_button.dart';
 import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/resource/app_resource.dart';
 import 'package:web_lms/core/resource/color_resource.dart';
+import 'package:web_lms/core/status.dart';
 import 'package:web_lms/core/textfield/text_field_custom.dart';
 import 'package:web_lms/core/utils.dart';
 import 'package:web_lms/ui/login/login_controller.dart';
@@ -49,15 +50,24 @@ class LoginPage extends GetWidget<LoginController> {
             inputType: TextInputType.visiblePassword,
           ),
           Utils.space(0, 32),
-          CustomButton(
-            // width: double.infinity,
-            // child: const Text(
-            //   'Đăng nhập',
-            //   textAlign: TextAlign.center,
-            // ),
-            alignment: Alignment.center,
-            title: "Đăng nhập",
-            onTab: () async => await controller.login(),
+          Obx(
+            () => CustomButton(
+              // width: double.infinity,
+              // child: const Text(
+              //   'Đăng nhập',
+              //   textAlign: TextAlign.center,
+              // ),
+              alignment: Alignment.center,
+              title: "Đăng nhập",
+              child: controller.status.value == Status.loading
+                  ? Utils.loading(height: 23, color: ColorResource.white)
+                  : Text(
+                      'Đăng nhập',
+                      style:
+                          AppResource.s15b.copyWith(color: ColorResource.white),
+                    ),
+              onTab: () async => await controller.login(),
+            ),
           ),
         ]),
       ),

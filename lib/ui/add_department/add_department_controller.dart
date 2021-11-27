@@ -24,6 +24,8 @@ class AddDepartmentController extends BaseController {
     }
     edtController[0].text = pDepartment?.name ?? '';
     edtController[1].text = pDepartment?.description ?? '';
+    edtController[4].text = pDepartment?.semester?.name ?? '';
+    idSemester = pDepartment?.idSemester;
     if (pDepartment?.status == 0) {
       isActive.value = false;
     } else if (pDepartment?.status == 1) {

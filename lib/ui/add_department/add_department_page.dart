@@ -114,7 +114,7 @@ class AddDepartmentPage extends GetWidget<AddDepartmentController> {
                                 const EdgeInsets.symmetric(horizontal: 16.0),
                             child: TypeAheadCustom(
                               maxLines: 1,
-                              hint: 'Repository',
+                              hint: 'Học kì',
                               editingController: controller.edtController[4],
                               suggestCallBack: (pattern) async =>
                                   await controller.sugestion(pattern),

@@ -71,12 +71,12 @@ class ListDepartmentPage extends GetWidget<ListDepartController> {
             TableRow(
               children: [
                 tableCell(header: 'STT'.toUpperCase()),
-                tableCell(header: 'TÊN Kì học'.toUpperCase()),
+                tableCell(header: 'Ngành học'.toUpperCase()),
                 tableCell(header: 'Mô tả'.toUpperCase()),
                 tableCell(header: 'Ảnh'.toUpperCase()),
                 tableCell(header: 'người tạo'.toUpperCase()),
-                tableCell(header: 'trạng thái'.toUpperCase()),
-                tableCell(header: 'Kì học'.toUpperCase()),
+                // tableCell(header: 'trạng thái'.toUpperCase()),
+                tableCell(header: 'Học kì'.toUpperCase()),
                 tableCell(header: 'CHỨC NĂNG'.toUpperCase()),
               ],
             ),
@@ -90,45 +90,50 @@ class ListDepartmentPage extends GetWidget<ListDepartController> {
                 child: Table(
                   border: TableBorder.all(
                       color: ColorResource.grey.withOpacity(0.5)),
-                  columnWidths:  <int, TableColumnWidth>{
-                    0: controller.listDepartment.isEmpty ? const FixedColumnWidth(64) :const FlexColumnWidth(),
+                  columnWidths: <int, TableColumnWidth>{
+                    0: controller.listDepartment.isNotEmpty
+                        ? const FixedColumnWidth(64)
+                        : const FlexColumnWidth(),
                     // 1: FlexColumnWidth(),
                     // 2: FixedColumnWidth(64),
                   },
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                  children:controller.listDepartment.isNotEmpty ?  controller.listDepartment
-                      .mapIndexed(
-                        (index, element) => TableRow(
-                          children: [
-                            tableCell(text: (index + 1).toString()),
-                            tableCell(text: element.name),
-                            tableCell(text: element.description),
-                            tableCell(
-                                child: RenderImage.imageNetwork(
-                                    Utils.concatUrl(element.image ?? ''),
-                                    height: 80)),
-                            tableCell(text: element.createBy?.name),
-                            tableCell(
-                                text: element.status == 1
-                                    ? 'Đã kích hoạt'
-                                    : 'Chưa kích hoạt'),
-                            tableCell(text: element.semester?.title),
-                            feature(
-                                onDelete: () => Get.dialog(
-                                    ConfirmDialog(
-                                      message:
-                                          'Xác nhận xóa ngành \"${element.name}\"',
-                                      onConfirm: () => controller
-                                          .deleteSemester(element.id ?? -1),
-                                    ),
-                                    barrierDismissible: false),
-                                onUpdate: () => Get.dialog(AddDepartmentPage(),
-                                    arguments: element,
-                                    barrierDismissible: false))
-                          ],
-                        ),
-                      )
-                      .toList() : Utils.emptyTable(),
+                  children: controller.listDepartment.isNotEmpty
+                      ? controller.listDepartment
+                          .mapIndexed(
+                            (index, element) => TableRow(
+                              children: [
+                                tableCell(text: (index + 1).toString()),
+                                tableCell(text: element.name),
+                                tableCell(text: element.description),
+                                tableCell(
+                                    child: RenderImage.imageNetwork(
+                                        Utils.concatUrl(element.image ?? ''),
+                                        height: 80)),
+                                tableCell(text: element.createBy?.name),
+                                // tableCell(
+                                //     text: element.status == 1
+                                //         ? 'Đã kích hoạt'
+                                //         : 'Chưa kích hoạt'),
+                                tableCell(text: element.semester?.title),
+                                feature(
+                                    onDelete: () => Get.dialog(
+                                        ConfirmDialog(
+                                          message:
+                                              'Xác nhận xóa ngành \"${element.name}\"',
+                                          onConfirm: () => controller
+                                              .deleteSemester(element.id ?? -1),
+                                        ),
+                                        barrierDismissible: false),
+                                    onUpdate: () => Get.dialog(
+                                        AddDepartmentPage(),
+                                        arguments: element,
+                                        barrierDismissible: false))
+                              ],
+                            ),
+                          )
+                          .toList()
+                      : Utils.emptyTable(),
                 ),
               ),
             ),

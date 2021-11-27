@@ -63,7 +63,7 @@ class AddSemesterController extends BaseController {
       status: isActive.value ? 1 : 0,
       startTime: '${edtController[2].text} 00:00:00',
       endTime: '${edtController[3].text} 00:00:00',
-      idRepository: 14,
+      idRepository: idRepo,
     );
   }
 

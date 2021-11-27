@@ -36,10 +36,14 @@ class Semester {
     idRepository = json['idRepository'];
     title = json['name'];
     createAt = json['createAt'];
-    startTime = TimeUtils.convertTimeToFormated(
-        json['startTime'], TimeUtils.locateDatetime2, TimeUtils.dateFormat);
-    endTime = TimeUtils.convertTimeToFormated(
-        json['endTime'], TimeUtils.locateDatetime2, TimeUtils.dateFormat);
+    if (json['startTime'] != null) {
+      startTime = TimeUtils.convertTimeToFormated(
+          json['startTime'], TimeUtils.locateDatetime2, TimeUtils.dateFormat);
+    }
+    if (json['endTime'] != null) {
+      endTime = TimeUtils.convertTimeToFormated(
+          json['endTime'], TimeUtils.locateDatetime2, TimeUtils.dateFormat);
+    }
     status = json['status'];
     createBy =
         json['createBy'] != null ? User.fromJson(json['createBy']) : null;

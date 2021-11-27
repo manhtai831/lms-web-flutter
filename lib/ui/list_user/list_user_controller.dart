@@ -11,7 +11,7 @@ class ListUserController extends BaseController {
   TextEditingController edtController = TextEditingController();
   @override
   initialData() async {
-    await handleDelay(150);
+    // await handleDelay(150);
     return super.initialData();
   }
 

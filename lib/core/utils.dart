@@ -68,12 +68,13 @@ class Utils {
     ];
   }
 
-  static Widget loading() {
+  static Widget loading({double? height, Color? color}) {
     return SizedBox(
-      height: Get.height / 2,
-      child: const Center(
+      height: height ?? Get.height / 2,
+      width: height,
+      child: Center(
         child: CircularProgressIndicator(
-          color: ColorResource.colorPrimary,
+          color: color ?? ColorResource.colorPrimary,
         ),
       ),
     );
