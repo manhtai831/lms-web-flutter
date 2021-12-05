@@ -213,8 +213,8 @@ class HomePage extends GetWidget<HomeController> {
     Widget view;
     switch (controller.indexView.value) {
       case 0:
-        view = ListPointPage();
-        // view = ListUserPage();
+        // view = ListPointPage();
+        view = ListUserPage();
         break;
       case 1:
         view = ListRepositoryPage();
@@ -241,7 +241,7 @@ class HomePage extends GetWidget<HomeController> {
         view = ListRolePage();
         break;
       case 9:
-        view = ListRepositoryPage();
+        view = ListPointPage();
         break;
       default:
         view = Container();
