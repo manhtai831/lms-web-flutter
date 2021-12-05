@@ -96,4 +96,10 @@ class ListPointController extends BaseController {
       setStatus(Status.success);
     }
   }
+
+  sendNotification(FileStudent element) async {
+    BaseSendNotification baseSendNotification = BaseSendNotification(
+        idUser: element.user?.id, idFileAttach: element.id);
+    await baseSendNotification.getData();
+  }
 }

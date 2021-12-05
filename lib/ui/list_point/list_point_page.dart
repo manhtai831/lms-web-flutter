@@ -160,7 +160,7 @@ class ListPointPage extends GetWidget<ListPointController> {
                                       onUpdate: () => Get.dialog(AddPointPage(),
                                           arguments: element,
                                           barrierDismissible: false),
-                                      onSendNotification: () {})
+                                      onSendNotification: () =>controller.sendNotification(element))
                                 ],
                               ),
                             )

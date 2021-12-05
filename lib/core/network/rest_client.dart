@@ -243,4 +243,7 @@ abstract class RestClient {
 
   @GET("api/get_info_more_quiz")
   Future<BaseResponse?> getInfoQuiz({@Queries() Map<String, dynamic>? m});
+
+  @GET("api/send_notification")
+  Future<BaseResponse?> sendNotification({@Queries() Map<String, dynamic>? m});
 }

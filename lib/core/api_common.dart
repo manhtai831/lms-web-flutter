@@ -406,3 +406,28 @@ class BaseInfoQuiz extends BaseController {
     return map;
   }
 }
+
+class BaseSendNotification extends BaseController {
+  int? idUser;
+  int? idFileAttach;
+  List<InfoQuiz> listData = [];
+
+  BaseSendNotification({this.idUser, this.idFileAttach});
+
+  @override
+  getDataSuccessFromAPI() async {
+    BaseResponse? baseResponse =
+        await client.sendNotification(m: getParameters());
+    if (checkError(baseResponse)) {
+      Utils.snackBar(message: 'Gửi thông báo thành công');
+    }
+  }
+
+  @override
+  getParameters() {
+    super.getParameters();
+    if (idUser != null) map['idUser'] = idUser;
+    if (idFileAttach != null) map['idFileAttach'] = idFileAttach;
+    return map;
+  }
+}
