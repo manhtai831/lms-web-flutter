@@ -70,14 +70,13 @@ class Utils {
   }
 
   static Widget loading({double? height, Color? color, double? width}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-      child: SizedBox(
-        height: height ?? Get.height / 2,
-        width: height,
-        child:
-            // Center(child: RenderImage.imageAssets(ImageResource.ic_smile)
-            CircularProgressIndicator(
+    return SizedBox(
+      height: height ?? Get.height / 2,
+      width: height,
+      child:
+          // Center(child: RenderImage.imageAssets(ImageResource.ic_smile)
+          Center(
+        child: CircularProgressIndicator(
           color: color ?? ColorResource.colorPrimary,
         ),
       ),
