@@ -1,3 +1,4 @@
+import 'package:web_lms/core/api_common.dart';
 import 'package:web_lms/core/base_controller.dart';
 import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/network/base_page_response.dart';
@@ -34,5 +35,12 @@ class ListDepartController extends BaseController {
       Get.back();
       Utils.snackBar(message: 'Xóa kì học thành công');
     }
+  }
+
+  search() async {
+    BaseDepartment baseSemester = BaseDepartment(title: edtController.text);
+    await baseSemester.getData();
+    listDepartment.clear();
+    listDepartment.value = baseSemester.listData ?? [];
   }
 }

@@ -16,11 +16,11 @@ class Role {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if(this.sId != null) data['_id'] = this.sId;
-    if(this.id != null) data['id'] = this.id;
-    if(this.description != null) data['description'] = this.description;
-    if(this.name != null) data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if(sId != null) data['_id'] = sId;
+    if(id != null) data['id'] = id;
+    if(description != null) data['description'] = description;
+    if(name != null) data['name'] = name;
     return data;
   }
 }

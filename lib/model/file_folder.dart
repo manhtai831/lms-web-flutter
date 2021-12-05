@@ -1,6 +1,5 @@
 import 'package:web_lms/model/class_model.dart';
 import 'package:web_lms/model/group_type.dart';
-import 'package:web_lms/model/question.dart';
 import 'package:web_lms/model/subject.dart';
 import 'package:web_lms/model/user.dart';
 import 'package:get/get.dart';
@@ -8,6 +7,7 @@ import 'package:get/get.dart';
 class FileFolder {
   String? sId;
   String? name;
+  String? title;
   String? description;
   int? idClass;
   int? idGroupType;
@@ -48,18 +48,21 @@ class FileFolder {
   FileFolder.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     name = json['name'];
+    title = json['name'];
     idClass = json['idClass'];
     description = json['description'];
     if (json['class'] != null) mClass = ClassModel.fromJson(json['class']);
-    if (json['oCreatedBy'] != null)
+    if (json['oCreatedBy'] != null) {
       oCreatedBy = User.fromJson(json['oCreatedBy']);
+    }
     type = json['type'];
     link = json['link'];
     startTime = json['startTime'];
     endTime = json['endTime'];
     createdAt = json['createdAt'];
-    if (json['groupType'] != null)
+    if (json['groupType'] != null) {
       groupType = GroupType.fromJson(json['groupType']);
+    }
     idGroupType = json['idGroupType'];
     createdBy = json['createdBy'];
     idSubject = json['idSubject'];
@@ -69,25 +72,25 @@ class FileFolder {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.sId != null) data['_id'] = this.sId;
-    if (this.name != null) data['name'] = this.name;
-    if (this.startTime != null) data['startTime'] = this.startTime;
-    if (this.description != null) data['description'] = this.description;
-    if (this.idGroupType != null) data['idGroupType'] = this.idGroupType;
-    if (this.endTime != null) data['endTime'] = this.endTime;
-    if (this.groupType != null) data['groupType'] = this.groupType;
-    if (this.listIdQuestion != null) data['listQuestion'] = this.listIdQuestion;
-    if (this.idClass != null) data['idClass'] = this.idClass;
-    if (this.mClass != null) data['mClass'] = this.mClass;
-    if (this.type != null) data['type'] = this.type;
-    if (this.link != null) data['link'] = this.link;
-    if (this.createdAt != null) data['createdAt'] = this.createdAt;
-    if (this.createdBy != null) data['createdBy'] = this.createdBy;
-    if (this.idSubject != null) data['idSubject'] = this.idSubject;
-    if (this.subject != null) data['subject'] = this.subject;
-    if (this.id != null) data['id'] = this.id;
-    if (this.iV != null) data['__v'] = this.iV;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (sId != null) data['_id'] = sId;
+    if (name != null) data['name'] = name;
+    if (startTime != null) data['startTime'] = startTime;
+    if (description != null) data['description'] = description;
+    if (idGroupType != null) data['idGroupType'] = idGroupType;
+    if (endTime != null) data['endTime'] = endTime;
+    if (groupType != null) data['groupType'] = groupType;
+    if (listIdQuestion != null) data['listQuestion'] = listIdQuestion;
+    if (idClass != null) data['idClass'] = idClass;
+    if (mClass != null) data['mClass'] = mClass;
+    if (type != null) data['type'] = type;
+    if (link != null) data['link'] = link;
+    if (createdAt != null) data['createdAt'] = createdAt;
+    if (createdBy != null) data['createdBy'] = createdBy;
+    if (idSubject != null) data['idSubject'] = idSubject;
+    if (subject != null) data['subject'] = subject;
+    if (id != null) data['id'] = id;
+    if (iV != null) data['__v'] = iV;
     return data;
   }
 }

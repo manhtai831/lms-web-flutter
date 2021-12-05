@@ -1,7 +1,7 @@
-import 'dart:html';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/resource/color_resource.dart';
 
 class RenderImage {
@@ -13,7 +13,7 @@ class RenderImage {
     BorderRadius? borderRadius,
   }) {
     return ClipRRect(
-      borderRadius: borderRadius ?? BorderRadius.circular(100),
+      borderRadius: borderRadius ?? BorderRadius.circular(0),
       child: Image.memory(path64!),
     );
   }
@@ -41,7 +41,7 @@ class RenderImage {
         width: width,
         height: height,
         decoration: BoxDecoration(
-            borderRadius: borderRadius ?? BorderRadius.circular(10),
+            borderRadius: borderRadius ?? BorderRadius.circular(0),
             border: border,
             boxShadow: isShadow
                 ? shadowCustom ??
@@ -96,6 +96,7 @@ class RenderImage {
             bottomLeft: Radius.circular(radiusBotLeft),
             bottomRight: Radius.circular(radiusBotRight),
           ),
+          image: DecorationImage(image: NetworkImage(url)),
           color: colorBorder,
           boxShadow: isShadow
               ? shadowCustom ??
@@ -116,6 +117,9 @@ class RenderImage {
         ),
         child: Image.network(
           url,
+          headers: const {
+            "Authorization": "Bearer ${KeyResource.ACCESS_TOKEN}"
+          },
           width: width,
           height: height,
           fit: boxFit,
@@ -124,6 +128,8 @@ class RenderImage {
             Object? exception,
             StackTrace? stackTrace,
           ) {
+            print(exception);
+            print(KeyResource.ACCESS_TOKEN);
             return Container(
               color: Colors.grey[300],
               child: const Center(

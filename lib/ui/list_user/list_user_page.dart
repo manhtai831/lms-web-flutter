@@ -69,7 +69,7 @@ class ListUserPage extends GetWidget<ListUserController> {
         ),
         Utils.space(0, 16),
         Table(
-          border: TableBorder.all(color: ColorResource.grey),
+          border: TableBorder.all(color: ColorResource.grey.withOpacity(0.5)),
           columnWidths: const <int, TableColumnWidth>{
             0: FixedColumnWidth(64),
             // 1: FlexColumnWidth(),
@@ -298,24 +298,24 @@ class ListUserPage extends GetWidget<ListUserController> {
                                           ),
                                         ),
                                         Utils.space(4, 0),
-                                        Tooltip(
-                                          message: 'Chi tiết',
-                                          child: Material(
-                                            color: ColorResource.transparent,
-                                            child: InkWell(
-                                              onTap: () => null,
-                                              child: const Padding(
-                                                padding: EdgeInsets.all(8.0),
-                                                child: Icon(
-                                                  Icons.details,
-                                                  color: ColorResource
-                                                      .colorPrimary,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Utils.space(4, 0),
+                                        // Tooltip(
+                                        //   message: 'Chi tiết',
+                                        //   child: Material(
+                                        //     color: ColorResource.transparent,
+                                        //     child: InkWell(
+                                        //       onTap: () => null,
+                                        //       child: const Padding(
+                                        //         padding: EdgeInsets.all(8.0),
+                                        //         child: Icon(
+                                        //           Icons.details,
+                                        //           color: ColorResource
+                                        //               .colorPrimary,
+                                        //         ),
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // ),
+                                        // Utils.space(4, 0),
                                         Tooltip(
                                           message: 'Xóa',
                                           child: Material(

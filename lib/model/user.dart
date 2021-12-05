@@ -5,6 +5,7 @@ class User {
   List<Permission>? permission;
   String? sId;
   String? name;
+  String? title;
   String? nameGroup;
   String? data;
   String? userName;
@@ -59,6 +60,7 @@ class User {
     nameGroup = json['nameGroup'];
     password = json['password'];
     name = json['name'];
+    title = json['name'];
     userName = json['userName'];
     if (json['kiHoc'] != null) kiHoc = Semester.fromJson(json['kiHoc']);
     address = json['address'];
@@ -74,29 +76,29 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.permission != null) {
-      data['permission'] = this.permission!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (permission != null) {
+      data['permission'] = permission!.map((v) => v.toJson()).toList();
     }
-    if (this.sId != null) data['_id'] = this.sId;
-    if (this.gender != null) data['gender'] = this.gender;
-    if (this.idGroup != null) data['idGroup'] = this.idGroup;
-    if (this.kiHocId != null) data['kiHocId'] = this.kiHocId;
-    if (this.nameGroup != null) data['nameGroup'] = this.nameGroup;
-    if (this.address != null) data['address'] = this.address;
-    if (this.chuyenNganhId != null) data['chuyenNganhId'] = this.chuyenNganhId;
-    if (this.password != null) data['password'] = this.password;
-    if (this.name != null) data['name'] = this.name;
-    if (this.userName != null) data['userName'] = this.userName;
-    if (this.email != null) data['email'] = this.email;
-    if (this.token != null) data['token'] = this.token;
+    if (sId != null) data['_id'] = sId;
+    if (gender != null) data['gender'] = gender;
+    if (idGroup != null) data['idGroup'] = idGroup;
+    if (kiHocId != null) data['kiHocId'] = kiHocId;
+    if (nameGroup != null) data['nameGroup'] = nameGroup;
+    if (address != null) data['address'] = address;
+    if (chuyenNganhId != null) data['chuyenNganhId'] = chuyenNganhId;
+    if (password != null) data['password'] = password;
+    if (name != null) data['name'] = name;
+    if (userName != null) data['userName'] = userName;
+    if (email != null) data['email'] = email;
+    if (token != null) data['token'] = token;
     if (this.data != null) data['data'] = this.data;
-    if (this.id != null) data['id'] = this.id;
-    if (this.birth != null) data['birth'] = this.birth;
-    if (this.phoneNumber != null) data['phoneNumber'] = this.phoneNumber;
-    if (this.avatar != null) data['avatar'] = this.avatar;
-    if (this.chuyenNganh != null) data['chuyenNganh'] = this.chuyenNganh;
-    if (this.kiHoc != null) data['kiHoc'] = this.kiHoc;
+    if (id != null) data['id'] = id;
+    if (birth != null) data['birth'] = birth;
+    if (phoneNumber != null) data['phoneNumber'] = phoneNumber;
+    if (avatar != null) data['avatar'] = avatar;
+    if (chuyenNganh != null) data['chuyenNganh'] = chuyenNganh;
+    if (kiHoc != null) data['kiHoc'] = kiHoc;
     return data;
   }
 }
@@ -114,8 +116,8 @@ class Permission {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['idRole'] = this.idRole;
+    data['_id'] = sId;
+    data['idRole'] = idRole;
     return data;
   }
 }

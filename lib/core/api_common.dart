@@ -9,6 +9,7 @@ import 'package:web_lms/model/file_student.dart';
 import 'package:web_lms/model/file_system.dart';
 import 'package:web_lms/model/group_role.dart';
 import 'package:web_lms/model/group_type.dart';
+import 'package:web_lms/model/info_quiz.dart';
 import 'package:web_lms/model/question.dart';
 import 'package:web_lms/model/repository.dart';
 import 'package:web_lms/model/semester.dart';
@@ -219,7 +220,7 @@ class BaseClassModel extends BaseController {
 
   @override
   getDataSuccessFromAPI() async {
-    BaseResponse? baseResponse = await client.getListClass();
+    BaseResponse? baseResponse = await client.getListClass(m: getParameters());
     if (checkError(baseResponse)) {
       BasePageResponse basePageResponse =
           BasePageResponse.fromJson(baseResponse?.data);
@@ -227,6 +228,13 @@ class BaseClassModel extends BaseController {
         listData!.add(ClassModel.fromJson(element));
       });
     }
+  }
+
+  @override
+  getParameters() {
+    super.getParameters();
+    if (title != null) map['name'] = title;
+    return map;
   }
 }
 
@@ -252,7 +260,7 @@ class BaseGroupType extends BaseController {
   @override
   getParameters() {
     super.getParameters();
-    if (this.idClass != null) map['idClass'] = idClass;
+    if (idClass != null) map['idClass'] = idClass;
     return map;
   }
 }
@@ -280,8 +288,8 @@ class BaseFileSystem extends BaseController {
   @override
   getParameters() {
     super.getParameters();
-    if (this.idClass != null) map['idClass'] = idClass;
-    if (this.idSubject != null) map['idSubject'] = idSubject;
+    if (idClass != null) map['idClass'] = idClass;
+    if (idSubject != null) map['idSubject'] = idSubject;
     return map;
   }
 }
@@ -309,9 +317,8 @@ class BaseFileStudent extends BaseController {
   @override
   getParameters() {
     super.getParameters();
-    if (this.idDocumentType != null)
-      map['idDocumentType'] = this.idDocumentType;
-    if (this.idClass != null) map['idClass'] = this.idClass;
+    if (idDocumentType != null) map['idDocumentType'] = idDocumentType;
+    if (idClass != null) map['idClass'] = idClass;
     return map;
   }
 }
@@ -338,7 +345,7 @@ class BaseFileFolder extends BaseController {
   @override
   getParameters() {
     super.getParameters();
-    if (this.idGroupType != null) map['idGroupType'] = this.idGroupType;
+    if (idGroupType != null) map['idGroupType'] = idGroupType;
     return map;
   }
 }
@@ -366,8 +373,36 @@ class BaseQuestion extends BaseController {
   @override
   getParameters() {
     super.getParameters();
-    if (this.content != null) map['content'] = this.content;
-    if (this.idMonHoc != null) map['idMonHoc'] = this.idMonHoc;
+    if (content != null) map['content'] = content;
+    if (idMonHoc != null) map['idMonHoc'] = idMonHoc;
+    return map;
+  }
+}
+
+class BaseInfoQuiz extends BaseController {
+  String? content;
+  int? idDocumentType;
+  List<InfoQuiz> listData = [];
+
+  BaseInfoQuiz({this.content, this.idDocumentType});
+
+  @override
+  getDataSuccessFromAPI() async {
+    BaseResponse? baseResponse = await client.getInfoQuiz(m: getParameters());
+    if (checkError(baseResponse)) {
+      BasePageResponse basePageResponse =
+          BasePageResponse.fromJson(baseResponse?.data);
+      basePageResponse.data!.forEach((element) {
+        listData.add(InfoQuiz.fromJson(element));
+      });
+    }
+  }
+
+  @override
+  getParameters() {
+    super.getParameters();
+    if (content != null) map['content'] = content;
+    if (idDocumentType != null) map['idDocumentType'] = idDocumentType;
     return map;
   }
 }

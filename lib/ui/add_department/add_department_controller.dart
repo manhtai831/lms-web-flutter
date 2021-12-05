@@ -118,6 +118,9 @@ class AddDepartmentController extends BaseController {
 
   @override
   getJsonObjectRequest() {
+    if (edtController[4].text.trim().isEmpty) {
+      idSemester = -1;
+    }
     return Department(
         id: pDepartment?.id,
         name: edtController[0].text,

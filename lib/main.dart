@@ -1,23 +1,32 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:web_lms/core/network/network_utils.dart';
-import 'package:web_lms/ui/home/home_controller.dart';
-import 'package:web_lms/ui/home/home_page.dart';
-import 'package:web_lms/ui/login/login_controller.dart';
 import 'package:web_lms/ui/login/login_page.dart';
 
 void main() {
   print('-----}-------------> Listen on ' + NetworkUtils.baseUrl);
-  runApp(MyApp());
+  HttpOverrides.global = MyHttpOverrides();
+  runApp(const _MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
+class _MyApp extends StatelessWidget {
+  const _MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: "LMS",
+      title: "Trang quản trị",
       defaultTransition: Transition.cupertino,
       smartManagement: SmartManagement.keepFactory,
       showPerformanceOverlay: false,

@@ -42,13 +42,13 @@ class Repository {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.sId != null) data['_id'] = this.sId;
-    if (this.title != null) data['title'] = this.title;
-    if (this.type != null) data['type'] = this.type;
+    if (sId != null) data['_id'] = sId;
+    if (title != null) data['title'] = title;
+    if (type != null) data['type'] = type;
     if (this.data != null) data['data'] = this.data;
-    if (this.image != null) data['image'] = this.image;
-    if (this.content != null) data['content'] = this.content;
-    if (this.id != null) data['id'] = this.id;
+    if (image != null) data['image'] = image;
+    if (content != null) data['content'] = content;
+    if (id != null) data['id'] = id;
     return data;
   }
 }

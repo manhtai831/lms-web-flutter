@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:web_lms/core/base_controller.dart';
 import 'package:get/get.dart';
 import 'package:web_lms/core/local_service/shared_pref.dart';
@@ -8,14 +9,18 @@ import 'package:web_lms/core/resource/string_resource.dart';
 import 'package:web_lms/model/user.dart';
 import 'package:web_lms/ui/login/login_page.dart';
 
-class HomeController extends BaseController {
+class HomeController extends BaseController with SingleGetTickerProviderMixin {
   List<ItemDrawer> listItem = [];
   var indexView = 0.obs;
   var visiblePopup = false.obs;
+  var visibleLeftView = true.obs;
   var user = User().obs;
-
+  AnimationController? controllerAnimate;
+  var title = 'Người dùng'.obs;
   @override
   initialData() async {
+    controllerAnimate = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 200), value: 0);
     addListItem();
     await getData();
   }
@@ -30,6 +35,7 @@ class HomeController extends BaseController {
     listItem.add(ItemDrawer(6, 'File sinh viên và hệ thống', false.obs));
     listItem.add(ItemDrawer(7, 'Quiz', false.obs));
     listItem.add(ItemDrawer(8, 'Cấu hình quyền', false.obs));
+    listItem.add(ItemDrawer(9, 'Điểm', false.obs));
   }
 
   pickFeature(int index) {
@@ -38,6 +44,7 @@ class HomeController extends BaseController {
         listItem[i].isChoose.value = false;
       }
       listItem[index].isChoose.value = true;
+      title.value = listItem[index].title ?? '';
       indexView.value = index;
     });
   }
@@ -55,6 +62,17 @@ class HomeController extends BaseController {
     BaseResponse? baseResponse = await client.getInfoUser();
     if (checkError(baseResponse)) {
       user.value = User.fromJson(baseResponse?.data);
+    }
+  }
+
+  controlAniMate() async {
+    if (controllerAnimate!.value == 1) {
+      visibleLeftView.value = !visibleLeftView.value;
+      controllerAnimate!.reverse(from: 1);
+    } else {
+      controllerAnimate!.forward(from: 0);
+      await handleDelay(200);
+      visibleLeftView.value = !visibleLeftView.value;
     }
   }
 }

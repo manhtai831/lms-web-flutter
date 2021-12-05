@@ -1,3 +1,4 @@
+import 'package:web_lms/core/api_common.dart';
 import 'package:web_lms/core/base_controller.dart';
 import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/network/base_page_response.dart';
@@ -27,7 +28,12 @@ class ListSubjectController extends BaseController {
     }
   }
 
-  search() {}
+  search() async {
+    BaseSubject baseSubject = BaseSubject(title: edtController.text);
+    await baseSubject.getData();
+    listSubject.clear();
+    listSubject.value = baseSubject.listData ?? [];
+  }
 
   delete(int i) async {
     BaseResponse? baseResponse = await client.deleteSubject(Subject(id: i));

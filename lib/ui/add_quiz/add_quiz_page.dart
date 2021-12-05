@@ -15,7 +15,7 @@ class AddQuizPage extends GetWidget<AddQuizController> {
   Widget build(BuildContext context) {
     return Dialog(
       child: SizedBox(
-        height: Get.height * 2 / 3,
+        height: Get.height * 3 / 4,
         width: Get.width * 2 / 3,
         child: Column(
           children: [

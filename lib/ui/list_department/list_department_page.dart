@@ -49,7 +49,7 @@ class ListDepartmentPage extends GetWidget<ListDepartController> {
             Utils.space(8, 0),
             CustomButton(
               title: 'Tìm kiếm',
-              // onTab: () => controller.search(),
+              onTab: () => controller.search(),
             ),
             Utils.space(8, 0),
             CustomButton(
@@ -61,7 +61,7 @@ class ListDepartmentPage extends GetWidget<ListDepartController> {
         ),
         Utils.space(0, 16),
         Table(
-          border: TableBorder.all(color: ColorResource.grey),
+          border: TableBorder.all(color: ColorResource.grey.withOpacity(0.5)),
           columnWidths: const <int, TableColumnWidth>{
             0: FixedColumnWidth(64),
             // 1: FlexColumnWidth(),

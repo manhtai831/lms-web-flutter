@@ -7,10 +7,10 @@ class MarqueeWidget extends StatefulWidget {
 
   MarqueeWidget({
     @required this.child,
-    this.direction: Axis.horizontal,
-    this.animationDuration: const Duration(milliseconds: 3000),
-    this.backDuration: const Duration(milliseconds: 800),
-    this.pauseDuration: const Duration(milliseconds: 800),
+    this.direction = Axis.horizontal,
+    this.animationDuration = const Duration(milliseconds: 3000),
+    this.backDuration = const Duration(milliseconds: 800),
+    this.pauseDuration = const Duration(milliseconds: 800),
   });
 
   @override
@@ -36,7 +36,7 @@ class _MarqueeWidgetState extends State<MarqueeWidget> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: ClampingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       child: widget.child,
       scrollDirection: widget.direction,
       controller: scrollController,
@@ -46,15 +46,17 @@ class _MarqueeWidgetState extends State<MarqueeWidget> {
   void scroll(_) async {
     while (scrollController.hasClients) {
       await Future.delayed(widget.pauseDuration);
-      if(scrollController.hasClients)
+      if(scrollController.hasClients) {
         await scrollController.animateTo(
             scrollController.position.maxScrollExtent,
             duration: widget.animationDuration,
             curve: Curves.ease);
+      }
       await Future.delayed(widget.pauseDuration);
-      if(scrollController.hasClients)
+      if(scrollController.hasClients) {
         await scrollController.animateTo(0.0,
             duration: widget.backDuration, curve: Curves.easeOut);
+      }
     }
   }
 }

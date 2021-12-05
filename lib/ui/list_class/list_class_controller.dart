@@ -1,3 +1,4 @@
+import 'package:web_lms/core/api_common.dart';
 import 'package:web_lms/core/base_controller.dart';
 import 'package:get/get.dart';
 import 'package:web_lms/core/export_all.dart';
@@ -34,5 +35,12 @@ class ListClassController extends BaseController {
       Get.back();
       Utils.snackBar(message: 'Xóa lớp học thành công');
     }
+  }
+
+  search() async {
+    BaseClassModel baseClassModel = BaseClassModel(title: edtController.text);
+    await baseClassModel.getData();
+    listCLass.clear();
+    listCLass.value = baseClassModel.listData ?? [];
   }
 }

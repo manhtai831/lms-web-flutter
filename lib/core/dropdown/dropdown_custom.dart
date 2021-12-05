@@ -23,7 +23,8 @@ class DropdownCustom extends StatefulWidget {
   Function? getCurrentValue;
 
   DropdownCustom(
-      {this.widgetLeft,
+      {Key? key,
+      this.widgetLeft,
       this.widgetRight,
       this.widgetAfterLeft,
       this.currentValue,
@@ -44,7 +45,8 @@ class DropdownCustom extends StatefulWidget {
       this.suffixConstraint,
       this.error,
       this.onValidator,
-      this.label});
+      this.label})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -55,11 +57,11 @@ class DropdownCustom extends StatefulWidget {
 class DropdownCustomState extends State<DropdownCustom> {
   final GlobalKey dropdownKey = GlobalKey();
   Color? _labelColor;
-  Color _highColor = ColorResource.colorPrimary;
-  Color _lowColor = ColorResource.grey;
+  final Color _highColor = ColorResource.colorPrimary;
+  final Color _lowColor = ColorResource.grey;
   OutlineInputBorder? _outlineInputBorder;
   OutlineInputBorder? _outlineInputBorderError;
-  var _dropdownFormFieldKey = GlobalKey<FormState>();
+  final _dropdownFormFieldKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -85,118 +87,109 @@ class DropdownCustomState extends State<DropdownCustom> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            width: Get.width,
-            child: Focus(
-              onFocusChange: (hasFocus) {
-                setState(() => _labelColor = hasFocus ? _highColor : _lowColor);
-              },
-              child: Form(
-                key: _dropdownFormFieldKey,
-                child: DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
-                    errorStyle:
-                        const TextStyle(fontSize: 11, color: Colors.red),
-                    errorText: widget.error,
-                    errorMaxLines: 1,
+    return SizedBox(
+      width: double.infinity,
+      child: Focus(
+        onFocusChange: (hasFocus) {
+          setState(() => _labelColor = hasFocus ? _highColor : _lowColor);
+        },
+        child: Form(
+          key: _dropdownFormFieldKey,
+          child: DropdownButtonFormField<String>(
+            decoration: InputDecoration(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+              errorStyle: const TextStyle(fontSize: 11, color: Colors.red),
+              errorText: widget.error,
+              errorMaxLines: 1,
 
-                    filled: true,
-                    fillColor: ColorResource.white,
-                    labelText: widget.label ?? widget.hint ?? '',
-                    labelStyle: TextStyle(
-                        fontSize: 14,
-                        fontWeight: AppResource.medium,
-                        color: _labelColor),
-                    isDense: true,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(0),
-                      borderSide: const BorderSide(
-                          width: 1, color: ColorResource.colorPrimary),
-                    ),
-                    focusedBorder: widget.focusBorder ?? _outlineInputBorder,
-                    disabledBorder: widget.disableBorder ?? _outlineInputBorder,
-                    errorBorder: widget.errorBorder ?? _outlineInputBorderError,
-                    focusedErrorBorder:
-                        widget.focusedErrorBorder ?? _outlineInputBorder,
-                    prefixIcon: widget.widgetLeft,
-                    prefixIconConstraints: widget.prefixConstraint ??
-                        const BoxConstraints(
-                          minHeight: 40,
-                          maxWidth: 40,
-                        ),
-                    suffixIconConstraints: widget.suffixConstraint ??
-                        const BoxConstraints(
-                            minHeight: 0, minWidth: 0, maxWidth: 30),
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
-                      child: widget.widgetRight ??
-                          const Icon(Icons.arrow_drop_down_outlined),
-                    ),
-                    // border: new CustomBorderTextFieldSkin().getSkin(),
+              filled: true,
+              fillColor: ColorResource.white,
+              labelText: widget.label ?? widget.hint ?? '',
+              labelStyle: TextStyle(
+                  fontSize: 14,
+                  fontWeight: AppResource.bold,
+                  color: _labelColor),
+              isDense: true,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(0),
+                borderSide: const BorderSide(
+                    width: 1, color: ColorResource.colorPrimary),
+              ),
+              focusedBorder: widget.focusBorder ?? _outlineInputBorder,
+              disabledBorder: widget.disableBorder ?? _outlineInputBorder,
+              errorBorder: widget.errorBorder ?? _outlineInputBorderError,
+              focusedErrorBorder:
+                  widget.focusedErrorBorder ?? _outlineInputBorder,
+              prefixIcon: widget.widgetLeft,
+              prefixIconConstraints: widget.prefixConstraint ??
+                  const BoxConstraints(
+                    minHeight: 40,
+                    maxWidth: 40,
                   ),
-                  validator: (value) => widget.onValidator?.call(value),
-                  key: dropdownKey,
-                  menuMaxHeight: Get.height / 2,
-                  value: widget.currentValue == '' ? null : widget.currentValue,
-                  isExpanded: true,
-                  isDense: true,
-                  icon: Utils.space(0, 0),
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: ColorResource.black,
-                      fontWeight: AppResource.medium),
+              suffixIconConstraints: widget.suffixConstraint ??
+                  const BoxConstraints(minHeight: 0, minWidth: 0, maxWidth: 30),
+              suffixIcon: Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: widget.widgetRight ??
+                    const Icon(Icons.arrow_drop_down_outlined),
+              ),
+              // border: new CustomBorderTextFieldSkin().getSkin(),
+            ),
+            validator: (value) => widget.onValidator?.call(value),
+            key: dropdownKey,
+            menuMaxHeight: Get.height / 2,
+            value: widget.currentValue == '' ? null : widget.currentValue,
+            isExpanded: true,
+            isDense: true,
+            icon: Utils.space(0, 0),
+            style: TextStyle(
+                fontSize: 14,
+                color: ColorResource.black,
+                fontWeight: AppResource.bold),
+            onTap: () {
+              Get.focusScope!.unfocus();
+            },
+            onChanged: (value) {
+              if (_dropdownFormFieldKey.currentState != null) {
+                if (_dropdownFormFieldKey.currentState!.validate()) {
+                  _dropdownFormFieldKey.currentState!.save();
+                }
+              }
+            },
+            items: (widget.listItems ?? []).map((value) {
+              return DropdownMenuItem<String>(
                   onTap: () {
                     Get.focusScope!.unfocus();
+                    widget.getCurrentValue?.call(value, widget.index ?? 0);
                   },
-                  onChanged: (value) {
-                    if (_dropdownFormFieldKey.currentState != null) {
-                      if (_dropdownFormFieldKey.currentState!.validate()) {
-                        _dropdownFormFieldKey.currentState!.save();
-                      }
-                    }
-                  },
-                  items: widget.listItems!.map((value) {
-                    return DropdownMenuItem<String>(
-                        onTap: () {
-                          Get.focusScope!.unfocus();
-                          widget.getCurrentValue
-                              ?.call(value, widget.index ?? 0);
-                        },
-                        value: value.title,
-                        child: Text(
-                          (value.title! as String),
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: ColorResource.colorPrimary,
-                              fontWeight: AppResource.bold),
-                        ));
-                  }).toList(),
-                  selectedItemBuilder: (context) => widget.listItems!
-                      .map(
-                        (value) => Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            (value.title! as String),
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: ColorResource.colorPrimary,
-                                fontSize: 14,
-                                fontWeight: AppResource.medium),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-            ),
+                  value: value.title,
+                  child: Text(
+                    (value.title! as String),
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: ColorResource.colorPrimary,
+                        fontWeight: AppResource.bold),
+                  ));
+            }).toList(),
+            selectedItemBuilder: (context) => (widget.listItems ?? [])
+                .map(
+                  (value) => Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      (value.title! as String),
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: ColorResource.colorPrimary,
+                          fontSize: 15,
+                          fontWeight: AppResource.bold),
+                    ),
+                  ),
+                )
+                .toList(),
           ),
         ),
-      ],
+      ),
     );
   }
 

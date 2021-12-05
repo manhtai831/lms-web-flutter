@@ -109,7 +109,8 @@ class ListQuizPage extends GetWidget<ListQuizController> {
                   child: Column(
                     children: [
                       Table(
-                        border: TableBorder.all(color: ColorResource.grey),
+                        border: TableBorder.all(
+                            color: ColorResource.grey.withOpacity(0.5)),
                         columnWidths: const <int, TableColumnWidth>{
                           0: FixedColumnWidth(64),
                           // 1: FlexColumnWidth(),
@@ -172,8 +173,11 @@ class ListQuizPage extends GetWidget<ListQuizController> {
                                                     ),
                                                     barrierDismissible: false),
                                                 onUpdate: () => Get.dialog(
-                                                    Container(),
-                                                    arguments: element,
+                                                    AddQuizPage(),
+                                                    arguments: [
+                                                      controller.idMonHoc,
+                                                      element
+                                                    ],
                                                     barrierDismissible: false))
                                           ],
                                         ),

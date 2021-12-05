@@ -85,8 +85,8 @@ class TextFieldCustom extends StatefulWidget {
 
 class _TextFieldCustomState extends State<TextFieldCustom> {
   Color? _labelColor;
-  Color? _highColor = ColorResource.colorPrimary;
-  Color? _lowColor = ColorResource.grey;
+  final Color? _highColor = ColorResource.colorPrimary;
+  final Color? _lowColor = ColorResource.grey;
   final _textFormFieldKey = GlobalKey<FormState>();
   OutlineInputBorder? _outlineInputBorder;
   OutlineInputBorder? _outlineInputBorderError;

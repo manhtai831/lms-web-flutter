@@ -1,32 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:web_lms/model/answer.dart';
-import 'package:web_lms/model/answer.dart';
-import 'package:web_lms/model/answer.dart';
-import 'package:web_lms/model/class_model.dart';
-import 'package:web_lms/model/class_model.dart';
 import 'package:web_lms/model/class_model.dart';
 import 'package:web_lms/model/department.dart';
 import 'package:web_lms/model/file_folder.dart';
-import 'package:web_lms/model/file_folder.dart';
-import 'package:web_lms/model/file_folder.dart';
 import 'package:web_lms/model/file_student.dart';
 import 'package:web_lms/model/file_system.dart';
-import 'package:web_lms/model/file_system.dart';
-import 'package:web_lms/model/file_system.dart';
-import 'package:web_lms/model/group_role.dart';
-import 'package:web_lms/model/group_role.dart';
 import 'package:web_lms/model/group_role.dart';
 import 'package:web_lms/model/group_type.dart';
-import 'package:web_lms/model/group_type.dart';
-import 'package:web_lms/model/group_type.dart';
-import 'package:web_lms/model/question.dart';
-import 'package:web_lms/model/question.dart';
 import 'package:web_lms/model/question.dart';
 import 'package:web_lms/model/repository.dart';
 import 'package:web_lms/model/semester.dart';
-import 'package:web_lms/model/subject.dart';
-import 'package:web_lms/model/subject.dart';
 import 'package:web_lms/model/subject.dart';
 import 'package:web_lms/model/user.dart';
 
@@ -256,4 +240,7 @@ abstract class RestClient {
 
   @POST("api/delete_answers")
   Future<BaseResponse?> deleteAnswer(@Body() Answer o);
+
+  @GET("api/get_info_more_quiz")
+  Future<BaseResponse?> getInfoQuiz({@Queries() Map<String, dynamic>? m});
 }

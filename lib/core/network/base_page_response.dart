@@ -22,11 +22,11 @@ class BasePageResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['pageIndex'] = this.pageIndex;
-    data['pageSize'] = this.pageSize;
-    data['totalPage'] = this.totalPage;
-    data['recordTotal'] = this.recordTotal;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['pageIndex'] = pageIndex;
+    data['pageSize'] = pageSize;
+    data['totalPage'] = totalPage;
+    data['recordTotal'] = recordTotal;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }

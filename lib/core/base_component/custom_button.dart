@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/resource/app_resource.dart';
 import 'package:web_lms/core/resource/color_resource.dart';
 
@@ -30,12 +31,23 @@ class CustomButton extends StatefulWidget {
 }
 
 class _CustomButtonState extends State<CustomButton> {
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Material(
       color: widget.background ?? ColorResource.colorPrimary,
       child: InkWell(
-        onTap: () => widget.onTab?.call(),
+        onTap: () async {
+          setState(() {
+            isLoading = true;
+          });
+
+          await widget.onTab?.call();
+          setState(() {
+            isLoading = false;
+          });
+        },
         child: Container(
           width: widget.width,
           decoration: BoxDecoration(
@@ -45,12 +57,15 @@ class _CustomButtonState extends State<CustomButton> {
           padding: widget.padding ??
               const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           alignment: widget.alignment ?? Alignment.centerLeft,
-          child: widget.child ??
-              Text(
-                widget.title ?? '',
-                textAlign: TextAlign.center,
-                style: AppResource.s15b.copyWith(color: ColorResource.white),
-              ),
+          child: isLoading
+              ? Utils.loading(height: 22, color: ColorResource.white, width: 70)
+              : widget.child ??
+                  Text(
+                    widget.title ?? '',
+                    textAlign: TextAlign.center,
+                    style:
+                        AppResource.s15b.copyWith(color: ColorResource.white),
+                  ),
         ),
       ),
     );

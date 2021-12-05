@@ -60,7 +60,7 @@ class ListRepositoryPage extends GetWidget<ListRepositoryController> {
       ),
       Utils.space(0, 16),
       Table(
-        border: TableBorder.all(color: ColorResource.grey),
+        border: TableBorder.all(color: ColorResource.grey.withOpacity(0.5)),
         columnWidths: const <int, TableColumnWidth>{
           0: FixedColumnWidth(64),
           // 1: FlexColumnWidth(),

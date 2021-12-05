@@ -54,21 +54,21 @@ class Semester {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.sId != null) data['_id'] = this.sId;
-    if (this.name != null) data['name'] = this.name;
-    if (this.description != null) data['description'] = this.description;
-    if (this.status != null) data['status'] = this.status;
-    if (this.idRepository != null) data['idRepository'] = this.idRepository;
-    if (this.endTime != null) data['endTime'] = this.endTime;
-    if (this.startTime != null) data['startTime'] = this.startTime;
-    if (this.createAt != null) data['createAt'] = this.createAt;
-    if (this.createBy != null) {
-      data['createBy'] = this.createBy!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (sId != null) data['_id'] = sId;
+    if (name != null) data['name'] = name;
+    if (description != null) data['description'] = description;
+    if (status != null) data['status'] = status;
+    if (idRepository != null) data['idRepository'] = idRepository;
+    if (endTime != null) data['endTime'] = endTime;
+    if (startTime != null) data['startTime'] = startTime;
+    if (createAt != null) data['createAt'] = createAt;
+    if (createBy != null) {
+      data['createBy'] = createBy!.toJson();
     }
-    if (this.id != null) data['id'] = this.id;
-    if (this.repository != null) {
-      data['repository'] = this.repository!.toJson();
+    if (id != null) data['id'] = id;
+    if (repository != null) {
+      data['repository'] = repository!.toJson();
     }
     return data;
   }

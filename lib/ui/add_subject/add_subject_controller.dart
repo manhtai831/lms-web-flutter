@@ -56,6 +56,9 @@ class AddSubjectController extends BaseController {
 
   @override
   getJsonObjectRequest() {
+    if (edtController[4].text.trim().isEmpty) {
+      idDepartment = -1;
+    }
     return Subject(
         id: pSubject?.id,
         name: edtController[0].text,

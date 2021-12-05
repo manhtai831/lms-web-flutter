@@ -6,11 +6,14 @@ import 'package:get/get.dart';
 class ClassModel {
   String? sId;
   String? name;
+  String? title;
   String? description;
   int? idSubject;
+  int? idAccount;
   Subject? subject;
   String? createAt;
   User? createBy;
+  User? account;
   int? id;
   int? iV;
   var isChoose = false.obs;
@@ -19,6 +22,7 @@ class ClassModel {
       {this.sId,
       this.name,
       this.description,
+      this.idAccount,
       this.idSubject,
       this.createAt,
       this.createBy,
@@ -28,6 +32,9 @@ class ClassModel {
   ClassModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     name = json['name'];
+    title = json['name'];
+    idAccount = json['idGiangVien'];
+
     description = json['description'];
     idSubject = json['idSubject'];
     if (json['subject'] != null) subject = Subject.fromJson(json['subject']);
@@ -37,23 +44,26 @@ class ClassModel {
     }
     createBy =
         json['createBy'] != null ? new User.fromJson(json['createBy']) : null;
+    account =
+        json['giangVien'] != null ? new User.fromJson(json['giangVien']) : null;
     id = json['id'];
     iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['description'] = this.description;
-    data['idSubject'] = this.idSubject;
-    data['createAt'] = this.createAt;
-    data['subject'] = this.subject;
-    if (this.createBy != null) {
-      data['createBy'] = this.createBy!.toJson();
+    if (sId != null) data['_id'] = sId;
+    if (name != null) data['name'] = name;
+    if (description != null) data['description'] = description;
+    if (idSubject != null) data['idSubject'] = idSubject;
+    if (idAccount != null) data['idGiangVien'] = idAccount;
+    if (createAt != null) data['createAt'] = createAt;
+    if (subject != null) data['subject'] = subject;
+    if (createBy != null) {
+      data['createBy'] = createBy!.toJson();
     }
-    data['id'] = this.id;
-    data['__v'] = this.iV;
+    if (id != null) data['id'] = id;
+    if (iV != null) data['__v'] = iV;
     return data;
   }
 }

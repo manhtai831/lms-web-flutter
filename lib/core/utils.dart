@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:web_lms/core/network/network_utils.dart';
+import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/resource/color_resource.dart';
+import 'package:web_lms/core/resource/image_resource.dart';
 import 'package:web_lms/model/base_item.dart';
 import 'package:web_lms/ui/semester/list_semester_page.dart';
 
@@ -40,8 +41,8 @@ class Utils {
   }
 
   static String concatUrl(String url) {
-    print('AAAAAAAAAAA ' + NetworkUtils.baseUrl + url);
-    return NetworkUtils.baseUrl + url;
+    print('URL ' + url);
+    return url;
   }
 
   static Future<void> launchInBrowser(String url) async {
@@ -49,7 +50,6 @@ class Utils {
       await launch(url);
     } else {
       Utils.snackBar(message: 'Can not open file');
-      throw 'Could not launch $url';
     }
   }
 
@@ -69,14 +69,17 @@ class Utils {
     ];
   }
 
-  static Widget loading({double? height, Color? color}) {
-    return SizedBox(
-      height: height ?? Get.height / 2,
-      width: height,
-      child: Center(
-        child: CircularProgressIndicator(
-          color: color ?? ColorResource.colorPrimary,
-        ),
+  static Widget loading({double? height, Color? color, double? width}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: SizedBox(
+        height: height ?? Get.height / 2,
+        width: height,
+        child: Center(child: RenderImage.imageAssets(ImageResource.ic_smile)
+            // CircularProgressIndicator(
+            //   color: color ?? ColorResource.colorPrimary,
+            // ),
+            ),
       ),
     );
   }

@@ -31,107 +31,113 @@ class AddATypePage extends GetWidget<AddATypeController> {
                   children: [
                     Utils.space(16, 0),
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Obx(
-                                  () => TextFieldCustom(
-                                    editingController:
-                                        controller.edtController[0],
-                                    error: controller.error[0],
-                                    maxLines: 1,
-                                    hint: 'Tên danh mục',
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Utils.space(0, 16),
-                          TextFieldCustom(
-                            hint: 'Mô tả',
-                            editingController: controller.edtController[1],
-                            maxLines: 1,
-                          ),
-                          Utils.space(0, 16),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: TextFieldCustom(
-                                  hint: 'Ngày bắt đầu',
-                                  isReadOnly: true,
-                                  editingController:
-                                      controller.edtController[2],
-                                  maxLines: 1,
-                                  onTap: () => controller.datePicker(2),
-                                ),
-                              ),
-                              Utils.space(16, 16),
-                              Expanded(
-                                child: TextFieldCustom(
-                                  hint: 'Giờ bắt đầu',
-                                  isReadOnly: true,
-                                  onTap: () => controller.timePicker(3),
-                                  editingController:
-                                      controller.edtController[3],
-                                  maxLines: 1,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Utils.space(0, 16),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: TextFieldCustom(
-                                  hint: 'Ngày kết thúc',
-                                  isReadOnly: true,
-                                  onTap: () => controller.datePicker(4),
-                                  editingController:
-                                      controller.edtController[4],
-                                  maxLines: 1,
-                                ),
-                              ),
-                              Utils.space(16, 16),
-                              Expanded(
-                                child: TextFieldCustom(
-                                  hint: 'Giờ kết thúc',
-                                  isReadOnly: true,
-                                  onTap: () => controller.timePicker(5),
-                                  editingController:
-                                      controller.edtController[5],
-                                  maxLines: 1,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Utils.space(0, 16),
-                          Obx(
-                            () => Row(
+                      child: Obx(
+                        () => Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               children: [
-                                Checkbox(
-                                    value: controller.isQuiz.value,
-                                    onChanged: (v) => controller.isQuiz.value =
-                                        !controller.isQuiz.value),
-                                InkWell(
-                                  onTap: () => controller.isQuiz.value =
-                                      !controller.isQuiz.value,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0, horizontal: 24),
-                                    child: Text(
-                                      'Là quiz',
-                                      style: AppResource.s15b,
+                                Expanded(
+                                  child: Obx(
+                                    () => TextFieldCustom(
+                                      editingController:
+                                          controller.edtController[0],
+                                      error: controller.error[0],
+                                      maxLines: 1,
+                                      hint: 'Tên danh mục',
                                     ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
-                          ),
-                          Utils.space(0, 16),
-                        ],
+                            Utils.space(0, 16),
+                            TextFieldCustom(
+                              hint: 'Mô tả',
+                              editingController: controller.edtController[1],
+                              maxLines: 1,
+                            ),
+                            Utils.space(0, 16),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextFieldCustom(
+                                    hint: 'Ngày bắt đầu',
+                                    isReadOnly: true,
+                                    error: controller.error[2],
+                                    editingController:
+                                        controller.edtController[2],
+                                    maxLines: 1,
+                                    onTap: () => controller.datePicker(2),
+                                  ),
+                                ),
+                                Utils.space(16, 16),
+                                Expanded(
+                                  child: TextFieldCustom(
+                                    hint: 'Giờ bắt đầu',
+                                    isReadOnly: true,
+                                    error: controller.error[3],
+                                    onTap: () => controller.timePicker(3),
+                                    editingController:
+                                        controller.edtController[3],
+                                    maxLines: 1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Utils.space(0, 16),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextFieldCustom(
+                                    hint: 'Ngày kết thúc',
+                                    isReadOnly: true,
+                                    error: controller.error[4],
+                                    onTap: () => controller.datePicker(4),
+                                    editingController:
+                                        controller.edtController[4],
+                                    maxLines: 1,
+                                  ),
+                                ),
+                                Utils.space(16, 16),
+                                Expanded(
+                                  child: TextFieldCustom(
+                                    hint: 'Giờ kết thúc',
+                                    isReadOnly: true,
+                                    error: controller.error[5],
+                                    onTap: () => controller.timePicker(5),
+                                    editingController:
+                                        controller.edtController[5],
+                                    maxLines: 1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Utils.space(0, 16),
+                            Obx(
+                              () => Row(
+                                children: [
+                                  Checkbox(
+                                      value: controller.isQuiz.value,
+                                      onChanged: (v) => controller.isQuiz
+                                          .value = !controller.isQuiz.value),
+                                  InkWell(
+                                    onTap: () => controller.isQuiz.value =
+                                        !controller.isQuiz.value,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8.0, horizontal: 24),
+                                      child: Text(
+                                        'Là quiz',
+                                        style: AppResource.s15b,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Utils.space(0, 16),
+                          ],
+                        ),
                       ),
                     ),
                   ],

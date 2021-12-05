@@ -12,6 +12,7 @@ class AddClassController extends BaseController {
   ClassModel? pClass;
   List<TextEditingController> edtController = [];
   int? idSubject;
+  int? idAccount;
   var error = <String?>[].obs;
 
   @override
@@ -24,7 +25,9 @@ class AddClassController extends BaseController {
     edtController[0].text = pClass?.name ?? '';
     edtController[1].text = pClass?.description ?? '';
     edtController[4].text = pClass?.subject?.name ?? '';
+    edtController[5].text = pClass?.account?.name ?? '';
     idSubject = pClass?.subject?.id;
+    idAccount = pClass?.idAccount;
   }
 
   @override
@@ -50,22 +53,38 @@ class AddClassController extends BaseController {
 
   @override
   getJsonObjectRequest() {
+    if (edtController[4].text.trim().isEmpty) {
+      idSubject = -1;
+    }
+    if (edtController[5].text.trim().isEmpty) {
+      idAccount = -1;
+    }
     return ClassModel(
-      id: pClass?.id,
-      name: edtController[0].text,
-      description: edtController[1].text,
-      idSubject: idSubject,
-    );
+        id: pClass?.id,
+        name: edtController[0].text,
+        description: edtController[1].text,
+        idSubject: idSubject,
+        idAccount: idAccount);
   }
 
-  sugestion(String pattern) async {
-    BaseSubject baseSemester = BaseSubject(title: pattern.toString());
-    await baseSemester.getData();
-    return baseSemester.listData;
+  sugestion(String pattern, int index) async {
+    if (index == 4) {
+      BaseSubject baseSemester = BaseSubject(title: pattern.toString());
+      await baseSemester.getData();
+      return baseSemester.listData;
+    } else {
+      BaseUser baseUser = BaseUser(title: pattern);
+      await baseUser.getData();
+      return baseUser.listData;
+    }
   }
 
-  valueSelected(value) {
-    idSubject = value.id;
+  valueSelected(value, int index) {
+    if (index == 4) {
+      idSubject = value.id;
+    } else if (index == 5) {
+      idAccount = value.id;
+    }
   }
 
   request() async {

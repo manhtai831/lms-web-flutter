@@ -16,17 +16,33 @@ class AddQuizController extends BaseController {
   @override
   initialData() async {
     idMonHoc = Get.arguments[0];
+    pQuestion = Get.arguments[1];
+    edtController.text = pQuestion?.content ?? '';
+    listAnswer.value = pQuestion?.listCauTraLoiObject ?? [];
+    listAnswer.forEach((element) {
+      if (element.id == pQuestion?.idDapAp) {
+        element.isDapAnDung.value = true;
+      }
+    });
   }
 
   @override
   getDataSuccessFromAPI() async {
-    BaseResponse? baseResponse =
-        await client.createQuestion(getJsonObjectRequest());
+    BaseResponse? baseResponse;
+    if (pQuestion != null) {
+      baseResponse = await client.updateQuestion(getJsonObjectRequest());
+    } else {
+      baseResponse = await client.createQuestion(getJsonObjectRequest());
+    }
+
     if (checkError(baseResponse)) {
       ListQuizController listQuizController = Get.find();
       listQuizController.getListQuestion();
       Get.back();
-      Utils.snackBar(message: 'Thêm câu hỏi thành công');
+      Utils.snackBar(
+          message: pQuestion != null
+              ? 'Cập nhật câu hỏi thành công'
+              : 'Thêm câu hỏi thành công');
     }
   }
 
@@ -39,6 +55,7 @@ class AddQuizController extends BaseController {
       }
     });
     return Question(
+      id: pQuestion?.id,
       listCauTraLoiObject: listAnswer,
       idDapAp: id,
       content: edtController.text,

@@ -78,15 +78,7 @@ class BaseController extends GetxController {
     switch (onError.runtimeType) {
       case DioError:
         final res = (onError as DioError).response;
-        try {
-          if (res?.statusCode != null) {
-            log('---->>>>>>>>>>>>>>>>>>>>>>>' + res!.statusCode.toString());
-          }
-          // Utils.showToast('${res!.statusCode}\n${res.statusMessage}');
-        } catch (e) {}
-
         if (res?.statusCode == 401) {
-          ///refresh token
         } else if (res?.statusCode == 500) {
           setStatus(Status.success);
           Utils.snackBar(message: 'Đã có lỗi xảy ra');

@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:web_lms/core/base_controller.dart';
 import 'package:get/get.dart';
+import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/network/base_page_response.dart';
 import 'package:web_lms/core/network/base_response.dart';
 import 'package:web_lms/core/status.dart';
@@ -54,7 +55,14 @@ class ListQuizController extends BaseController {
     status1.value = Status.success;
   }
 
-  deleteQuestion(int i) {}
+  deleteQuestion(int i) async {
+    BaseResponse? baseResponse = await client.deleteQuestion(Question(id: i));
+    if (checkError(baseResponse)) {
+      Get.back();
+      getListQuestion();
+      Utils.snackBar(message: 'Xóa câu hỏi thành công');
+    }
+  }
 
   pickSubject(Subject element) async {
     status.value = Status.loading;

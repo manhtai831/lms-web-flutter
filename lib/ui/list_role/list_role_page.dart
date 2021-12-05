@@ -145,7 +145,7 @@ class ListRolePage extends GetWidget<ListRoleController> {
                         () => Visibility(
                           visible: controller.visibleHeader.value,
                           child: Table(
-                            border: TableBorder.all(color: ColorResource.grey),
+                            border: TableBorder.all(color: ColorResource.grey.withOpacity(0.5)),
                             columnWidths: const <int, TableColumnWidth>{
                               0: FixedColumnWidth(64),
                               1: FixedColumnWidth(64),

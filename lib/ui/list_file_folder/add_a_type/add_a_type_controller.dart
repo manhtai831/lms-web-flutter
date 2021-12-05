@@ -163,5 +163,14 @@ class AddATypeController extends BaseController {
     });
   }
 
-  request() {}
+  request() async {
+    error[0] = Utils.validate(s: edtController[0].text);
+    error[2] = Utils.validate(s: edtController[2].text);
+    error[3] = Utils.validate(s: edtController[3].text);
+    error[4] = Utils.validate(s: edtController[4].text);
+    error[5] = Utils.validate(s: edtController[5].text);
+    if (Utils.checkValidate(l: error)) {
+      await getData();
+    }
+  }
 }

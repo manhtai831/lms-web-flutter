@@ -56,7 +56,7 @@ class ListClassPage extends GetWidget<ListClassController> {
                   Utils.space(8, 0),
                   CustomButton(
                     title: 'Tìm kiếm',
-                    // onTab: () => controller.search(),
+                    onTab: () => controller.search(),
                   ),
                   Utils.space(8, 0),
                   CustomButton(
@@ -71,7 +71,7 @@ class ListClassPage extends GetWidget<ListClassController> {
         ),
         Utils.space(0, 16),
         Table(
-          border: TableBorder.all(color: ColorResource.grey),
+          border: TableBorder.all(color: ColorResource.grey.withOpacity(0.5)),
           columnWidths: const <int, TableColumnWidth>{
             0: FixedColumnWidth(64),
             // 1: FlexColumnWidth(),
@@ -84,6 +84,7 @@ class ListClassPage extends GetWidget<ListClassController> {
                 tableCell(header: 'STT'.toUpperCase()),
                 tableCell(header: 'TÊN lớp học'.toUpperCase()),
                 tableCell(header: 'Mô tả'.toUpperCase()),
+                tableCell(header: 'Giảng viên'.toUpperCase()),
                 tableCell(header: 'Thời gian tạo'.toUpperCase()),
                 tableCell(header: 'người tạo'.toUpperCase()),
                 tableCell(header: 'Môn học'.toUpperCase()),
@@ -116,6 +117,7 @@ class ListClassPage extends GetWidget<ListClassController> {
                                 tableCell(text: (index + 1).toString()),
                                 tableCell(text: element.name),
                                 tableCell(text: element.description),
+                                tableCell(text: element.account?.title),
                                 tableCell(text: element.createAt),
                                 tableCell(text: element.createBy?.name),
                                 tableCell(text: element.subject?.name),

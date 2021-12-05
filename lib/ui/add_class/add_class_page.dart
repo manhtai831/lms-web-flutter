@@ -58,9 +58,19 @@ class AddClassPage extends GetWidget<AddClassController> {
                             hint: 'Môn học',
                             editingController: controller.edtController[4],
                             suggestCallBack: (pattern) async =>
-                                await controller.sugestion(pattern),
+                                await controller.sugestion(pattern, 4),
                             onSuggestionSelected: (value) =>
-                                controller.valueSelected(value),
+                                controller.valueSelected(value, 4),
+                          ),
+                          Utils.space(0, 16),
+                          TypeAheadCustom(
+                            maxLines: 1,
+                            hint: 'Giảng viên',
+                            editingController: controller.edtController[5],
+                            suggestCallBack: (pattern) async =>
+                                await controller.sugestion(pattern, 5),
+                            onSuggestionSelected: (value) =>
+                                controller.valueSelected(value, 5),
                           ),
                         ],
                       ),

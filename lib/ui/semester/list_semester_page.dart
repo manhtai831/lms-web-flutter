@@ -61,7 +61,7 @@ class ListSemesterPage extends GetWidget<ListSemesterController> {
         ),
         Utils.space(0, 16),
         Table(
-          border: TableBorder.all(color: ColorResource.grey),
+          border: TableBorder.all(color: ColorResource.grey.withOpacity(0.5)),
           columnWidths: const <int, TableColumnWidth>{
             0: FixedColumnWidth(64),
             // 1: FlexColumnWidth(),
@@ -149,11 +149,11 @@ class ListSemesterPage extends GetWidget<ListSemesterController> {
   }
 }
 
-Widget feature({
-  Function? onUpdate,
-  Function? onDetail,
-  Function? onDelete,
-}) {
+Widget feature(
+    {Function? onUpdate,
+    Function? onDetail,
+    Function? onDelete,
+    Function? onSendNotification}) {
   return Container(
     alignment: Alignment.center,
     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
@@ -215,6 +215,24 @@ Widget feature({
                   ),
                 ),
               ),
+            ),
+          if (onDelete != null) Utils.space(4, 0),
+          if (onSendNotification != null)
+            Tooltip(
+              message: 'Gửi thông báo',
+              child: Material(
+                color: ColorResource.transparent,
+                child: InkWell(
+                  onTap: () => onSendNotification.call(),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.send,
+                      color: ColorResource.colorPrimary,
+                    ),
+                  ),
+                ),
+              ),
             )
         ],
       ),
@@ -227,8 +245,12 @@ Widget tableCell({String? text, String? header, Widget? child}) {
     alignment: Alignment.center,
     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
     child: child ??
-        Text(
+        SelectableText(
           header ?? text ?? '',
+          cursorColor: Colors.red,
+          showCursor: false,
+          toolbarOptions: const ToolbarOptions(
+              copy: true, selectAll: true, cut: false, paste: false),
           style: header != null ? AppResource.s15b : AppResource.s15r,
           textAlign: TextAlign.center,
         ),

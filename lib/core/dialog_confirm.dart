@@ -9,7 +9,7 @@ class ConfirmDialog extends StatefulWidget {
   String? message;
   Function? onConfirm;
 
-  ConfirmDialog({this.message, this.onConfirm});
+  ConfirmDialog({Key? key, this.message, this.onConfirm}) : super(key: key);
 
   @override
   _ConfirmDialogState createState() => _ConfirmDialogState();

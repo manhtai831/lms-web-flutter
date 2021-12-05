@@ -31,13 +31,13 @@ class Answer {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['idCauHoi'] = this.idCauHoi;
-    data['content'] = this.content;
-    data['createdAt'] = this.createdAt;
-    data['createdBy'] = this.createdBy;
-    data['id'] = this.id;
-    data['__v'] = this.iV;
+    if (sId != null) data['_id'] = sId;
+    if (idCauHoi != null) data['idCauHoi'] = idCauHoi;
+    if (content != null) data['content'] = content;
+    if (createdAt != null) data['createdAt'] = createdAt;
+    if (createdBy != null) data['createdBy'] = createdBy;
+    if (id != null) data['id'] = id;
+    if (iV != null) data['__v'] = iV;
     return data;
   }
 }

@@ -22,11 +22,11 @@ class GroupRole {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.name != null) data['name'] = this.name;
-    if (this.id != null) data['id'] = this.id;
-    if (this.description != null) data['description'] = this.description;
-    if (this.roles != null) data['roles'] = this.roles;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (name != null) data['name'] = name;
+    if (id != null) data['id'] = id;
+    if (description != null) data['description'] = description;
+    if (roles != null) data['roles'] = roles;
     return data;
   }
 }

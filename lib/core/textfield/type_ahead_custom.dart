@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:get/get.dart';
 import 'package:web_lms/core/resource/app_resource.dart';
 import 'package:web_lms/core/resource/color_resource.dart';
 
@@ -41,7 +40,7 @@ class TypeAheadCustom extends StatefulWidget {
   SuggestionsBoxDecoration? suggestionsBoxDecoration;
 
   TypeAheadCustom(
-      {this.widgetLeft,
+      {Key? key, this.widgetLeft,
       this.widgetRight,
       this.widgetAfterLeft,
       this.widgetBelow,
@@ -70,16 +69,13 @@ class TypeAheadCustom extends StatefulWidget {
       this.onSubmitted,
       this.initialValue,
       this.error,
-      this.border});
+      this.border}) : super(key: key);
 
   @override
   State<TypeAheadCustom> createState() => _TypeAheadCustomState();
 }
 
 class _TypeAheadCustomState extends State<TypeAheadCustom> {
-  Color? _labelColor;
-  Color _highColor = ColorResource.colorPrimary;
-  Color _lowColor = ColorResource.grey;
   final _textFormFieldKey = GlobalKey<FormState>();
   OutlineInputBorder? _outlineInputBorder;
   OutlineInputBorder? _outlineInputBorderError;
@@ -110,8 +106,6 @@ class _TypeAheadCustomState extends State<TypeAheadCustom> {
               flex: 1,
               child: Focus(
                 onFocusChange: (hasFocus) {
-                  setState(
-                      () => _labelColor = hasFocus ? _highColor : _lowColor);
                 },
                 child: Form(
                   key: _textFormFieldKey,

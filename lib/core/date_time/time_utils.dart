@@ -1,13 +1,11 @@
-import 'dart:collection';
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class TimeUtils {
   static String dateFormat = "dd/MM/yyyy";
 
   static String timeFomart = "HH:mm:ss";
+  static String timeDateFormat = "HH:mm dd/MM/yyyy";
 
   static String locateDatetime2 = "dd/MM/yyyy HH:mm:ss";
   static String locateDatetime = "yyyy/MM/dd HH:mm:ss";
@@ -193,10 +191,12 @@ class TimeUtils {
         return 1;
       } else if (date.minute == now.minute) {
         return 0;
-      } else
+      } else {
         return -1;
-    } else
+      }
+    } else {
       return -1;
+    }
   }
 
   /*
@@ -215,12 +215,15 @@ class TimeUtils {
           return 1;
         } else if (d1.day == d2.day) {
           return 0;
-        } else
+        } else {
           return -1;
-      } else
+        }
+      } else {
         return -1;
-    } else
+      }
+    } else {
       return -1;
+    }
   }
 
   static int compareDateTime({DateTime? date, DateTime? now}) {
@@ -241,16 +244,21 @@ class TimeUtils {
               return 1;
             } else if (date.minute == now.minute) {
               return 0;
-            } else
+            } else {
               return -1;
-          } else
+            }
+          } else {
             return -1;
-        } else
+          }
+        } else {
           return -1;
-      } else
+        }
+      } else {
         return -1;
-    } else
+      }
+    } else {
       return -1;
+    }
   }
 
   //--------------------- lấy ra các ngày đầu tiên và cuối cùng của một tuần (cũng có thể lấy được các ngày trong tuần)

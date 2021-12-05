@@ -26,8 +26,8 @@ class AddUserController extends BaseController {
   var currentGender = ''.obs;
   var idGender;
   var avatar;
-  var idDepartment;
-  var idSemester;
+  int? idDepartment = -1;
+  int? idSemester = -1;
   BaseGroupRole? baseGroupRole;
 
   @override
@@ -70,6 +70,12 @@ class AddUserController extends BaseController {
 
   @override
   getJsonObjectRequest() {
+    if (edtController[8].text.trim().isEmpty) {
+      idDepartment = -1;
+    }
+    if (edtController[9].text.trim().isEmpty) {
+      idSemester = -1;
+    }
     return User(
         id: pUser?.id,
         userName: edtController[0].text,

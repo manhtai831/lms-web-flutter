@@ -71,20 +71,20 @@ class Question {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['content'] = this.content;
-    data['listCauTraLoi'] = this.listCauTraLoi;
-    data['idDanhMuc'] = this.idDanhMuc;
-    if (this.listCauTraLoiObject != null) {
+    if (content != null) data['content'] = content;
+    if (listCauTraLoi != null) data['listCauTraLoi'] = listCauTraLoi;
+    if (idDanhMuc != null) data['idDanhMuc'] = idDanhMuc;
+    if (listCauTraLoiObject != null) {
       data['listCauTraLoiObject'] =
-          this.listCauTraLoiObject!.map((v) => v.toJson()).toList();
+          listCauTraLoiObject!.map((v) => v.toJson()).toList();
     }
-    data['idMonHoc'] = this.idMonHoc;
-    data['idDapAp'] = this.idDapAp;
-    data['createdAt'] = this.createdAt;
-    data['createdBy'] = this.createdBy;
-    data['_id'] = this.sId;
-    data['id'] = this.id;
-    data['__v'] = this.iV;
+    if (idMonHoc != null) data['idMonHoc'] = idMonHoc;
+    if (idDapAp != null) data['idDapAp'] = idDapAp;
+    if (createdAt != null) data['createdAt'] = createdAt;
+    if (createdBy != null) data['createdBy'] = createdBy;
+    if (sId != null) data['_id'] = sId;
+    if (id != null) data['id'] = id;
+    if (iV != null) data['__v'] = iV;
     return data;
   }
 }
