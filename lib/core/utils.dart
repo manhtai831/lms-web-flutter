@@ -75,11 +75,11 @@ class Utils {
       child: SizedBox(
         height: height ?? Get.height / 2,
         width: height,
-        child: Center(child: RenderImage.imageAssets(ImageResource.ic_smile)
-            // CircularProgressIndicator(
-            //   color: color ?? ColorResource.colorPrimary,
-            // ),
-            ),
+        child:
+            // Center(child: RenderImage.imageAssets(ImageResource.ic_smile)
+            CircularProgressIndicator(
+          color: color ?? ColorResource.colorPrimary,
+        ),
       ),
     );
   }
