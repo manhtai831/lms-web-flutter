@@ -157,10 +157,15 @@ class ListPointPage extends GetWidget<ListPointController> {
                                           : element.point.toString()),
                                   tableCell(text: element.note),
                                   feature(
+                                      canUpdate: PersonManager.getInstance()
+                                          .hasRole(KeyRole.cap_nhat_diem),
                                       onUpdate: () => Get.dialog(AddPointPage(),
                                           arguments: element,
                                           barrierDismissible: false),
-                                      onSendNotification: () =>controller.sendNotification(element))
+                                      canSendNotify: PersonManager.getInstance()
+                                          .hasRole(KeyRole.thong_bao_diem),
+                                      onSendNotification: () =>
+                                          controller.sendNotification(element))
                                 ],
                               ),
                             )

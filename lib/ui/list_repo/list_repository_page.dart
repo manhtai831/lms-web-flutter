@@ -38,23 +38,35 @@ class ListRepositoryPage extends GetWidget<ListRepositoryController> {
             flex: 3,
             child: Container(),
           ),
-          Flexible(
-            child: TextFieldCustom(
-              padV: 12,
-              hint: 'Tên repository',
-              editingController: controller.edtController,
+          Visibility(
+            visible: PersonManager.getInstance()
+                .hasRole(KeyRole.tim_kiem_repository),
+            child: Flexible(
+              child: TextFieldCustom(
+                padV: 12,
+                hint: 'Tên repository',
+                editingController: controller.edtController,
+              ),
             ),
           ),
           Utils.space(8, 0),
-          CustomButton(
-            title: 'Tìm kiếm',
-            onTab: () => controller.search(),
+          Visibility(
+            visible: PersonManager.getInstance()
+                .hasRole(KeyRole.tim_kiem_repository),
+            child: CustomButton(
+              title: 'Tìm kiếm',
+              onTab: () => controller.search(),
+            ),
           ),
           Utils.space(8, 0),
-          CustomButton(
-            onTab: () =>
-                Get.dialog(AddRepositoryPage(), barrierDismissible: false),
-            title: 'Thêm',
+          Visibility(
+            visible:
+                PersonManager.getInstance().hasRole(KeyRole.them_repository),
+            child: CustomButton(
+              onTab: () =>
+                  Get.dialog(AddRepositoryPage(), barrierDismissible: false),
+              title: 'Thêm',
+            ),
           )
         ],
       ),
@@ -233,21 +245,26 @@ class ListRepositoryPage extends GetWidget<ListRepositoryController> {
                                         CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Tooltip(
-                                        message: 'Cật nhật',
-                                        child: Material(
-                                          color: ColorResource.transparent,
-                                          child: InkWell(
-                                            onTap: () => Get.dialog(
-                                                AddRepositoryPage(),
-                                                arguments: element,
-                                                barrierDismissible: false),
-                                            child: const Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Icon(
-                                                CupertinoIcons.pen,
-                                                color:
-                                                    ColorResource.colorPrimary,
+                                      Visibility(
+                                        visible: PersonManager.getInstance()
+                                            .hasRole(
+                                                KeyRole.cap_nhat_repository),
+                                        child: Tooltip(
+                                          message: 'Cật nhật',
+                                          child: Material(
+                                            color: ColorResource.transparent,
+                                            child: InkWell(
+                                              onTap: () => Get.dialog(
+                                                  AddRepositoryPage(),
+                                                  arguments: element,
+                                                  barrierDismissible: false),
+                                              child: const Padding(
+                                                padding: EdgeInsets.all(8.0),
+                                                child: Icon(
+                                                  CupertinoIcons.pen,
+                                                  color: ColorResource
+                                                      .colorPrimary,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -271,26 +288,30 @@ class ListRepositoryPage extends GetWidget<ListRepositoryController> {
                                       //   ),
                                       // ),
                                       // Utils.space(4, 0),
-                                      Tooltip(
-                                        message: 'Xóa',
-                                        child: Material(
-                                          color: ColorResource.transparent,
-                                          child: InkWell(
-                                            onTap: () => Get.dialog(
-                                                ConfirmDialog(
-                                                  message:
-                                                      'Xác nhận xóa repository \"${element.title}\"',
-                                                  onConfirm: () => controller
-                                                      .deleteRepository(
-                                                          element.id ?? -1),
+                                      Visibility(
+                                        visible: PersonManager.getInstance()
+                                            .hasRole(KeyRole.xoa_repository),
+                                        child: Tooltip(
+                                          message: 'Xóa',
+                                          child: Material(
+                                            color: ColorResource.transparent,
+                                            child: InkWell(
+                                              onTap: () => Get.dialog(
+                                                  ConfirmDialog(
+                                                    message:
+                                                        'Xác nhận xóa repository \"${element.title}\"',
+                                                    onConfirm: () => controller
+                                                        .deleteRepository(
+                                                            element.id ?? -1),
+                                                  ),
+                                                  barrierDismissible: false),
+                                              child: const Padding(
+                                                padding: EdgeInsets.all(8.0),
+                                                child: Icon(
+                                                  Icons.delete,
+                                                  color: ColorResource
+                                                      .colorPrimary,
                                                 ),
-                                                barrierDismissible: false),
-                                            child: const Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Icon(
-                                                Icons.delete,
-                                                color:
-                                                    ColorResource.colorPrimary,
                                               ),
                                             ),
                                           ),

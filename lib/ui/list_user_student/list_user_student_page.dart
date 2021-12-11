@@ -5,20 +5,20 @@ import 'package:get/get.dart';
 import 'package:web_lms/core/base_component/base_view.dart';
 import 'package:web_lms/core/base_component/custom_button.dart';
 import 'package:web_lms/core/dialog_confirm.dart';
-import 'package:web_lms/core/dropdown/dropdown_custom.dart';
 import 'package:web_lms/core/local_service/person_manager.dart';
 import 'package:web_lms/core/resource/app_resource.dart';
 import 'package:web_lms/core/resource/color_resource.dart';
 import 'package:web_lms/core/role_map.dart';
-import 'package:web_lms/core/status.dart';
 import 'package:web_lms/core/textfield/text_field_custom.dart';
 import 'package:web_lms/core/utils.dart';
 import 'package:web_lms/ui/add_user/add_user_page.dart';
 import 'package:web_lms/ui/list_user/list_user_controller.dart';
 import 'package:collection/collection.dart';
 
-class ListUserPage extends GetWidget<ListUserController> {
-  final _controller = Get.lazyPut(() => ListUserController());
+import 'list_user_student_controller.dart';
+
+class ListUserStudentPage extends GetWidget<ListUserStudentController> {
+  final _controller = Get.lazyPut(() => ListUserStudentController());
 
   @override
   Widget build(BuildContext context) {
@@ -60,21 +60,6 @@ class ListUserPage extends GetWidget<ListUserController> {
                   padV: 12,
                   hint: 'Tên người dùng',
                   editingController: controller.edtController,
-                ),
-              ),
-            ),
-            Utils.space(8, 0),
-            Obx(
-              () => Visibility(
-                visible: controller.status.value == Status.success,
-                child: Flexible(
-                  child: DropdownCustom(
-                    hint: 'Nhóm người dùng',
-                    currentValue: '',
-                    listItems: controller.listGroupRole,
-                    getCurrentValue: (value, index) =>
-                        controller.getCurrentValue(value),
-                  ),
                 ),
               ),
             ),

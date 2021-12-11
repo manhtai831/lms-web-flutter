@@ -40,10 +40,15 @@ class ListRolePage extends GetWidget<ListRoleController> {
                 Utils.space(0, 12),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: CustomButton(
-                    width: 170,
-                    title: 'Thêm nhóm quyền',
-                    onTab: () => controller.addGroup(),
+                  child: Visibility(
+                    visible: false,
+                    // visible: PersonManager.getInstance()
+                    //     .hasRole(KeyRole.them_nhom_quyen) ,
+                    child: CustomButton(
+                      width: 170,
+                      title: 'Thêm nhóm quyền',
+                      onTab: () => controller.addGroup(),
+                    ),
                   ),
                 ),
                 Utils.space(0, 12),
@@ -117,16 +122,25 @@ class ListRolePage extends GetWidget<ListRoleController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          CustomButton(
-                            background: ColorResource.grey,
-                            title: 'Xóa nhóm quyền',
-                            onTab: () => controller.delete(),
+                          Visibility(
+                            visible: false,
+                            // visible: PersonManager.getInstance()
+                            //     .hasRole(KeyRole.xoa_nhom_quyen),
+                            child: CustomButton(
+                              background: ColorResource.grey,
+                              title: 'Xóa nhóm quyền',
+                              onTab: () => controller.delete(),
+                            ),
                           ),
                           Utils.space(16, 0),
-                          CustomButton(
-                            onTab: () => controller.updateAndAdd(),
-                            background: ColorResource.colorPrimary,
-                            title: 'Cập nhật',
+                          Visibility(
+                            visible: PersonManager.getInstance()
+                                .hasRole(KeyRole.cap_nhat_nhom_quyen),
+                            child: CustomButton(
+                              onTab: () => controller.updateAndAdd(),
+                              background: ColorResource.colorPrimary,
+                              title: 'Cập nhật',
+                            ),
                           ),
                         ],
                       ),
@@ -145,7 +159,8 @@ class ListRolePage extends GetWidget<ListRoleController> {
                         () => Visibility(
                           visible: controller.visibleHeader.value,
                           child: Table(
-                            border: TableBorder.all(color: ColorResource.grey.withOpacity(0.5)),
+                            border: TableBorder.all(
+                                color: ColorResource.grey.withOpacity(0.5)),
                             columnWidths: const <int, TableColumnWidth>{
                               0: FixedColumnWidth(64),
                               1: FixedColumnWidth(64),

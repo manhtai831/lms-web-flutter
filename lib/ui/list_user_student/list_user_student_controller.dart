@@ -3,27 +3,21 @@ import 'package:web_lms/core/api_common.dart';
 import 'package:web_lms/core/base_controller.dart';
 import 'package:web_lms/core/network/base_page_response.dart';
 import 'package:web_lms/core/network/base_response.dart';
-import 'package:web_lms/core/status.dart';
-import 'package:web_lms/model/group_role.dart';
 import 'package:web_lms/model/user.dart';
 import 'package:get/get.dart';
 
-class ListUserController extends BaseController {
+class ListUserStudentController extends BaseController {
   var listUser = <User>[].obs;
-  var listGroupRole = <GroupRole>[].obs;
-  int? idGroup;
   TextEditingController edtController = TextEditingController();
-
   @override
   initialData() async {
     // await handleDelay(150);
-    await getGroupRole();
-    return await super.initialData();
+    return super.initialData();
   }
 
   @override
   getDataSuccessFromAPI() async {
-    BaseResponse? baseResponse = await client.getListUser();
+    BaseResponse? baseResponse = await client.getListUser(m: getParameters());
     listUser.clear();
     if (checkError(baseResponse)) {
       BasePageResponse basePageResponse =
@@ -32,16 +26,6 @@ class ListUserController extends BaseController {
         listUser.add(User.fromJson(element));
       }
     }
-    setStatus(Status.success);
-  }
-
-  getGroupRole() async {
-    BaseGroupRole baseGroupRole = BaseGroupRole();
-    await baseGroupRole.getData();
-    listGroupRole.value = [
-      GroupRole(title: 'Tất cả', name: 'Tất cả', id: -1),
-      ...baseGroupRole.listData ?? []
-    ];
   }
 
   deleteUser(int id) async {
@@ -56,15 +40,17 @@ class ListUserController extends BaseController {
   }
 
   search() async {
-    int? id = (idGroup == -1 || idGroup == null) ? null : idGroup;
-    BaseUser baseSemester =
-        BaseUser(title: edtController.text.trim(), idGroup: id);
+    BaseUser baseSemester = BaseUser(title: edtController.text.trim());
     await baseSemester.getData();
     listUser.clear();
     listUser.value = baseSemester.listData;
   }
 
-  getCurrentValue(value) {
-    idGroup = value.id;
+  @override
+  getParameters() {
+    super.getParameters();
+    map['name'] = ' ';
+    map['idGroup'] = 13;
+    return map;
   }
 }

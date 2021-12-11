@@ -4,9 +4,9 @@ import 'package:web_lms/core/resource/string_resource.dart';
 import 'rest_client.dart';
 
 class NetworkUtils {
-  // static String baseUrl = "http://192.168.1.26:3002/";
-  // static String baseUrl = "http://192.168.1.39:3001/";
-  static String baseUrl = "https://lms-app-281.herokuapp.com/";
+  static String baseUrl = "http://192.168.1.26:3002/";
+  // static String baseUrl = "http://192.168.1.39:3002/";
+  // static String baseUrl = "https://lms-app-281.herokuapp.com/";
 
   static String getBaseUrl() {
     return baseUrl;
@@ -43,18 +43,4 @@ class NetworkUtils {
     );
     return dio;
   }
-
-/*static Future<bool> hasConnection() async {
-    try {
-      final List<InternetAddress> result =
-          await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        return true;
-      } else {
-        return false;
-      }
-    } on SocketException catch (_) {
-      return false;
-    }
-  }*/
 }

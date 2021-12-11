@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:web_lms/core/api_common.dart';
 import 'package:web_lms/core/base_controller.dart';
 import 'package:web_lms/core/local_service/person_manager.dart';
 import 'package:web_lms/core/local_service/shared_pref.dart';
@@ -8,6 +9,7 @@ import 'package:web_lms/core/network/network_utils.dart';
 import 'package:web_lms/core/network/rest_client.dart';
 import 'package:web_lms/core/resource/key_resource.dart';
 import 'package:web_lms/core/resource/string_resource.dart';
+import 'package:web_lms/core/role_map.dart';
 import 'package:web_lms/core/status.dart';
 import 'package:web_lms/core/utils.dart';
 import 'package:web_lms/model/user.dart';
@@ -20,14 +22,20 @@ class LoginController extends BaseController {
 
   @override
   initialData() async {
-    setStatus(Status.success);
+    setStatus(Status.loading);
     var b1 = await SharedPref.containKey(KeyResource.token);
     if (b1) {
       StringResource.token = await SharedPref.getString(KeyResource.token);
+      BaseUserInfo baseUserInfo = BaseUserInfo();
+      await baseUserInfo.getData();
+      PersonManager.getInstance().user = baseUserInfo.user;
     }
-    if (StringResource.token != '') {
-      Get.offAll(() => HomePage());
+    if (PersonManager.getInstance().hasRole(KeyRole.dang_nhap_cms)) {
+      if (StringResource.token != '') {
+        Get.offAll(() => HomePage());
+      }
     }
+    setStatus(Status.success);
   }
 
   @override
@@ -46,7 +54,11 @@ class LoginController extends BaseController {
       StringResource.token = user.token ?? '';
       NetworkUtils.client = null;
       client = await NetworkUtils.getClientInstance();
-      Get.offAll(() => HomePage());
+      if (PersonManager.getInstance().hasRole(KeyRole.dang_nhap_cms)) {
+        Get.offAll(() => HomePage());
+      } else {
+        Utils.snackBar(message: 'Vui lòng kiểm tra lại tài khoản');
+      }
     }
     setStatus(Status.success);
   }

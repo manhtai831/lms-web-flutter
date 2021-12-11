@@ -39,9 +39,10 @@ class BaseDeleteUser extends BaseController {
 
 class BaseUser extends BaseController {
   String? title;
+  int? idGroup;
   List<User> listData = [];
 
-  BaseUser({this.title});
+  BaseUser({this.title,this.idGroup});
 
   @override
   getDataSuccessFromAPI() async {
@@ -60,6 +61,7 @@ class BaseUser extends BaseController {
   getParameters() {
     super.getParameters();
     if (title != null) map['name'] = title;
+    if (idGroup != null) map['idGroup'] = idGroup;
     return map;
   }
 }
@@ -429,5 +431,19 @@ class BaseSendNotification extends BaseController {
     if (idUser != null) map['idUser'] = idUser;
     if (idFileAttach != null) map['idFileAttach'] = idFileAttach;
     return map;
+  }
+}
+
+class BaseUserInfo extends BaseController {
+  User? user;
+
+  BaseUserInfo();
+
+  @override
+  getDataSuccessFromAPI() async {
+    BaseResponse? baseResponse = await client.getInfoUser();
+    if (checkError(baseResponse)) {
+      user = User.fromJson(baseResponse?.data);
+    }
   }
 }

@@ -8,7 +8,7 @@ class GroupRole {
   List<int>? roles;
   var isChoose = false.obs;
 
-  GroupRole({this.name, this.roles, this.id, this.description});
+  GroupRole({this.name, this.title, this.roles, this.id, this.description});
 
   GroupRole.fromJson(Map<String, dynamic> json) {
     name = json['name'];

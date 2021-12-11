@@ -39,23 +39,34 @@ class ListDepartmentPage extends GetWidget<ListDepartController> {
               flex: 3,
               child: Container(),
             ),
-            Flexible(
-              child: TextFieldCustom(
-                padV: 12,
-                hint: 'Tên kì học',
-                editingController: controller.edtController,
+            Visibility(
+              visible:
+                  PersonManager.getInstance().hasRole(KeyRole.tim_kiem_nganh),
+              child: Flexible(
+                child: TextFieldCustom(
+                  padV: 12,
+                  hint: 'Tên ngành học',
+                  editingController: controller.edtController,
+                ),
               ),
             ),
             Utils.space(8, 0),
-            CustomButton(
-              title: 'Tìm kiếm',
-              onTab: () => controller.search(),
+            Visibility(
+              visible:
+                  PersonManager.getInstance().hasRole(KeyRole.tim_kiem_nganh),
+              child: CustomButton(
+                title: 'Tìm kiếm',
+                onTab: () => controller.search(),
+              ),
             ),
             Utils.space(8, 0),
-            CustomButton(
-              onTab: () =>
-                  Get.dialog(AddDepartmentPage(), barrierDismissible: false),
-              title: 'Thêm',
+            Visibility(
+              visible: PersonManager.getInstance().hasRole(KeyRole.them_nganh),
+              child: CustomButton(
+                onTab: () =>
+                    Get.dialog(AddDepartmentPage(), barrierDismissible: false),
+                title: 'Thêm',
+              ),
             )
           ],
         ),
@@ -115,6 +126,8 @@ class ListDepartmentPage extends GetWidget<ListDepartController> {
                                 tableCell(text: element.listRepoStrings),
                                 tableCell(text: element.semester?.title),
                                 feature(
+                                    canDelete: PersonManager.getInstance()
+                                        .hasRole(KeyRole.xoa_nganh),
                                     onDelete: () => Get.dialog(
                                         ConfirmDialog(
                                           message:
@@ -123,6 +136,8 @@ class ListDepartmentPage extends GetWidget<ListDepartController> {
                                               .deleteSemester(element.id ?? -1),
                                         ),
                                         barrierDismissible: false),
+                                    canUpdate: PersonManager.getInstance()
+                                        .hasRole(KeyRole.cap_nhat_nganh),
                                     onUpdate: () => Get.dialog(
                                         AddDepartmentPage(),
                                         arguments: element,

@@ -39,23 +39,34 @@ class ListSemesterPage extends GetWidget<ListSemesterController> {
               flex: 3,
               child: Container(),
             ),
-            Flexible(
-              child: TextFieldCustom(
-                padV: 12,
-                hint: 'Tên kì học',
-                editingController: controller.edtController,
+            Visibility(
+              visible:
+                  PersonManager.getInstance().hasRole(KeyRole.tim_kiem_hoc_ky),
+              child: Flexible(
+                child: TextFieldCustom(
+                  padV: 12,
+                  hint: 'Tên kì học',
+                  editingController: controller.edtController,
+                ),
               ),
             ),
             Utils.space(8, 0),
-            CustomButton(
-              title: 'Tìm kiếm',
-              onTab: () => controller.search(),
+            Visibility(
+              visible:
+                  PersonManager.getInstance().hasRole(KeyRole.tim_kiem_hoc_ky),
+              child: CustomButton(
+                title: 'Tìm kiếm',
+                onTab: () => controller.search(),
+              ),
             ),
             Utils.space(8, 0),
-            CustomButton(
-              onTab: () =>
-                  Get.dialog(AddSemesterPage(), barrierDismissible: false),
-              title: 'Thêm',
+            Visibility(
+              visible: PersonManager.getInstance().hasRole(KeyRole.them_hoc_ky),
+              child: CustomButton(
+                onTab: () =>
+                    Get.dialog(AddSemesterPage(), barrierDismissible: false),
+                title: 'Thêm',
+              ),
             )
           ],
         ),
@@ -122,14 +133,18 @@ class ListSemesterPage extends GetWidget<ListSemesterController> {
                                     child:
                                         Text(element.repository?.title ?? '')),
                                 feature(
+                                    canDelete: PersonManager.getInstance()
+                                        .hasRole(KeyRole.xoa_hoc_ky),
                                     onDelete: () => Get.dialog(
                                         ConfirmDialog(
                                           message:
-                                              'Xác nhận xóa repository \"${element.name}\"',
+                                              'Xác nhận xóa học kì \"${element.name}\"',
                                           onConfirm: () => controller
                                               .deleteSemester(element.id ?? -1),
                                         ),
                                         barrierDismissible: false),
+                                    canUpdate: PersonManager.getInstance()
+                                        .hasRole(KeyRole.cap_nhat_hoc_ky),
                                     onUpdate: () => Get.dialog(
                                         AddSemesterPage(),
                                         arguments: element,
@@ -149,11 +164,16 @@ class ListSemesterPage extends GetWidget<ListSemesterController> {
   }
 }
 
-Widget feature(
-    {Function? onUpdate,
-    Function? onDetail,
-    Function? onDelete,
-    Function? onSendNotification}) {
+Widget feature({
+  Function? onUpdate,
+  bool? canUpdate,
+  Function? onDetail,
+  bool? canDetail,
+  Function? onDelete,
+  bool? canDelete,
+  Function? onSendNotification,
+  bool? canSendNotify,
+}) {
   return Container(
     alignment: Alignment.center,
     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
@@ -163,7 +183,7 @@ Widget feature(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (onUpdate != null)
+          if (onUpdate != null && (canUpdate ?? false))
             Tooltip(
               message: 'Cật nhật',
               child: Material(
@@ -180,8 +200,8 @@ Widget feature(
                 ),
               ),
             ),
-          if (onUpdate != null) Utils.space(4, 0),
-          if (onDetail != null)
+          if (onUpdate != null && (canUpdate ?? false)) Utils.space(4, 0),
+          if (onDetail != null && (canDetail ?? false))
             Tooltip(
               message: 'Chi tiết',
               child: Material(
@@ -198,8 +218,8 @@ Widget feature(
                 ),
               ),
             ),
-          if (onDetail != null) Utils.space(4, 0),
-          if (onDelete != null)
+          if (onDetail != null && (canDetail ?? false)) Utils.space(4, 0),
+          if (onDelete != null && (canDelete ?? false))
             Tooltip(
               message: 'Xóa',
               child: Material(
@@ -216,8 +236,8 @@ Widget feature(
                 ),
               ),
             ),
-          if (onDelete != null) Utils.space(4, 0),
-          if (onSendNotification != null)
+          if (onDelete != null && (canDelete ?? false)) Utils.space(4, 0),
+          if (onSendNotification != null && (canSendNotify ?? false))
             Tooltip(
               message: 'Gửi thông báo',
               child: Material(

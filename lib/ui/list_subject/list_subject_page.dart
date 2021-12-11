@@ -39,23 +39,35 @@ class ListSubjectPage extends GetWidget<ListSubjectController> {
               flex: 3,
               child: Container(),
             ),
-            Flexible(
-              child: TextFieldCustom(
-                padV: 12,
-                hint: 'Tên môn học',
-                editingController: controller.edtController,
+            Visibility(
+              visible:
+                  PersonManager.getInstance().hasRole(KeyRole.tim_kiem_mon_hoc),
+              child: Flexible(
+                child: TextFieldCustom(
+                  padV: 12,
+                  hint: 'Tên môn học',
+                  editingController: controller.edtController,
+                ),
               ),
             ),
             Utils.space(8, 0),
-            CustomButton(
-              title: 'Tìm kiếm',
-              onTab: () => controller.search(),
+            Visibility(
+              visible:
+                  PersonManager.getInstance().hasRole(KeyRole.tim_kiem_mon_hoc),
+              child: CustomButton(
+                title: 'Tìm kiếm',
+                onTab: () => controller.search(),
+              ),
             ),
             Utils.space(8, 0),
-            CustomButton(
-              onTab: () =>
-                  Get.dialog(AddSubjectPage(), barrierDismissible: false),
-              title: 'Thêm',
+            Visibility(
+              visible:
+                  PersonManager.getInstance().hasRole(KeyRole.them_mon_hoc),
+              child: CustomButton(
+                onTab: () =>
+                    Get.dialog(AddSubjectPage(), barrierDismissible: false),
+                title: 'Thêm',
+              ),
             )
           ],
         ),
@@ -126,6 +138,10 @@ class ListSubjectPage extends GetWidget<ListSubjectController> {
                                               .delete(element.id ?? -1),
                                         ),
                                         barrierDismissible: false),
+                                    canDelete: PersonManager.getInstance()
+                                        .hasRole(KeyRole.xoa_mon_hoc),
+                                    canUpdate: PersonManager.getInstance()
+                                        .hasRole(KeyRole.cap_nhat_mon_hoc),
                                     onUpdate: () => Get.dialog(AddSubjectPage(),
                                         arguments: element,
                                         barrierDismissible: false))

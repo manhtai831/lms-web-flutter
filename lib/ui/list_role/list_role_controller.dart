@@ -177,9 +177,9 @@ class ListRoleController extends BaseController {
   }
 
   pickFullRole() {
-    isFullRole.value = true;
+    isFullRole.value = !isFullRole.value;
     listRole.forEach((element) {
-      element.isChoose.value = true;
+      element.isChoose.value = isFullRole.value;
     });
   }
 }

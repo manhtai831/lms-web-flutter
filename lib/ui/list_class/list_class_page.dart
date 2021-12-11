@@ -39,12 +39,16 @@ class ListClassPage extends GetWidget<ListClassController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
-                    width: 250,
-                    child: TextFieldCustom(
-                      padV: 12,
-                      hint: 'Tên lớp học',
-                      editingController: controller.edtController,
+                  Visibility(
+                    visible: PersonManager.getInstance()
+                        .hasRole(KeyRole.tim_kiem_lop_hoc),
+                    child: SizedBox(
+                      width: 250,
+                      child: TextFieldCustom(
+                        padV: 12,
+                        hint: 'Tên lớp học',
+                        editingController: controller.edtController,
+                      ),
                     ),
                   ),
                   // Utils.space(8, 6),
@@ -54,15 +58,23 @@ class ListClassPage extends GetWidget<ListClassController> {
                   //   editingController: controller.edtController,
                   // ),
                   Utils.space(8, 0),
-                  CustomButton(
-                    title: 'Tìm kiếm',
-                    onTab: () => controller.search(),
+                  Visibility(
+                    visible: PersonManager.getInstance()
+                        .hasRole(KeyRole.tim_kiem_lop_hoc),
+                    child: CustomButton(
+                      title: 'Tìm kiếm',
+                      onTab: () => controller.search(),
+                    ),
                   ),
                   Utils.space(8, 0),
-                  CustomButton(
-                    onTab: () =>
-                        Get.dialog(AddClassPage(), barrierDismissible: false),
-                    title: 'Thêm',
+                  Visibility(
+                    visible: PersonManager.getInstance()
+                        .hasRole(KeyRole.them_lop_hoc),
+                    child: CustomButton(
+                      onTab: () =>
+                          Get.dialog(AddClassPage(), barrierDismissible: false),
+                      title: 'Thêm',
+                    ),
                   )
                 ],
               ),
@@ -130,6 +142,10 @@ class ListClassPage extends GetWidget<ListClassController> {
                                               .delete(element.id ?? -1),
                                         ),
                                         barrierDismissible: false),
+                                    canDelete: PersonManager.getInstance()
+                                        .hasRole(KeyRole.xoa_lop_hoc),
+                                    canUpdate: PersonManager.getInstance()
+                                        .hasRole(KeyRole.cap_nhat_lop_hoc),
                                     onUpdate: () => Get.dialog(AddClassPage(),
                                         arguments: element,
                                         barrierDismissible: false))

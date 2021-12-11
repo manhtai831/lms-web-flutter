@@ -20,11 +20,12 @@ import 'package:web_lms/ui/list_repo/list_repository_page.dart';
 import 'package:web_lms/ui/list_role/list_role_page.dart';
 import 'package:web_lms/ui/list_subject/list_subject_page.dart';
 import 'package:web_lms/ui/list_user/list_user_page.dart';
+import 'package:web_lms/ui/list_user_student/list_user_student_page.dart';
 import 'package:web_lms/ui/semester/list_semester_page.dart';
 
 class HomePage extends GetWidget<HomeController> {
   final _controller = Get.lazyPut(() => HomeController());
-  final double widthDrawer = Get.width / 5;
+  final double widthDrawer = 300;
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +158,7 @@ class HomePage extends GetWidget<HomeController> {
           child: Column(
             children: [
               Container(
-                height: Get.height / 20,
+                height: 55,
                 width: controller.visibleLeftView.value ? widthDrawer : 0,
                 color: ColorResource.colorPrimary,
                 alignment: Alignment.center,
@@ -243,8 +244,19 @@ class HomePage extends GetWidget<HomeController> {
       case 9:
         view = ListPointPage();
         break;
+      // case 10:
+      //   view = ListUserStudentPage();
+      //   break;
+      // case 11:
+      //   view = ListUserPage();
+      //   break;
       default:
-        view = Container();
+        view = Center(
+          child: Text(
+            'Bạn không có quyền truy cập. Vui lòng liên hệ với quản trị viên',
+            style: AppResource.s15b.copyWith(color: ColorResource.red),
+          ),
+        );
         break;
     }
     return Container(

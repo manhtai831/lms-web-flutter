@@ -44,23 +44,36 @@ class ListQuizPage extends GetWidget<ListQuizController> {
               flex: 3,
               child: Container(),
             ),
-            Flexible(
-              child: TextFieldCustom(
-                padV: 12,
-                hint: 'Câu hỏi',
-                // editingController: controller.edtController,
+            Visibility(
+              visible:
+                  PersonManager.getInstance().hasRole(KeyRole.tim_kiem_cau_hoi),
+              child: Flexible(
+                child: TextFieldCustom(
+                  padV: 12,
+                  hint: 'Câu hỏi',
+                  // editingController: controller.edtController,
+                ),
               ),
             ),
             Utils.space(8, 0),
-            CustomButton(
-              title: 'Tìm kiếm',
-              // onTab: () => controller.search(),
+            Visibility(
+              visible:
+                  PersonManager.getInstance().hasRole(KeyRole.tim_kiem_cau_hoi),
+              child: CustomButton(
+                title: 'Tìm kiếm',
+                // onTab: () => controller.search(),
+              ),
             ),
             Utils.space(8, 0),
-            CustomButton(
-              onTab: () => Get.dialog(AddQuizPage(),
-                  arguments: [controller.idMonHoc], barrierDismissible: false),
-              title: 'Thêm',
+            Visibility(
+              visible:
+                  PersonManager.getInstance().hasRole(KeyRole.them_cau_hoi),
+              child: CustomButton(
+                onTab: () => Get.dialog(AddQuizPage(),
+                    arguments: [controller.idMonHoc],
+                    barrierDismissible: false),
+                title: 'Thêm',
+              ),
             )
           ],
         ),
@@ -172,6 +185,14 @@ class ListQuizPage extends GetWidget<ListQuizController> {
                                                                       -1),
                                                     ),
                                                     barrierDismissible: false),
+                                                canUpdate:
+                                                    PersonManager.getInstance()
+                                                        .hasRole(KeyRole
+                                                            .cap_nhat_cau_hoi),
+                                                canDelete:
+                                                    PersonManager.getInstance()
+                                                        .hasRole(KeyRole
+                                                            .xoa_cau_hoi),
                                                 onUpdate: () => Get.dialog(
                                                     AddQuizPage(),
                                                     arguments: [

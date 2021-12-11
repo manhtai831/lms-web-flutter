@@ -49,7 +49,7 @@ class User {
     if (json['permission'] != null) {
       permission = [];
       json['permission'].forEach((v) {
-        permission!.add(new Permission.fromJson(v));
+        permission!.add(Permission.fromJson(v));
       });
     }
     sId = json['_id'];
@@ -105,17 +105,21 @@ class User {
 
 class Permission {
   String? sId;
+  String? name;
   int? idRole;
+  int? id;
 
   Permission({this.sId, this.idRole});
 
   Permission.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     idRole = json['idRole'];
+    id = json['id'];
+    name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['_id'] = sId;
     data['idRole'] = idRole;
     return data;

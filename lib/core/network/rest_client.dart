@@ -30,7 +30,7 @@ abstract class RestClient {
   Future<BaseResponse?> register(@Body() User o);
 
   @GET("api/list_user")
-  Future<BaseResponse?> getListUser();
+  Future<BaseResponse?> getListUser({@Queries() Map<String, dynamic>? m});
 
   @GET("api/info_user")
   Future<BaseResponse?> getInfoUser();

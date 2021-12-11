@@ -50,9 +50,11 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<BaseResponse?> getListUser() async {
+  Future<BaseResponse?> getListUser({m}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(m ?? <String, dynamic>{});
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(

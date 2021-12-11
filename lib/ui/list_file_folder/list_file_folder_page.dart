@@ -153,11 +153,13 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        CustomButton(
-                          background: ColorResource.grey,
-                          width: 180,
-                          title: 'Xóa file',
-                          onTab: () => controller.deleteType_FileSys(),
+                        Visibility(
+                          child: CustomButton(
+                            background: ColorResource.grey,
+                            width: 180,
+                            title: 'Xóa file',
+                            onTab: () => controller.deleteType_FileSys(),
+                          ),
                         ),
                         Utils.space(12, 12),
                         CustomButton(
@@ -204,17 +206,25 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        CustomButton(
-                          background: ColorResource.grey,
-                          width: 180,
-                          title: controller.deleteFile_GroupType.value,
-                          onTab: () => controller.deleteType_FileSys(),
+                        Visibility(
+                          visible: PersonManager.getInstance()
+                              .hasRole(KeyRole.xoa_nhom_danh_muc),
+                          child: CustomButton(
+                            background: ColorResource.grey,
+                            width: 180,
+                            title: controller.deleteFile_GroupType.value,
+                            onTab: () => controller.deleteType_FileSys(),
+                          ),
                         ),
                         Utils.space(12, 12),
-                        CustomButton(
-                          width: 200,
-                          title: controller.addFile_GroupType.value,
-                          onTab: () => controller.addType_FileSys(),
+                        Visibility(
+                          visible: PersonManager.getInstance()
+                              .hasRole(KeyRole.them_nhom_danh_muc),
+                          child: CustomButton(
+                            width: 200,
+                            title: controller.addFile_GroupType.value,
+                            onTab: () => controller.addType_FileSys(),
+                          ),
                         ),
                       ],
                     ),
@@ -265,17 +275,25 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  CustomButton(
-                    background: ColorResource.grey,
-                    width: 150,
-                    title: 'Xóa danh mục',
-                    onTab: () => controller.deleteFileFolder(),
+                  Visibility(
+                    visible: PersonManager.getInstance()
+                        .hasRole(KeyRole.xoa_danh_muc),
+                    child: CustomButton(
+                      background: ColorResource.grey,
+                      width: 150,
+                      title: 'Xóa danh mục',
+                      onTab: () => controller.deleteFileFolder(),
+                    ),
                   ),
                   Utils.space(12, 12),
-                  CustomButton(
-                    width: 170,
-                    title: 'Thêm danh mục',
-                    onTab: () => controller.addFileFolder(),
+                  Visibility(
+                    visible: PersonManager.getInstance()
+                        .hasRole(KeyRole.them_danh_muc),
+                    child: CustomButton(
+                      width: 170,
+                      title: 'Thêm danh mục',
+                      onTab: () => controller.addFileFolder(),
+                    ),
                   ),
                 ],
               ),
@@ -576,7 +594,9 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
                             child: Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  if (controller.tabController1!.index == 0) {
+                                  if (controller.tabController1!.index == 0 &&
+                                      PersonManager.getInstance().hasRole(
+                                          KeyRole.cap_nhat_nhom_danh_muc)) {
                                     Get.dialog(AddGroupTypePage(),
                                         arguments: [
                                           controller.idClass,
