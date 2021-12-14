@@ -79,6 +79,21 @@ class ListUserPage extends GetWidget<ListUserController> {
               ),
             ),
             Utils.space(8, 0),
+            Obx(
+              () => Visibility(
+                visible: controller.status.value == Status.success,
+                child: Flexible(
+                  child: DropdownCustom(
+                    hint: 'Lớp học',
+                    currentValue: '',
+                    listItems: controller.listClass,
+                    getCurrentValue: (value, index) =>
+                        controller.getCurrentValue(value),
+                  ),
+                ),
+              ),
+            ),
+            Utils.space(8, 0),
             Visibility(
               visible: PersonManager.getInstance()
                   .hasRole(KeyRole.tim_kiem_nguoi_dung),

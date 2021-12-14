@@ -4,6 +4,7 @@ import 'package:web_lms/core/base_controller.dart';
 import 'package:web_lms/core/network/base_page_response.dart';
 import 'package:web_lms/core/network/base_response.dart';
 import 'package:web_lms/core/status.dart';
+import 'package:web_lms/model/class_model.dart';
 import 'package:web_lms/model/group_role.dart';
 import 'package:web_lms/model/user.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 class ListUserController extends BaseController {
   var listUser = <User>[].obs;
   var listGroupRole = <GroupRole>[].obs;
+  var listClass = <ClassModel>[].obs;
   int? idGroup;
   TextEditingController edtController = TextEditingController();
 
@@ -18,6 +20,7 @@ class ListUserController extends BaseController {
   initialData() async {
     // await handleDelay(150);
     await getGroupRole();
+    await getClass();
     return await super.initialData();
   }
 
@@ -66,5 +69,14 @@ class ListUserController extends BaseController {
 
   getCurrentValue(value) {
     idGroup = value.id;
+  }
+
+  getClass()async {
+    BaseClassModel baseGroupRole = BaseClassModel();
+    await baseGroupRole.getData();
+    listClass.value = [
+      ClassModel(title: 'Tất cả', name: 'Tất cả', id: -1),
+      ...baseGroupRole.listData ?? []
+    ];
   }
 }

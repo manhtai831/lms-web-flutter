@@ -12,6 +12,7 @@ import 'package:web_lms/core/textfield/text_field_custom.dart';
 import 'package:web_lms/core/textfield/type_ahead_custom.dart';
 import 'package:web_lms/core/utils.dart';
 import 'package:web_lms/model/base_item.dart';
+import 'package:web_lms/model/class_model.dart';
 import 'package:web_lms/ui/add_user/add_user_controller.dart';
 
 class AddUserPage extends GetWidget<AddUserController> {
@@ -49,8 +50,11 @@ class AddUserPage extends GetWidget<AddUserController> {
                               alignment: Alignment.center,
                               child: Obx(
                                 () => controller.imageCurrent.value == null
-                                    ? RenderImage.imageNetwork(Utils.concatUrl(
-                                        controller.pUser?.avatar ?? ''))
+                                    ? controller.pUser?.avatar != null
+                                        ? RenderImage.imageNetwork(
+                                            Utils.concatUrl(
+                                                controller.pUser?.avatar ?? ''))
+                                        : Utils.space(0, 0)
                                     : RenderImage.getImageStorage(
                                         path64: controller.imageCurrent.value),
                               ),
@@ -92,7 +96,7 @@ class AddUserPage extends GetWidget<AddUserController> {
                             ],
                           ),
                           Utils.space(0, 16),
-                          Obx(
+                          /*Obx(
                             () => SingleChildScrollView(
                               child: Row(
                                 children: [
@@ -121,7 +125,7 @@ class AddUserPage extends GetWidget<AddUserController> {
                                 ],
                               ),
                             ),
-                          ),
+                          ),*/
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Row(
@@ -252,7 +256,46 @@ class AddUserPage extends GetWidget<AddUserController> {
                                   ),
                                 ),
                                 Utils.space(16, 0),
-                                Expanded(child: Container()),
+                                Expanded(
+                                  child: TypeAheadCustom(
+                                    hint: 'Lớp học',
+                                    editingController:
+                                        controller.edtController[10],
+                                    itemBuilder: (ClassModel suggest) =>
+                                        Obx(() => InkWell(
+                                              onTap: () => controller
+                                                  .onTabClass(suggest),
+                                              child: Row(
+                                                children: [
+                                                  Checkbox(
+                                                      value: suggest
+                                                          .isChoose.value,
+                                                      onChanged: (bool? b) =>
+                                                          suggest.isChoose
+                                                                  .value =
+                                                              !suggest.isChoose
+                                                                  .value),
+                                                  Text(
+                                                    suggest.title ?? '',
+                                                    style: AppResource.s15m
+                                                        .copyWith(
+                                                            color: suggest
+                                                                    .isChoose
+                                                                    .value
+                                                                ? ColorResource
+                                                                    .colorPrimary
+                                                                : ColorResource
+                                                                    .black),
+                                                  ),
+                                                ],
+                                              ),
+                                            )),
+                                    suggestCallBack: (pattern) async =>
+                                        await controller.sugestion(pattern, 10),
+                                    // onSuggestionSelected: (value) =>
+                                    //     controller.valueSelected(value, 10),
+                                  ),
+                                ),
                               ],
                             ),
                           ),

@@ -21,6 +21,7 @@ class ClassModel {
   ClassModel(
       {this.sId,
       this.name,
+      this.title,
       this.description,
       this.idAccount,
       this.idSubject,

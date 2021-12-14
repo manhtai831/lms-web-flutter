@@ -11,6 +11,7 @@ import 'package:web_lms/core/date_time/date_time_utils.dart';
 import 'package:web_lms/core/date_time/time_utils.dart';
 import 'package:web_lms/core/network/base_response.dart';
 import 'package:web_lms/core/utils.dart';
+import 'package:web_lms/model/class_model.dart';
 import 'package:web_lms/model/group_role.dart';
 import 'package:web_lms/model/user.dart';
 import 'package:web_lms/ui/list_user/list_user_controller.dart';
@@ -26,13 +27,14 @@ class AddUserController extends BaseController {
   var currentGender = ''.obs;
   var idGender;
   var avatar;
+  List<ClassModel> listClass = [];
   int? idDepartment = -1;
   int? idSemester = -1;
   BaseGroupRole? baseGroupRole;
 
   @override
   initialData() async {
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 11; i++) {
       edtController.add(TextEditingController());
     }
     checkArgument();
@@ -139,6 +141,14 @@ class AddUserController extends BaseController {
       BaseSemester baseSemester = BaseSemester(title: pattern.toString());
       await baseSemester.getData();
       return baseSemester.listData;
+    } else if (index == 10) {
+      if (listClass.isEmpty) {
+        BaseClassModel baseClassModel =
+            BaseClassModel(title: pattern.toString());
+        await baseClassModel.getData();
+        listClass = baseClassModel.listData ?? [];
+      }
+      return listClass;
     } else {
       return [];
     }
@@ -149,6 +159,8 @@ class AddUserController extends BaseController {
       idDepartment = value.id;
     } else if (index == 9) {
       idSemester = value.id;
+    } else if (index == 10) {
+      edtController[10].text += value.title;
     }
   }
 
@@ -159,5 +171,15 @@ class AddUserController extends BaseController {
       currentGroup.value = value.title;
       idGroup = value.id;
     }
+  }
+
+  onTabClass(ClassModel suggest) {
+    suggest.isChoose.value = !suggest.isChoose.value;
+    edtController[10].text = '';
+    listClass.forEach((element) {
+      if (element.isChoose.value) {
+        edtController[10].text += '${element.title}; ';
+      }
+    });
   }
 }
