@@ -25,50 +25,52 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
         decoration: const BoxDecoration(color: ColorResource.white),
         child: Scaffold(
           backgroundColor: ColorResource.white,
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              headerDialog(title: 'Thông báo'),
-              Utils.space(0, 16),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  widget.message ?? '',
-                  style: AppResource.s15r,
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                headerDialog(title: 'Thông báo'),
+                Utils.space(0, 16),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    widget.message ?? '',
+                    style: AppResource.s15r,
+                  ),
                 ),
-              ),
-              Utils.space(0, 16),
-              Container(
-                width: double.infinity,
-                height: 1,
-                color: ColorResource.grey,
-              ),
-              Utils.space(0, 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  CustomButton(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 24),
-                    onTab: () => Get.back(),
-                    title: 'Không',
-                    background: ColorResource.grey,
-                  ),
-                  Utils.space(16, 0),
-                  CustomButton(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 24),
-                    onTab: () {
-                      Get.back();
-                      widget.onConfirm?.call();
-                    },
-                    title: 'Có',
-                    background: ColorResource.colorPrimary,
-                  ),
-                  Utils.space(32, 0),
-                ],
-              )
-            ],
+                Utils.space(0, 16),
+                Container(
+                  width: double.infinity,
+                  height: 1,
+                  color: ColorResource.grey,
+                ),
+                Utils.space(0, 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CustomButton(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 24),
+                      onTab: () => Get.back(),
+                      title: 'Không',
+                      background: ColorResource.grey,
+                    ),
+                    Utils.space(16, 0),
+                    CustomButton(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 24),
+                      onTab: () {
+                        Get.back();
+                        widget.onConfirm?.call();
+                      },
+                      title: 'Có',
+                      background: ColorResource.colorPrimary,
+                    ),
+                    Utils.space(32, 0),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

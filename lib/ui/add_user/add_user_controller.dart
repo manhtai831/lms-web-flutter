@@ -31,6 +31,7 @@ class AddUserController extends BaseController {
   int? idDepartment = -1;
   int? idSemester = -1;
   BaseGroupRole? baseGroupRole;
+  BaseClassModel? baseClassModel;
 
   @override
   initialData() async {
@@ -48,7 +49,6 @@ class AddUserController extends BaseController {
 
   @override
   getDataSuccessFromAPI() async {
-    print('get Dataaaaaaaaa' + pUser.toString());
     if (pUser != null) {
       BaseResponse? baseResponse =
           await client.updateUser(getJsonObjectRequest());
@@ -89,6 +89,10 @@ class AddUserController extends BaseController {
         email: edtController[6].text,
         phoneNumber: edtController[7].text,
         chuyenNganhId: idDepartment,
+        listClassId: listClass
+            .where((e) => e.isChoose.value)
+            .map((e) => e.id ?? -1)
+            .toList(),
         avatar: pUser?.avatar,
         kiHocId: idSemester,
         data: avatar,
@@ -113,6 +117,14 @@ class AddUserController extends BaseController {
       idDepartment = pUser?.chuyenNganhId;
       idSemester = pUser?.kiHocId;
       idGroup = pUser?.idGroup;
+
+      listClass = pUser?.listClass
+              ?.map((e) => ClassModel.copy(e.id ?? -1, true.obs, e.name))
+              .toList() ??
+          [];
+      pUser?.listClass?.forEach((element) {
+        edtController[10].text += '${element.title}; ';
+      });
     }
   }
 
@@ -142,11 +154,17 @@ class AddUserController extends BaseController {
       await baseSemester.getData();
       return baseSemester.listData;
     } else if (index == 10) {
-      if (listClass.isEmpty) {
-        BaseClassModel baseClassModel =
-            BaseClassModel(title: pattern.toString());
-        await baseClassModel.getData();
-        listClass = baseClassModel.listData ?? [];
+      if (baseClassModel == null) {
+        baseClassModel = BaseClassModel(title: '');
+        await baseClassModel!.getData();
+        listClass = baseClassModel?.listData ?? [];
+        listClass.forEach((element) {
+          pUser?.listClass?.forEach((element1) {
+            if (element.id == element1.id) {
+              element.isChoose.value = true;
+            }
+          });
+        });
       }
       return listClass;
     } else {

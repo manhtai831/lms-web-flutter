@@ -40,9 +40,10 @@ class BaseDeleteUser extends BaseController {
 class BaseUser extends BaseController {
   String? title;
   int? idGroup;
+  int? idClass;
   List<User> listData = [];
 
-  BaseUser({this.title,this.idGroup});
+  BaseUser({this.title, this.idGroup, this.idClass});
 
   @override
   getDataSuccessFromAPI() async {
@@ -62,6 +63,7 @@ class BaseUser extends BaseController {
     super.getParameters();
     if (title != null) map['name'] = title;
     if (idGroup != null) map['idGroup'] = idGroup;
+    if (idClass != null) map['idClass'] = idClass;
     return map;
   }
 }
@@ -216,6 +218,7 @@ class BaseGroupRole extends BaseController {
 
 class BaseClassModel extends BaseController {
   String? title;
+  int? idDepartment;
   List<ClassModel>? listData = [];
 
   BaseClassModel({this.title});
@@ -236,6 +239,7 @@ class BaseClassModel extends BaseController {
   getParameters() {
     super.getParameters();
     if (title != null) map['name'] = title;
+    if (idDepartment != null) map['idDepartment'] = idDepartment;
     return map;
   }
 }

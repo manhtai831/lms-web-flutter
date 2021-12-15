@@ -57,6 +57,7 @@ class AddFileSystemController extends BaseController {
         name: edtController[0].text,
         linkFile: pFileSystem?.linkFile,
         description: edtController[1].text,
+        idSubject: -1,
         data: fileBase64,
         idClass: idClass);
   }

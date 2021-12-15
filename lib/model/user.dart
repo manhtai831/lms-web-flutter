@@ -1,3 +1,4 @@
+import 'package:web_lms/model/class_model.dart';
 import 'package:web_lms/model/department.dart';
 import 'package:web_lms/model/semester.dart';
 
@@ -23,6 +24,8 @@ class User {
   int? chuyenNganhId;
   Semester? kiHoc;
   int? kiHocId;
+  List<int>? listClassId;
+  List<ClassModel>? listClass;
 
   User(
       {this.permission,
@@ -34,6 +37,7 @@ class User {
       this.id,
       this.gender,
       this.idGroup,
+      this.listClassId,
       this.birth,
       this.password,
       this.phoneNumber,
@@ -55,6 +59,15 @@ class User {
     sId = json['_id'];
     gender = json['gender'];
     chuyenNganhId = json['chuyenNganhId'];
+    listClassId = [];
+    if (json['listClassId'] != null) {
+      json['listClassId'].forEach((element) => listClassId!.add(element));
+    }
+    listClass = [];
+    if (json['listClass'] != null) {
+      json['listClass']
+          .forEach((element) => listClass!.add(ClassModel.fromJson(element)));
+    }
     kiHocId = json['kiHocId'];
     idGroup = json['idGroup'];
     nameGroup = json['nameGroup'];
@@ -93,6 +106,7 @@ class User {
     if (email != null) data['email'] = email;
     if (token != null) data['token'] = token;
     if (this.data != null) data['data'] = this.data;
+    if (listClassId != null) data['listClassId'] = listClassId;
     if (id != null) data['id'] = id;
     if (birth != null) data['birth'] = birth;
     if (phoneNumber != null) data['phoneNumber'] = phoneNumber;

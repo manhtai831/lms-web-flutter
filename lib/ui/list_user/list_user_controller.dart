@@ -14,6 +14,7 @@ class ListUserController extends BaseController {
   var listGroupRole = <GroupRole>[].obs;
   var listClass = <ClassModel>[].obs;
   int? idGroup;
+  int? idClass;
   TextEditingController edtController = TextEditingController();
 
   @override
@@ -60,18 +61,24 @@ class ListUserController extends BaseController {
 
   search() async {
     int? id = (idGroup == -1 || idGroup == null) ? null : idGroup;
+    int? idC = (idClass == -1 || idClass == null) ? null : idClass;
     BaseUser baseSemester =
-        BaseUser(title: edtController.text.trim(), idGroup: id);
+        BaseUser(title: edtController.text.trim(), idGroup: id, idClass: idC);
     await baseSemester.getData();
     listUser.clear();
     listUser.value = baseSemester.listData;
   }
 
   getCurrentValue(value) {
-    idGroup = value.id;
+    if (value is GroupRole) {
+      idGroup = value.id;
+    }
+    if (value is ClassModel) {
+      idClass = value.id;
+    }
   }
 
-  getClass()async {
+  getClass() async {
     BaseClassModel baseGroupRole = BaseClassModel();
     await baseGroupRole.getData();
     listClass.value = [

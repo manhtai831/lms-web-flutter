@@ -30,6 +30,8 @@ class ClassModel {
       this.id,
       this.iV});
 
+  ClassModel.copy(this.id, this.isChoose, this.title);
+
   ClassModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     name = json['name'];
