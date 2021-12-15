@@ -1228,17 +1228,17 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<BaseResponse?> sendNotification({m}) async {
+  Future<BaseResponse?> sendNotification({o}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.addAll(m ?? <String, dynamic>{});
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
+    _data.addAll(o?.toJson() ?? <String, dynamic>{});
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<BaseResponse>(
-            Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'api/send_notification',
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'api/push_notify',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value =

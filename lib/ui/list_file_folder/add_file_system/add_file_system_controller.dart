@@ -13,13 +13,20 @@ class AddFileSystemController extends BaseController {
   FileSystem? pFileSystem;
   List<TextEditingController> edtController = [];
   int? idClass;
+  int? idSubject;
   var fileCurrent = ''.obs;
   var fileBase64;
   var error = <String?>[].obs;
+
   @override
   initialData() async {
-    idClass = Get.arguments[0];
-    if (Get.arguments.length > 1) {
+    if (Get.arguments[0] == 'fileSystemClass') {
+      idClass = Get.arguments[1];
+    } else {
+      idSubject = Get.arguments[1];
+    }
+
+    if ((Get.arguments[1] is FileSystem)) {
       pFileSystem = Get.arguments[1];
     }
 
@@ -57,7 +64,7 @@ class AddFileSystemController extends BaseController {
         name: edtController[0].text,
         linkFile: pFileSystem?.linkFile,
         description: edtController[1].text,
-        idSubject: -1,
+        idSubject: idSubject,
         data: fileBase64,
         idClass: idClass);
   }

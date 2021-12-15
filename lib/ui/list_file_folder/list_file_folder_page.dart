@@ -594,21 +594,30 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
                             child: Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  if (controller.tabController1!.index == 0 &&
-                                      PersonManager.getInstance().hasRole(
-                                          KeyRole.cap_nhat_nhom_danh_muc)) {
-                                    Get.dialog(AddGroupTypePage(),
-                                        arguments: [
-                                          controller.idClass,
-                                          element
-                                        ],
-                                        barrierDismissible: false);
-                                  }
-                                  if (controller.tabController1!.index == 1) {
+                                  if (controller.tabController1!.length > 0) {
+                                    if (controller.tabController1!.index == 0 &&
+                                        PersonManager.getInstance().hasRole(
+                                            KeyRole.cap_nhat_nhom_danh_muc)) {
+                                      Get.dialog(AddGroupTypePage(),
+                                          arguments: [
+                                            controller.idClass,
+                                            element
+                                          ],
+                                          barrierDismissible: false);
+                                    }
+                                    if (controller.tabController1!.index == 1) {
+                                      Get.dialog(AddFileSystemPage(),
+                                          barrierDismissible: false,
+                                          arguments: [
+                                            controller.idClass,
+                                            element
+                                          ]);
+                                    }
+                                  } else {
                                     Get.dialog(AddFileSystemPage(),
                                         barrierDismissible: false,
                                         arguments: [
-                                          controller.idClass,
+                                          controller.idSubject,
                                           element
                                         ]);
                                   }

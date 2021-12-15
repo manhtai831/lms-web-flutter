@@ -64,8 +64,10 @@ class ListPointController extends BaseController {
     idClass = suggestion.id;
     listGroupType.clear();
     listType.clear();
+    setStatus(Status.loading);
     await getListGroupType();
     groupTypeTitle.value = '';
+    setStatus(Status.success);
   }
 
   suggestCallBack(String pattern) async {
@@ -74,12 +76,13 @@ class ListPointController extends BaseController {
 
   getValueCallBack(value, int i) async {
     if (i == 0) {
+      setStatus(Status.loading);
       groupTypeTitle.value = (value as GroupType).title ?? '';
       listType.clear();
       await getListFileFolder(idGroupType: value.id);
       typeTitle.value = '';
-    }
-    if (i == 1) {
+      setStatus(Status.success);
+    } else if (i == 1) {
       setStatus(Status.loading);
       typeTitle.value = (value as FileFolder).title ?? '';
       idType = value.id;
@@ -98,8 +101,8 @@ class ListPointController extends BaseController {
   }
 
   sendNotification(FileStudent element) async {
-    BaseSendNotification baseSendNotification = BaseSendNotification(
-        idUser: element.user?.id, idFileAttach: element.id);
+    BaseSendNotification baseSendNotification =
+        BaseSendNotification(idUser: element.user?.id);
     await baseSendNotification.getData();
   }
 }

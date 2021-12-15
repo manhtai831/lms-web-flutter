@@ -423,18 +423,15 @@ class BaseSendNotification extends BaseController {
   @override
   getDataSuccessFromAPI() async {
     BaseResponse? baseResponse =
-        await client.sendNotification(m: getParameters());
+        await client.sendNotification(o: getJsonObjectRequest());
     if (checkError(baseResponse)) {
       Utils.snackBar(message: 'Gửi thông báo thành công');
     }
   }
 
   @override
-  getParameters() {
-    super.getParameters();
-    if (idUser != null) map['idUser'] = idUser;
-    if (idFileAttach != null) map['idFileAttach'] = idFileAttach;
-    return map;
+  getJsonObjectRequest() {
+    return User(id: idUser);
   }
 }
 

@@ -151,6 +151,8 @@ class ListFileFolderController extends BaseController {
       visibleView[5] = false;
     } else {
       idSubject = element.id;
+      idClass = null;
+      visibleView[1] = true;
       visibleView[2] = false;
       visibleView[3] = false;
       visibleView[5] = true;
@@ -201,10 +203,15 @@ class ListFileFolderController extends BaseController {
   addType_FileSys({bool? isOnly}) {
     if (tabController1!.index == 0 && isOnly == null) {
       Get.dialog(AddGroupTypePage(),
-          barrierDismissible: false, arguments: [idClass]);
+          barrierDismissible: false, arguments: ['fileSystemClass', idClass]);
     } else if (tabController1!.index == 1 || isOnly == true) {
-      Get.dialog(AddFileSystemPage(),
-          barrierDismissible: false, arguments: [idClass]);
+      if (idSubject != null) {
+        Get.dialog(AddFileSystemPage(),
+            barrierDismissible: false, arguments: ['fileSystem', idSubject]);
+      } else {
+        Get.dialog(AddFileSystemPage(),
+            barrierDismissible: false, arguments: ['fileSystemClass', idClass]);
+      }
     }
   }
 

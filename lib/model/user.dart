@@ -18,6 +18,7 @@ class User {
   int? idGroup;
   String? birth;
   String? phoneNumber;
+  String? fcmToken;
   String? address;
   String? avatar;
   Department? chuyenNganh;
@@ -36,6 +37,7 @@ class User {
       this.token,
       this.id,
       this.gender,
+      this.fcmToken,
       this.idGroup,
       this.listClassId,
       this.birth,
@@ -79,6 +81,7 @@ class User {
     address = json['address'];
     email = json['email'];
     token = json['token'];
+    fcmToken = json['fcmToken'];
     id = json['id'];
     if (json['chuyenNganh'] != null) {
       chuyenNganh = Department.fromJson(json['chuyenNganh']);
@@ -95,6 +98,7 @@ class User {
     }
     if (sId != null) data['_id'] = sId;
     if (gender != null) data['gender'] = gender;
+    if (fcmToken != null) data['fcmToken'] = fcmToken;
     if (idGroup != null) data['idGroup'] = idGroup;
     if (kiHocId != null) data['kiHocId'] = kiHocId;
     if (nameGroup != null) data['nameGroup'] = nameGroup;
