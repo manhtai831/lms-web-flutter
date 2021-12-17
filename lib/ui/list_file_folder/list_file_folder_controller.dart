@@ -215,8 +215,8 @@ class ListFileFolderController extends BaseController {
     }
   }
 
-  deleteType_FileSys() async {
-    if (tabController1!.index == 0) {
+  deleteType_FileSys({bool? isFileSystem}) async {
+    if (!(isFileSystem ?? true)) {
       listGroupType.forEach((element) async {
         if (element.isChoose.value) {
           await Get.dialog(
@@ -234,7 +234,7 @@ class ListFileFolderController extends BaseController {
                     });
                   }
                 },
-                message: 'Xác nhận xóa danh mục \"${element.name}',
+                message: 'Xác nhận xóa danh mục \"${element.name}\"',
               ),
               barrierDismissible: false);
         }
@@ -252,7 +252,7 @@ class ListFileFolderController extends BaseController {
                 Utils.snackBar(message: 'Xóa file hệ thống thành công');
               }
             },
-            message: 'Xác nhận xóa file \"${element.name}',
+            message: 'Xác nhận xóa file \"${element.name}\"',
           ));
         }
       });

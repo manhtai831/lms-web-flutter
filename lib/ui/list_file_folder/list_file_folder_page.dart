@@ -158,7 +158,8 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
                             background: ColorResource.grey,
                             width: 180,
                             title: 'Xóa file',
-                            onTab: () => controller.deleteType_FileSys(),
+                            onTab: () => controller.deleteType_FileSys(
+                                isFileSystem: true),
                           ),
                         ),
                         Utils.space(12, 12),
@@ -213,7 +214,8 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
                             background: ColorResource.grey,
                             width: 180,
                             title: controller.deleteFile_GroupType.value,
-                            onTab: () => controller.deleteType_FileSys(),
+                            onTab: () => controller.deleteType_FileSys(
+                                isFileSystem: false),
                           ),
                         ),
                         Utils.space(12, 12),

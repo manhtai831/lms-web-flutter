@@ -87,7 +87,7 @@ class ListSemesterPage extends GetWidget<ListSemesterController> {
                 tableCell(header: 'Mô tả'.toUpperCase()),
                 tableCell(header: 'thời gian bắt đầu'.toUpperCase()),
                 tableCell(header: 'Thời gian kết thúc'.toUpperCase()),
-                tableCell(header: 'trạng thái'.toUpperCase()),
+                // tableCell(header: 'trạng thái'.toUpperCase()),
                 tableCell(header: 'người tạo'.toUpperCase()),
                 tableCell(header: 'Repository'.toUpperCase()),
                 tableCell(header: 'CHỨC NĂNG'.toUpperCase()),
@@ -121,10 +121,10 @@ class ListSemesterPage extends GetWidget<ListSemesterController> {
                                 tableCell(text: element.description),
                                 tableCell(text: element.startTime),
                                 tableCell(text: element.endTime),
-                                tableCell(
-                                    text: element.status == 1
-                                        ? 'Đã kích hoạt'
-                                        : 'Chưa kích hoạt'),
+                                // tableCell(
+                                //     text: element.status == 1
+                                //         ? 'Đã kích hoạt'
+                                //         : 'Chưa kích hoạt'),
                                 tableCell(text: element.createBy?.name),
                                 Container(
                                     alignment: Alignment.center,
