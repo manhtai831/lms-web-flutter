@@ -4,9 +4,9 @@ import 'package:web_lms/core/resource/string_resource.dart';
 import 'rest_client.dart';
 
 class NetworkUtils {
-  // static String baseUrl = "http://192.168.1.26:3002/";
+  static String baseUrl = "http://192.168.1.26:3002/";
   // static String baseUrl = "http://192.168.1.39:3002/";
-  static String baseUrl = "https://lms-app-281.herokuapp.com/";
+  // static String baseUrl = "https://lms-app-281.herokuapp.com/";
 
   static String getBaseUrl() {
     return baseUrl;

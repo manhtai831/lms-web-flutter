@@ -212,8 +212,8 @@ class ListUserPage extends GetWidget<ListUserController> {
                       color: ColorResource.grey.withOpacity(0.5)),
                   columnWidths: <int, TableColumnWidth>{
                     0: controller.listUser.isNotEmpty
-                        ? FixedColumnWidth(64)
-                        : FlexColumnWidth(),
+                        ? const FixedColumnWidth(64)
+                        : const FlexColumnWidth(),
                     // 1: FlexColumnWidth(),
                     // 2: FixedColumnWidth(64),
                   },
