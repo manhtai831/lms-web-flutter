@@ -14,9 +14,9 @@ class AddGroupTypeController extends BaseController {
 
   @override
   initialData() async {
-    idClass = Get.arguments[0];
-    if (Get.arguments.length > 1) {
-      pGroupType = Get.arguments[1];
+    idClass = Get.arguments[1];
+    if (Get.arguments.length > 2) {
+      pGroupType = Get.arguments[2];
     }
 
     for (int i = 0; i < 5; i++) {

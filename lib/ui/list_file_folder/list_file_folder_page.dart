@@ -1,4 +1,5 @@
 import 'package:web_lms/core/export_all.dart';
+import 'package:web_lms/model/class_model.dart';
 import 'package:web_lms/ui/list_file_folder/add_a_type/add_a_type_page.dart';
 import 'package:web_lms/ui/list_file_folder/add_group_type/add_group_type_page.dart';
 import 'package:web_lms/ui/list_file_folder/list_file_folder_controller.dart';
@@ -538,12 +539,28 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
                           ? ColorResource.colorPrimary
                           : ColorResource.white,
                       onTab: () => controller.pickView1(element),
-                      child: Text(
-                        element.name ?? '',
-                        style: AppResource.s15r.copyWith(
-                            color: element.isChoose.value
-                                ? ColorResource.white
-                                : ColorResource.black),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            element.name ?? '',
+                            style: AppResource.s15r.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: element.isChoose.value
+                                    ? ColorResource.white
+                                    : ColorResource.black),
+                          ),
+                          (element is ClassModel)
+                              ? Text(
+                                  element.subject?.name ?? '',
+                                  style: AppResource.s15r.copyWith(
+                                      fontSize: 12,
+                                      color: element.isChoose.value
+                                          ? ColorResource.white
+                                          : ColorResource.grey),
+                                )
+                              : Utils.space(0, 0),
+                        ],
                       ),
                     ),
                   ],
@@ -602,6 +619,7 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
                                             KeyRole.cap_nhat_nhom_danh_muc)) {
                                       Get.dialog(AddGroupTypePage(),
                                           arguments: [
+                                            'adsf',
                                             controller.idClass,
                                             element
                                           ],
