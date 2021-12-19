@@ -1,6 +1,8 @@
+import 'package:excel/excel.dart';
 import 'package:web_lms/core/api_common.dart';
 import 'package:web_lms/core/base_controller.dart';
 import 'package:get/get.dart';
+import 'package:web_lms/core/excel_module.dart';
 import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/status.dart';
 import 'package:web_lms/model/class_model.dart';
@@ -104,5 +106,20 @@ class ListPointController extends BaseController {
     BaseSendNotification baseSendNotification =
         BaseSendNotification(idUser: element.user?.id);
     await baseSendNotification.getData();
+  }
+
+  exportExcel() {
+    Excel excel = ExcelModule.createExcel();
+    listFileStudent.mapIndexed((index, element) {
+      List<String> listData = [];
+      listData.add(element.user?.name ?? '');
+      listData.add(element.name ?? '');
+      listData.add(element.link ?? '');
+      listData.add(element.createdAt ?? '');
+      listData.add(element.point.toString());
+      listData.add(element.note ?? '');
+      ExcelModule.insertRow(excel: excel, index: index, listData: listData);
+    });
+    ExcelModule.saveFile(excel: excel);
   }
 }

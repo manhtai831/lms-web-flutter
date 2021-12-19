@@ -32,10 +32,23 @@ class ListPointPage extends GetWidget<ListPointController> {
       () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Điểm',
-            style: AppResource.s15b
-                .copyWith(fontSize: 23, color: ColorResource.colorPrimary),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Điểm',
+                style: AppResource.s15b
+                    .copyWith(fontSize: 23, color: ColorResource.colorPrimary),
+              ),
+              Visibility(
+                visible: controller.listFileStudent.isNotEmpty ||
+                    controller.listInfoQuiz.isNotEmpty,
+                child: CustomButton(
+                  onTab: () => controller.exportExcel(),
+                  title: 'Xuất excel',
+                ),
+              )
+            ],
           ),
           Utils.space(0, 16),
           Row(
