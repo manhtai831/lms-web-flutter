@@ -1,3 +1,4 @@
+import 'dart:html' as html;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -5,8 +6,6 @@ import 'package:get/get.dart';
 import 'package:web_lms/core/local_service/shared_pref.dart';
 import 'package:web_lms/core/network/network_utils.dart';
 import 'package:web_lms/ui/login/login_page.dart';
-
-import 'dart:html' as html;
 
 void main() {
   print('-----}-------------> Listen on ' + NetworkUtils.baseUrl);
@@ -32,7 +31,7 @@ class _MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: "Trang quản trị",
+      title: "Web quản trị",
       defaultTransition: Transition.cupertino,
       smartManagement: SmartManagement.keepFactory,
       showPerformanceOverlay: false,
