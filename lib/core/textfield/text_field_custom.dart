@@ -164,7 +164,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
                     decoration: InputDecoration(
                       errorStyle:
                           const TextStyle(fontSize: 11, color: Colors.red),
-                      errorText: widget.error,
+                      errorText: widget.error == '' ? null : widget.error,
                       errorMaxLines: 1,
                       filled: true,
                       fillColor: widget.fillColor ?? ColorResource.white,

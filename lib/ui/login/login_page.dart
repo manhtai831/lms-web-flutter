@@ -29,47 +29,53 @@ class LoginPage extends GetWidget<LoginController> {
         decoration: const BoxDecoration(color: ColorResource.white,
             // border: Border.all(),
             boxShadow: [BoxShadow(color: ColorResource.grey, blurRadius: 5)]),
-        child: Column(children: [
-          Text(
-            'Sign in',
-            style: AppResource.s15b
-                .copyWith(fontSize: 20, color: ColorResource.colorPrimary),
-          ),
-          Utils.space(0, 32),
-          TextFieldCustom(
-            editingController: controller.edtLogin,
-            maxLines: 1,
-            hint: 'Tài khoản',
-          ),
-          Utils.space(0, 16),
-          TextFieldCustom(
-            editingController: controller.edtPassword,
-            obscureText: true,
-            maxLines: 1,
-            hint: 'Mật khẩu',
-            inputType: TextInputType.visiblePassword,
-          ),
-          Utils.space(0, 32),
-          Obx(
-            () => CustomButton(
-              // width: double.infinity,
-              // child: const Text(
-              //   'Đăng nhập',
-              //   textAlign: TextAlign.center,
-              // ),
-              alignment: Alignment.center,
-              title: "Đăng nhập",
-              child: controller.status.value == Status.loading
-                  ? Utils.loading(height: 23, color: ColorResource.white)
-                  : Text(
-                      'Đăng nhập',
-                      style:
-                          AppResource.s15b.copyWith(color: ColorResource.white),
-                    ),
-              onTab: () async => await controller.login(),
+        child: Obx(
+          () => Column(children: [
+            Text(
+              'Sign in',
+              style: AppResource.s15b
+                  .copyWith(fontSize: 20, color: ColorResource.colorPrimary),
             ),
-          ),
-        ]),
+            Utils.space(0, 32),
+            TextFieldCustom(
+              editingController: controller.edtLogin,
+              maxLines: 1,
+              onValidator: (v) => controller.onValidate(1),
+              error: controller.errorUserName.value,
+              hint: 'Tài khoản',
+            ),
+            Utils.space(0, 16),
+            TextFieldCustom(
+              editingController: controller.edtPassword,
+              obscureText: true,
+              maxLines: 1,
+              error: controller.errorPassword.value,
+              onValidator: (v) => controller.onValidate(2),
+              hint: 'Mật khẩu',
+              inputType: TextInputType.visiblePassword,
+            ),
+            Utils.space(0, 32),
+            Obx(
+              () => CustomButton(
+                // width: double.infinity,
+                // child: const Text(
+                //   'Đăng nhập',
+                //   textAlign: TextAlign.center,
+                // ),
+                alignment: Alignment.center,
+                title: "Đăng nhập",
+                child: controller.status.value == Status.loading
+                    ? Utils.loading(height: 23, color: ColorResource.white)
+                    : Text(
+                        'Đăng nhập',
+                        style: AppResource.s15b
+                            .copyWith(color: ColorResource.white),
+                      ),
+                onTab: () async => await controller.login(),
+              ),
+            ),
+          ]),
+        ),
       ),
     );
   }

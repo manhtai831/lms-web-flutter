@@ -4,21 +4,20 @@ import 'package:web_lms/core/api_common.dart';
 import 'package:web_lms/core/base_controller.dart';
 import 'package:web_lms/core/local_service/person_manager.dart';
 import 'package:web_lms/core/local_service/shared_pref.dart';
-import 'package:web_lms/core/network/base_response.dart';
 import 'package:web_lms/core/network/network_utils.dart';
-import 'package:web_lms/core/network/rest_client.dart';
 import 'package:web_lms/core/resource/key_resource.dart';
 import 'package:web_lms/core/resource/string_resource.dart';
 import 'package:web_lms/core/role_map.dart';
 import 'package:web_lms/core/status.dart';
 import 'package:web_lms/core/utils.dart';
 import 'package:web_lms/model/user.dart';
-import 'package:web_lms/ui/home/home_controller.dart';
 import 'package:web_lms/ui/home/home_page.dart';
 
 class LoginController extends BaseController {
   TextEditingController edtLogin = TextEditingController(text: '');
   TextEditingController edtPassword = TextEditingController(text: '');
+  var errorUserName = ''.obs;
+  var errorPassword = ''.obs;
 
   @override
   initialData() async {
@@ -69,6 +68,23 @@ class LoginController extends BaseController {
   }
 
   login() async {
-    await getData();
+    if (edtLogin.text.trim().isEmpty) {
+      errorUserName.value = 'Chưa nhập tài khoản';
+    }
+    if (edtPassword.text.trim().isEmpty) {
+      errorPassword.value = 'Chưa nhập mật khẩu';
+    }
+    if (errorPassword.value == '' && errorUserName.value == '') {
+      await getData();
+    }
+  }
+
+  onValidate(int i) {
+    if (i == 1) {
+      errorUserName.value = '';
+    }
+    if (i == 2) {
+      errorPassword.value = '';
+    }
   }
 }
