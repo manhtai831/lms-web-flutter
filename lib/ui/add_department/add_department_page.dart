@@ -41,9 +41,19 @@ class AddDepartmentPage extends GetWidget<AddDepartmentController> {
                                       color: ColorResource.colorPrimary)),
                               alignment: Alignment.center,
                               child: Obx(
+                                // () => controller.imageCurrent.value == null
+                                //     ? RenderImage.imageNetwork(Utils.concatUrl(
+                                //         controller.pDepartment?.image ?? ''))
+                                //     : RenderImage.getImageStorage(
+                                //         path64: controller.imageCurrent.value),
+
                                 () => controller.imageCurrent.value == null
-                                    ? RenderImage.imageNetwork(Utils.concatUrl(
-                                        controller.pDepartment?.image ?? ''))
+                                    ? controller.pDepartment?.image != null
+                                        ? RenderImage.imageNetwork(
+                                            Utils.concatUrl(
+                                                controller.pDepartment?.image ??
+                                                    ''))
+                                        : Utils.space(0, 0)
                                     : RenderImage.getImageStorage(
                                         path64: controller.imageCurrent.value),
                               ),

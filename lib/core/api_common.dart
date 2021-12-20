@@ -2,6 +2,7 @@ import 'package:web_lms/core/base_controller.dart';
 import 'package:web_lms/core/network/base_page_response.dart';
 import 'package:web_lms/core/network/base_response.dart';
 import 'package:web_lms/core/utils.dart';
+import 'package:web_lms/model/answer.dart';
 import 'package:web_lms/model/class_model.dart';
 import 'package:web_lms/model/department.dart';
 import 'package:web_lms/model/file_folder.dart';
@@ -409,6 +410,32 @@ class BaseInfoQuiz extends BaseController {
     super.getParameters();
     if (content != null) map['content'] = content;
     if (idDocumentType != null) map['idDocumentType'] = idDocumentType;
+    return map;
+  }
+}
+
+class BaseAnswer extends BaseController {
+  int? idCauHoi;
+  List<Answer> listData = [];
+
+  BaseAnswer({this.idCauHoi});
+
+  @override
+  getDataSuccessFromAPI() async {
+    BaseResponse? baseResponse = await client.getListAnswer(m: getParameters());
+    if (checkError(baseResponse)) {
+      BasePageResponse basePageResponse =
+          BasePageResponse.fromJson(baseResponse?.data);
+      basePageResponse.data!.forEach((element) {
+        listData.add(Answer.fromJson(element));
+      });
+    }
+  }
+
+  @override
+  getParameters() {
+    super.getParameters();
+    if (idCauHoi != null) map['idCauHoi'] = idCauHoi;
     return map;
   }
 }

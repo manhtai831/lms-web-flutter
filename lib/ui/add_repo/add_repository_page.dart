@@ -5,7 +5,6 @@ import 'package:web_lms/core/dialog_confirm.dart';
 import 'package:web_lms/core/dropdown/dropdown_custom.dart';
 import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/textfield/text_field_custom.dart';
-import 'package:web_lms/core/textfield/type_ahead_custom.dart';
 import 'package:web_lms/ui/add_repo/add_repository_controller.dart';
 
 class AddRepositoryPage extends GetWidget<AddRepositoryController> {
@@ -45,9 +44,18 @@ class AddRepositoryPage extends GetWidget<AddRepositoryController> {
                                       color: ColorResource.colorPrimary)),
                               alignment: Alignment.center,
                               child: Obx(
+                                // () => controller.imageCurrent.value == null
+                                //     ? RenderImage.imageNetwork(Utils.concatUrl(
+                                //         controller.pRepository?.image ?? ''))
+                                //     : RenderImage.getImageStorage(
+                                //         path64: controller.imageCurrent.value),
                                 () => controller.imageCurrent.value == null
-                                    ? RenderImage.imageNetwork(Utils.concatUrl(
-                                        controller.pRepository?.image ?? ''))
+                                    ? controller.pRepository?.image != null
+                                        ? RenderImage.imageNetwork(
+                                            Utils.concatUrl(
+                                                controller.pRepository?.image ??
+                                                    ''))
+                                        : Utils.space(0, 0)
                                     : RenderImage.getImageStorage(
                                         path64: controller.imageCurrent.value),
                               ),

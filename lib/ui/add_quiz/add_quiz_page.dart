@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:web_lms/core/dialog_confirm.dart';
 import 'package:web_lms/core/export_all.dart';
-import 'package:web_lms/ui/add_answer/add_answer_page.dart';
 import 'package:web_lms/ui/add_quiz/add_quiz_controller.dart';
 import 'package:web_lms/ui/semester/list_semester_page.dart';
 
@@ -102,15 +101,17 @@ class AddQuizPage extends GetWidget<AddQuizController> {
                                           .pickAnswerCorrect(element)))),
                               tableCell(text: element.content),
                               feature(
-                                onDelete: () => Get.dialog(
-                                    ConfirmDialog(
-                                      message:
-                                          'Xác nhận xóa câu trả lời \"${element.content}\"',
-                                      onConfirm: () =>
-                                          controller.deleteAnswer(index),
-                                    ),
-                                    barrierDismissible: false),
-                              )
+                                  canDelete: true,
+                                  onDelete: () => Get.dialog(
+                                      ConfirmDialog(
+                                        message:
+                                            'Xác nhận xóa câu trả lời \"${element.content}\"',
+                                        onConfirm: () =>
+                                            controller.deleteAnswer(index),
+                                      ),
+                                      barrierDismissible: false),
+                                  canUpdate: true,
+                                  onUpdate: () => controller.updateAnswer(element))
                             ],
                           ),
                         )
@@ -153,4 +154,6 @@ class AddQuizPage extends GetWidget<AddQuizController> {
       ),
     );
   }
+
+
 }

@@ -1,5 +1,6 @@
-import 'package:web_lms/core/base_controller.dart';
 import 'package:get/get.dart';
+import 'package:web_lms/core/api_common.dart';
+import 'package:web_lms/core/base_controller.dart';
 import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/network/base_response.dart';
 import 'package:web_lms/model/answer.dart';
@@ -64,10 +65,22 @@ class AddQuizController extends BaseController {
   }
 
   addAnswer() async {
-    var result = await Get.dialog(AddAnswerPage(), barrierDismissible: false);
-    if (result != null) {
-      listAnswer.add(result);
-    }
+    var result = await Get.dialog(AddAnswerPage(),
+        arguments: pQuestion, barrierDismissible: false);
+    BaseAnswer baseAnswer = BaseAnswer(idCauHoi: pQuestion?.id);
+    await baseAnswer.getData();
+    int idChooseAnswer = -1;
+    listAnswer.forEach((element) {
+      if (element.isDapAnDung.isTrue) {
+        idChooseAnswer = element.id ?? -1;
+      }
+    });
+    listAnswer.value = baseAnswer.listData;
+    listAnswer.forEach((element) {
+      if (element.id == idChooseAnswer) {
+        element.isDapAnDung.value = true;
+      }
+    });
   }
 
   deleteAnswer(int i) {
@@ -79,5 +92,24 @@ class AddQuizController extends BaseController {
       element.isDapAnDung.value = false;
     });
     element.isDapAnDung.value = true;
+  }
+
+  updateAnswer(Answer element) async {
+    await Get.dialog(AddAnswerPage(),
+        arguments: element, barrierDismissible: false);
+    BaseAnswer baseAnswer = BaseAnswer(idCauHoi: element.idCauHoi);
+    await baseAnswer.getData();
+    int idChooseAnswer = -1;
+    listAnswer.forEach((element) {
+      if (element.isDapAnDung.isTrue) {
+        idChooseAnswer = element.id ?? -1;
+      }
+    });
+    listAnswer.value = baseAnswer.listData;
+    listAnswer.forEach((element) {
+      if (element.id == idChooseAnswer) {
+        element.isDapAnDung.value = true;
+      }
+    });
   }
 }

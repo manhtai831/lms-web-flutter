@@ -5,7 +5,6 @@ import 'package:web_lms/ui/add_quiz/add_quiz_page.dart';
 import 'package:web_lms/ui/semester/list_semester_page.dart';
 
 import 'list_quiz_controller.dart';
-import 'list_quiz_page.dart';
 
 class ListQuizPage extends GetWidget<ListQuizController> {
   final _controller = Get.lazyPut(() => ListQuizController());
@@ -45,8 +44,9 @@ class ListQuizPage extends GetWidget<ListQuizController> {
               child: Container(),
             ),
             Visibility(
-              visible:
-                  PersonManager.getInstance().hasRole(KeyRole.tim_kiem_cau_hoi),
+              // visible:
+              //     PersonManager.getInstance().hasRole(KeyRole.tim_kiem_cau_hoi),
+              visible: false,
               child: Flexible(
                 child: TextFieldCustom(
                   padV: 12,
@@ -57,8 +57,9 @@ class ListQuizPage extends GetWidget<ListQuizController> {
             ),
             Utils.space(8, 0),
             Visibility(
-              visible:
-                  PersonManager.getInstance().hasRole(KeyRole.tim_kiem_cau_hoi),
+              // visible:
+              //     PersonManager.getInstance().hasRole(KeyRole.tim_kiem_cau_hoi),
+              visible: false,
               child: CustomButton(
                 title: 'Tìm kiếm',
                 // onTab: () => controller.search(),
