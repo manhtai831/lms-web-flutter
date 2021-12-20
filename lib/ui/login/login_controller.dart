@@ -17,8 +17,8 @@ import 'package:web_lms/ui/home/home_controller.dart';
 import 'package:web_lms/ui/home/home_page.dart';
 
 class LoginController extends BaseController {
-  TextEditingController edtLogin = TextEditingController(text: 'admin');
-  TextEditingController edtPassword = TextEditingController(text: '123@123a');
+  TextEditingController edtLogin = TextEditingController(text: '');
+  TextEditingController edtPassword = TextEditingController(text: '');
 
   @override
   initialData() async {
