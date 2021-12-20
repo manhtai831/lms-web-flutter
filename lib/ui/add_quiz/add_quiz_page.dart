@@ -111,7 +111,8 @@ class AddQuizPage extends GetWidget<AddQuizController> {
                                       ),
                                       barrierDismissible: false),
                                   canUpdate: true,
-                                  onUpdate: () => controller.updateAnswer(element))
+                                  onUpdate: () =>
+                                      controller.updateAnswer(element))
                             ],
                           ),
                         )
@@ -154,6 +155,4 @@ class AddQuizPage extends GetWidget<AddQuizController> {
       ),
     );
   }
-
-
 }
