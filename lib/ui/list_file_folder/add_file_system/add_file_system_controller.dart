@@ -1,12 +1,11 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:web_lms/core/base64.dart';
 import 'package:web_lms/core/base_controller.dart';
-import 'package:get/get.dart';
 import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/network/base_response.dart';
 import 'package:web_lms/model/file_system.dart';
-import 'package:web_lms/model/group_type.dart';
 import 'package:web_lms/ui/list_file_folder/list_file_folder_controller.dart';
 
 class AddFileSystemController extends BaseController {
@@ -26,8 +25,8 @@ class AddFileSystemController extends BaseController {
       idSubject = Get.arguments[1];
     }
 
-    if ((Get.arguments[1] is FileSystem)) {
-      pFileSystem = Get.arguments[1];
+    if ((Get.arguments[2] is FileSystem)) {
+      pFileSystem = Get.arguments[2];
     }
 
     for (int i = 0; i < 5; i++) {

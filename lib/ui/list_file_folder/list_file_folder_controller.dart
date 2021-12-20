@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:web_lms/core/api_common.dart';
 import 'package:web_lms/core/base_controller.dart';
-import 'package:get/get.dart';
 import 'package:web_lms/core/dialog_confirm.dart';
 import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/network/base_page_response.dart';
@@ -203,42 +203,64 @@ class ListFileFolderController extends BaseController {
   addType_FileSys({bool? isOnly}) {
     if (tabController1!.index == 0 && isOnly == null) {
       Get.dialog(AddGroupTypePage(),
-          barrierDismissible: false, arguments: ['fileSystemClass', idClass]);
+          barrierDismissible: false,
+          arguments: ['fileSystemClass', idClass, null]);
     } else if (tabController1!.index == 1 || isOnly == true) {
       if (idSubject != null) {
         Get.dialog(AddFileSystemPage(),
-            barrierDismissible: false, arguments: ['fileSystem', idSubject]);
+            barrierDismissible: false,
+            arguments: ['fileSystem', idSubject, null]);
       } else {
         Get.dialog(AddFileSystemPage(),
-            barrierDismissible: false, arguments: ['fileSystemClass', idClass]);
+            barrierDismissible: false,
+            arguments: ['fileSystemClass', idClass, null]);
       }
     }
   }
 
   deleteType_FileSys({bool? isFileSystem}) async {
     if (!(isFileSystem ?? true)) {
-      listGroupType.forEach((element) async {
-        if (element.isChoose.value) {
-          await Get.dialog(
-              ConfirmDialog(
-                onConfirm: () async {
-                  BaseResponse? baseResponse =
-                      await client.deleteGroupType(GroupType(id: element.id));
-                  if (checkError(baseResponse)) {
-                    getListGroupType();
-                    Get.back();
-                    Utils.snackBar(message: 'Xóa danh mục thành công');
-                    visibleView[2] = false;
-                    listType.forEach((element) {
-                      element.isChoose.value = false;
-                    });
-                  }
-                },
-                message: 'Xác nhận xóa danh mục \"${element.name}\"',
-              ),
-              barrierDismissible: false);
-        }
-      });
+      if (deleteFile_GroupType.value == 'Xóa file') {
+        listFileSystem.forEach((element) async {
+          if (element.isChoose.value) {
+            await Get.dialog(ConfirmDialog(
+              onConfirm: () async {
+                BaseResponse? baseResponse =
+                    await client.deleteFileSystem(FileSystem(id: element.id));
+                if (checkError(baseResponse)) {
+                  getListFileSystem();
+                  Get.back();
+                  Utils.snackBar(message: 'Xóa file hệ thống thành công');
+                }
+              },
+              message: 'Xác nhận xóa file \"${element.name}\"',
+            ));
+          }
+        });
+      } else {
+        listGroupType.forEach((element) async {
+          if (element.isChoose.value) {
+            await Get.dialog(
+                ConfirmDialog(
+                  onConfirm: () async {
+                    BaseResponse? baseResponse =
+                        await client.deleteGroupType(GroupType(id: element.id));
+                    if (checkError(baseResponse)) {
+                      getListGroupType();
+                      Get.back();
+                      Utils.snackBar(message: 'Xóa danh mục thành công');
+                      visibleView[2] = false;
+                      listType.forEach((element) {
+                        element.isChoose.value = false;
+                      });
+                    }
+                  },
+                  message: 'Xác nhận xóa danh mục \"${element.name}\"',
+                ),
+                barrierDismissible: false);
+          }
+        });
+      }
     } else {
       listFileSystem.forEach((element) async {
         if (element.isChoose.value) {

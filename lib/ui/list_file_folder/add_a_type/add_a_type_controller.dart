@@ -1,9 +1,9 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:web_lms/core/api_common.dart';
 import 'package:web_lms/core/base_controller.dart';
-import 'package:get/get.dart';
 import 'package:web_lms/core/date_time/date_time_utils.dart';
 import 'package:web_lms/core/date_time/time_utils.dart';
 import 'package:web_lms/core/export_all.dart';
@@ -11,7 +11,6 @@ import 'package:web_lms/core/network/base_page_response.dart';
 import 'package:web_lms/core/network/base_response.dart';
 import 'package:web_lms/core/network/network_utils.dart';
 import 'package:web_lms/model/file_folder.dart';
-import 'package:web_lms/model/group_type.dart';
 import 'package:web_lms/model/question.dart';
 import 'package:web_lms/ui/list_file_folder/list_file_folder_controller.dart';
 
@@ -49,7 +48,7 @@ class AddATypeController extends BaseController {
       await getQuestion();
     }
     edtController[0].text = pFileFolder?.name ?? '';
-    edtController[1].text = pFileFolder?.name ?? '';
+    edtController[1].text = pFileFolder?.description ?? '';
     edtController[2].text = TimeUtils.convertTimeToFormated(
         pFileFolder?.startTime ?? '',
         TimeUtils.locateDatetime2,

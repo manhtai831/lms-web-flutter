@@ -619,7 +619,7 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
                                             KeyRole.cap_nhat_nhom_danh_muc)) {
                                       Get.dialog(AddGroupTypePage(),
                                           arguments: [
-                                            'adsf',
+                                            'ádfasdf',
                                             controller.idClass,
                                             element
                                           ],
@@ -629,6 +629,7 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
                                       Get.dialog(AddFileSystemPage(),
                                           barrierDismissible: false,
                                           arguments: [
+                                            'ádfasdf',
                                             controller.idClass,
                                             element
                                           ]);
@@ -637,6 +638,7 @@ class ListFileFolderPage extends GetWidget<ListFileFolderController> {
                                     Get.dialog(AddFileSystemPage(),
                                         barrierDismissible: false,
                                         arguments: [
+                                          'ádfasdf',
                                           controller.idSubject,
                                           element
                                         ]);

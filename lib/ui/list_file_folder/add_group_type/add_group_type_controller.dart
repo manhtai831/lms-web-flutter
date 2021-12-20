@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:web_lms/core/base_controller.dart';
 import 'package:get/get.dart';
+import 'package:web_lms/core/base_controller.dart';
 import 'package:web_lms/core/export_all.dart';
 import 'package:web_lms/core/network/base_response.dart';
 import 'package:web_lms/model/group_type.dart';
@@ -24,7 +24,7 @@ class AddGroupTypeController extends BaseController {
       error.add(null);
     }
     edtController[0].text = pGroupType?.name ?? '';
-    edtController[1].text = pGroupType?.name ?? '';
+    edtController[1].text = pGroupType?.description ?? '';
   }
 
   @override
