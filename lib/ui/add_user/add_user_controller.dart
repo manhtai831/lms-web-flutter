@@ -20,6 +20,7 @@ class AddUserController extends BaseController {
   var isActive = false.obs;
   User? pUser;
   List<TextEditingController> edtController = [];
+  var error = <String?>[].obs;
   var listGroupRole = <GroupRole>[].obs;
   var imageCurrent = Rxn();
   var currentGroup = ''.obs;
@@ -37,6 +38,7 @@ class AddUserController extends BaseController {
   initialData() async {
     for (int i = 0; i < 11; i++) {
       edtController.add(TextEditingController());
+      error.add('');
     }
     checkArgument();
     baseGroupRole = BaseGroupRole();
@@ -199,5 +201,93 @@ class AddUserController extends BaseController {
         edtController[10].text += '${element.title}; ';
       }
     });
+  }
+
+  onValidate(int i) {
+    error[i] = '';
+    if (i == 0) {
+      if (!RegExp(r'^[a-zA-Z0-9._\\s@]+$').hasMatch(edtController[0].text)) {
+        return 'Tên tài khoản không đúng định dạng';
+      } else if (edtController[0].text.trim().isEmpty) {
+        return 'Tên tài khoản không được để trống';
+      } else {
+        return null;
+      }
+    } else if (i == 1) {
+      if (edtController[i].text.trim().isEmpty) {
+        return 'Mật khẩu không được để trống';
+      } else {
+        return null;
+      }
+    } else if (i == 6) {
+      if (edtController[i].text.isNotEmpty) {
+        if (!RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+            .hasMatch(edtController[i].text)) {
+          return 'Email không đúng định dạng';
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    } else if (i == 7) {
+      if (edtController[i].text.isNotEmpty) {
+        if (!RegExp(r'^0[0-9]{9,12}$').hasMatch(edtController[i].text)) {
+          return 'Số điện thoại không đúng định dạng';
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    }
+  }
+
+  request() async {
+    if (validate()) {
+      await getData();
+    }
+  }
+
+  bool validate() {
+    if (edtController[0].text.trim().isEmpty) {
+      error[0] = 'Tên tài khoản không được để trống';
+    } else {
+      error[0] = '';
+    }
+    if (edtController[1].text.trim().isEmpty) {
+      error[1] = 'Mật khẩu không được để trống';
+    } else {
+      error[1] = '';
+    }
+    if (edtController[7].text.isNotEmpty) {
+      if (!RegExp(r'^0[0-9]{9,12}$').hasMatch(edtController[7].text)) {
+        error[7] = 'Số điện thoại không đúng định dạng';
+      } else {
+        error[7] = '';
+      }
+    } else {
+      error[7] = '';
+    }
+    if (edtController[6].text.isNotEmpty) {
+      if (!RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+          .hasMatch(edtController[6].text)) {
+        error[8] = 'Email không đúng định dạng';
+      } else {
+        error[8] = '';
+      }
+    } else {
+      error[8] = '';
+    }
+    int count = 0;
+    for (int i = 0; i < 11; i++) {
+      if (error[i] != '') {
+        count++;
+      }
+    }
+    if (count == 0) {
+      return true;
+    } else
+      return false;
   }
 }

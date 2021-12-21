@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:web_lms/core/base_component/custom_button.dart';
 import 'package:web_lms/core/dialog_confirm.dart';
 import 'package:web_lms/core/dropdown/dropdown_custom.dart';
-import 'package:web_lms/core/network/network_utils.dart';
 import 'package:web_lms/core/render_image.dart';
 import 'package:web_lms/core/resource/app_resource.dart';
 import 'package:web_lms/core/resource/color_resource.dart';
@@ -66,240 +65,268 @@ class AddUserPage extends GetWidget<AddUserController> {
                       ],
                     ),
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Utils.space(16, 0),
-                              Expanded(
-                                child: TextFieldCustom(
-                                  editingController:
-                                      controller.edtController[0],
-                                  maxLines: 1,
-                                  isReadOnly: controller.pUser != null,
-                                  hint: 'Tên tài khoản',
+                      child: Obx(
+                        () => Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Utils.space(16, 0),
+                                Expanded(
+                                  child: TextFieldCustom(
+                                    editingController:
+                                        controller.edtController[0],
+                                    maxLines: 1,
+                                    onValidator: (v) =>
+                                        controller.onValidate(0),
+                                    error: controller.error[0] == ''
+                                        ? null
+                                        : controller.error[0],
+                                    isReadOnly: controller.pUser != null,
+                                    hint: 'Tên tài khoản',
+                                  ),
+                                ),
+                                Utils.space(16, 0),
+                                Expanded(
+                                  child: TextFieldCustom(
+                                    hint: 'Mật khẩu',
+                                    editingController:
+                                        controller.edtController[1],
+                                    maxLines: 1,
+                                    onValidator: (v) =>
+                                        controller.onValidate(1),
+                                    error: controller.error[1] == ''
+                                        ? null
+                                        : controller.error[1],
+                                    obscureText: true,
+                                    inputType: TextInputType.visiblePassword,
+                                  ),
+                                ),
+                                Utils.space(16, 0),
+                              ],
+                            ),
+                            Utils.space(0, 16),
+                            /*Obx(
+                              () => SingleChildScrollView(
+                                child: Row(
+                                  children: [
+                                    Utils.space(16, 0),
+                                    Switch(
+                                      onChanged: (b) => controller.isActive
+                                          .value = !controller.isActive.value,
+                                      value: controller.isActive.value,
+                                      activeColor: ColorResource.colorPrimary,
+                                      activeTrackColor:
+                                          ColorResource.colorPrimary10,
+                                      inactiveThumbColor: ColorResource.grey,
+                                      inactiveTrackColor:
+                                          ColorResource.grey.withOpacity(0.5),
+                                    ),
+                                    InkWell(
+                                        onTap: () => controller.isActive.value =
+                                            !controller.isActive.value,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            'Trạng thái kích hoạt',
+                                            style: AppResource.s15r,
+                                          ),
+                                        ))
+                                  ],
                                 ),
                               ),
-                              Utils.space(16, 0),
-                              Expanded(
-                                child: TextFieldCustom(
-                                  hint: 'Mật khẩu',
-                                  editingController:
-                                      controller.edtController[1],
-                                  maxLines: 1,
-                                  obscureText: true,
-                                  inputType: TextInputType.visiblePassword,
-                                ),
-                              ),
-                              Utils.space(16, 0),
-                            ],
-                          ),
-                          Utils.space(0, 16),
-                          /*Obx(
-                            () => SingleChildScrollView(
+                            ),*/
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
                               child: Row(
                                 children: [
-                                  Utils.space(16, 0),
-                                  Switch(
-                                    onChanged: (b) => controller.isActive
-                                        .value = !controller.isActive.value,
-                                    value: controller.isActive.value,
-                                    activeColor: ColorResource.colorPrimary,
-                                    activeTrackColor:
-                                        ColorResource.colorPrimary10,
-                                    inactiveThumbColor: ColorResource.grey,
-                                    inactiveTrackColor:
-                                        ColorResource.grey.withOpacity(0.5),
+                                  Expanded(
+                                    child: TextFieldCustom(
+                                      maxLines: 1,
+                                      hint: 'Tên người dùng',
+                                      editingController:
+                                          controller.edtController[2],
+                                    ),
                                   ),
-                                  InkWell(
-                                      onTap: () => controller.isActive.value =
-                                          !controller.isActive.value,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          'Trạng thái kích hoạt',
-                                          style: AppResource.s15r,
-                                        ),
-                                      ))
+                                  Utils.space(16, 0),
+                                  Expanded(
+                                    child: TextFieldCustom(
+                                      maxLines: 1,
+                                      hint: 'Ngày sinh',
+                                      isReadOnly: true,
+                                      onTap: () => controller.datePicker(),
+                                      editingController:
+                                          controller.edtController[3],
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-                          ),*/
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: TextFieldCustom(
-                                    maxLines: 1,
-                                    hint: 'Tên người dùng',
-                                    editingController:
-                                        controller.edtController[2],
-                                  ),
-                                ),
-                                Utils.space(16, 0),
-                                Expanded(
-                                  child: TextFieldCustom(
-                                    maxLines: 1,
-                                    hint: 'Ngày sinh',
-                                    isReadOnly: true,
-                                    onTap: () => controller.datePicker(),
-                                    editingController:
-                                        controller.edtController[3],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Obx(
-                                    () => DropdownCustom(
-                                      hint: 'Giới tính',
-                                      listItems: [
-                                        BaseItem(id: 0, title: 'Nam'),
-                                        BaseItem(id: 1, title: 'Nữ'),
-                                      ],
-                                      getCurrentValue: (value, index) =>
-                                          controller.getCurrentValue(value, 0),
-                                      currentValue:
-                                          controller.currentGender.value,
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Obx(
+                                      () => DropdownCustom(
+                                        hint: 'Giới tính',
+                                        listItems: [
+                                          BaseItem(id: 0, title: 'Nam'),
+                                          BaseItem(id: 1, title: 'Nữ'),
+                                        ],
+                                        getCurrentValue: (value, index) =>
+                                            controller.getCurrentValue(
+                                                value, 0),
+                                        currentValue:
+                                            controller.currentGender.value,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Utils.space(16, 0),
-                                Expanded(
-                                  child: TextFieldCustom(
-                                    maxLines: 1,
-                                    hint: 'Địa chỉ',
-                                    editingController:
-                                        controller.edtController[5],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: TextFieldCustom(
-                                    maxLines: 1,
-                                    hint: 'Email',
-                                    editingController:
-                                        controller.edtController[6],
-                                  ),
-                                ),
-                                Utils.space(16, 0),
-                                Expanded(
-                                  child: TextFieldCustom(
-                                    maxLines: 1,
-                                    hint: 'Số điện thoại',
-                                    editingController:
-                                        controller.edtController[7],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: TypeAheadCustom(
-                                    maxLines: 1,
-                                    hint: 'Chuyên ngành',
-                                    editingController:
-                                        controller.edtController[8],
-                                    suggestCallBack: (pattern) async =>
-                                        await controller.sugestion(pattern, 8),
-                                    onSuggestionSelected: (value) =>
-                                        controller.valueSelected(value, 8),
-                                  ),
-                                ),
-                                Utils.space(16, 0),
-                                Expanded(
-                                  child: TypeAheadCustom(
-                                    maxLines: 1,
-                                    hint: 'Học kì',
-                                    editingController:
-                                        controller.edtController[9],
-                                    suggestCallBack: (pattern) async =>
-                                        await controller.sugestion(pattern, 9),
-                                    onSuggestionSelected: (value) =>
-                                        controller.valueSelected(value, 9),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Obx(
-                                    () => DropdownCustom(
-                                      hint: 'Quyền',
-                                      listItems: controller.listGroupRole,
-                                      getCurrentValue: (value, index) =>
-                                          controller.getCurrentValue(value, 1),
-                                      currentValue:
-                                          controller.currentGroup.value,
+                                  Utils.space(16, 0),
+                                  Expanded(
+                                    child: TextFieldCustom(
+                                      maxLines: 1,
+                                      hint: 'Địa chỉ',
+                                      editingController:
+                                          controller.edtController[5],
                                     ),
                                   ),
-                                ),
-                                Utils.space(16, 0),
-                                Expanded(
-                                  child: TypeAheadCustom(
-                                    hint: 'Lớp học',
-                                    editingController:
-                                        controller.edtController[10],
-                                    itemBuilder: (ClassModel suggest) =>
-                                        Obx(() => InkWell(
-                                              onTap: () => controller
-                                                  .onTabClass(suggest),
-                                              child: Row(
-                                                children: [
-                                                  Checkbox(
-                                                      value: suggest
-                                                          .isChoose.value,
-                                                      onChanged: (bool? b) =>
-                                                          suggest.isChoose
-                                                                  .value =
-                                                              !suggest.isChoose
-                                                                  .value),
-                                                  Text(
-                                                    suggest.title ?? '',
-                                                    style: AppResource.s15m
-                                                        .copyWith(
-                                                            color: suggest
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: TextFieldCustom(
+                                      maxLines: 1,
+                                      hint: 'Email',
+                                      error: controller.error[6] == ''
+                                          ? null
+                                          : controller.error[6],
+                                      onValidator: (v) =>
+                                          controller.onValidate(6),
+                                      editingController:
+                                          controller.edtController[6],
+                                    ),
+                                  ),
+                                  Utils.space(16, 0),
+                                  Expanded(
+                                    child: TextFieldCustom(
+                                      maxLines: 1,
+                                      hint: 'Số điện thoại',
+                                      error: controller.error[7] == ''
+                                          ? null
+                                          : controller.error[7],
+                                      onValidator: (v) =>
+                                          controller.onValidate(7),
+                                      editingController:
+                                          controller.edtController[7],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: TypeAheadCustom(
+                                      maxLines: 1,
+                                      hint: 'Chuyên ngành',
+                                      editingController:
+                                          controller.edtController[8],
+                                      suggestCallBack: (pattern) async =>
+                                          await controller.sugestion(
+                                              pattern, 8),
+                                      onSuggestionSelected: (value) =>
+                                          controller.valueSelected(value, 8),
+                                    ),
+                                  ),
+                                  Utils.space(16, 0),
+                                  Expanded(
+                                    child: TypeAheadCustom(
+                                      maxLines: 1,
+                                      hint: 'Học kì',
+                                      editingController:
+                                          controller.edtController[9],
+                                      suggestCallBack: (pattern) async =>
+                                          await controller.sugestion(
+                                              pattern, 9),
+                                      onSuggestionSelected: (value) =>
+                                          controller.valueSelected(value, 9),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Obx(
+                                      () => DropdownCustom(
+                                        hint: 'Quyền',
+                                        listItems: controller.listGroupRole,
+                                        getCurrentValue: (value, index) =>
+                                            controller.getCurrentValue(
+                                                value, 1),
+                                        currentValue:
+                                            controller.currentGroup.value,
+                                      ),
+                                    ),
+                                  ),
+                                  Utils.space(16, 0),
+                                  Expanded(
+                                    child: TypeAheadCustom(
+                                      hint: 'Lớp học',
+                                      editingController:
+                                          controller.edtController[10],
+                                      itemBuilder: (ClassModel suggest) =>
+                                          Obx(() => InkWell(
+                                                onTap: () => controller
+                                                    .onTabClass(suggest),
+                                                child: Row(
+                                                  children: [
+                                                    Checkbox(
+                                                        value: suggest
+                                                            .isChoose.value,
+                                                        onChanged: (bool? b) =>
+                                                            suggest.isChoose
+                                                                    .value =
+                                                                !suggest
                                                                     .isChoose
-                                                                    .value
-                                                                ? ColorResource
-                                                                    .colorPrimary
-                                                                : ColorResource
-                                                                    .black),
-                                                  ),
-                                                ],
-                                              ),
-                                            )),
-                                    suggestCallBack: (pattern) async =>
-                                        await controller.sugestion(pattern, 10),
-                                    // onSuggestionSelected: (value) =>
-                                    //     controller.valueSelected(value, 10),
+                                                                    .value),
+                                                    Text(
+                                                      suggest.title ?? '',
+                                                      style: AppResource.s15m
+                                                          .copyWith(
+                                                              color: suggest
+                                                                      .isChoose
+                                                                      .value
+                                                                  ? ColorResource
+                                                                      .colorPrimary
+                                                                  : ColorResource
+                                                                      .black),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )),
+                                      suggestCallBack: (pattern) async =>
+                                          await controller.sugestion(
+                                              pattern, 10),
+                                      // onSuggestionSelected: (value) =>
+                                      //     controller.valueSelected(value, 10),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -326,7 +353,7 @@ class AddUserPage extends GetWidget<AddUserController> {
                   CustomButton(
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 24),
-                    onTab: () => controller.getData(),
+                    onTab: () => controller.request(),
                     title: 'Đồng ý',
                     background: ColorResource.colorPrimary,
                   ),
